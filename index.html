@@ -696,248 +696,183 @@
         }
 
         @media (max-width: 768px) {
-            /* 헤더 컨텐츠 조정 */
-            .header-content {
-                flex-direction: column;
-                padding: 0.5rem 1rem;
-                gap: 0.5rem;
-            }
-
-            /* 우측 컨텐츠를 세로로 변경 */
-            .header-right {
-                width: 100%;
-                flex-direction: column;  /* 세로 배치로 변경 */
-                gap: 0.5rem;
-                align-items: stretch;    /* 가로 폭 채우기 */
-            }
-
-            /* 검색창 컨테이너 */
-            .header-content .search-container {
-                width: 100%;
-                max-width: none;
-                display: flex;
-                justify-content: center; /* 중앙 정렬 */
-            }
-
-            .header-content .search-box {
-                width: 100%;            /* 검색박스 전체 너비 */
-                max-width: 500px;       /* 최대 너비 제한 */
-            }
-            
-            /* 검색 버튼과 입력창 */
-            .header-content .search-box input {
-                padding: 0.5rem 1rem;
-                font-size: 0.9rem;
-                height: 40px;
-            }
-
-            /* 문의하기 버튼 */
-            .request-button {
-                width: 100%;          /* 전체 너비 사용 */
-                height: 40px;
-                padding: 0 1rem;
-                margin-left: 0;       /* 마진 제거 */
-                justify-content: center;  /* 가운데 정렬 */
-                white-space: nowrap;     /* 텍스트 줄바꿈 방지 */
-                font-size: 0.9rem;
-            }
-
-            .initial-state .search-box {
-                flex-direction: column;  /* 버튼을 아래로 */
-                gap: 0.8rem;            /* 간격 조정 */
-            }
-
-            /* 초기 검색창 버튼 */
-            .initial-state .search-box button {
-                width: 100%;            /* 버튼 전체 너비 */
-                margin-top: 0.5rem;  
-                white-space: nowrap;  /* 텍스트 줄바꿈 방지 */
-            }
-
-            /* 사이트 제목 */
-            .site-title {
-                font-size: 1.5rem;
-            }
-
-            /* 메인 컨텐츠 영역 */
-            .main-content {
-                margin: 1rem;
-                padding: 1rem;
-            }
-
-            /* 단어 항목 */
-            .word-entry {
-                padding: 1rem;
-            }
-
-            .word-header {
-                flex-wrap: wrap;
-                gap: 0.5rem;
-            }
-
-            .word-title {
-                font-size: 1.3rem;
-                width: 100%;
-            }
-
-            .word-class, .word-ipa {
-                font-size: 0.9rem;
-            }
-
-            .word-video video {
-                width: 100%;  /* 모바일에서는 전체 너비로 */
-            }
-
-            /* 모달 */
-            .modal-content {
-                width: 95%;
-                margin: 50vh auto;
-            }
-
-            .modal-header h2 {
-                font-size: 1.3rem;
-            }
-
-            .modal-body {
-                padding: 1rem;
-            }
-
-            .format-content {
-                font-size: 0.85rem;
-                padding: 0.8rem;
-            }
-
-            /* 터치 관련 최적화 */
-            .sound-button {
-                padding: 0.8rem;
-            }
-
-            .close-modal {
-                padding: 1rem;
-            }
-
-            /* 터치 피드백 */
-            .word-entry {
-                -webkit-tap-highlight-color: transparent;
-            }
-
-            .word-header:active {
-                background-color: rgba(75, 63, 114, 0.05);
-            }
-
-            /* 초기 상태 */
-            .initial-state .title {
-                font-size: 2rem;
-                padding: 0 1rem;
-            }
-
-            .word-meaning {
-                font-size: 1rem;
-                line-height: 1.5;
-            }
-
-            .word-example {
-                font-size: 0.95rem;
-                padding: 0.8rem 1rem;
-            }
-
-            /* 자동완성 */
-            .autocomplete-items {
-                max-height: 200px;
-                overflow-y: auto;
-                -webkit-overflow-scrolling: touch;
-            }
-
-            .autocomplete-item {
-                padding: 1rem;
-                font-size: 0.95rem;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .main-content {
-                margin: 1rem;
-                padding: 1rem;
-            }
-
-            .word-entry {
-                padding: 1rem;
-            }
-
-            .word-header {
-                flex-wrap: wrap;
-                gap: 0.5rem;
-            }
-
-            .word-title {
-                font-size: 1.3rem;
-                width: 100%;
-            }
-
-            .word-class, .word-ipa {
-                font-size: 0.9rem;
-            }
-
-            .word-video video {
-                width: 100%;  /* 모바일에서는 전체 너비로 */
-            }
-        }
-
-        @media (max-width: 768px) {
-            .modal-content {
-                width: 95%;
-                margin: 50vh auto;
-            }
-
-            .modal-header h2 {
-                font-size: 1.3rem;
-            }
-
-            .modal-body {
-                padding: 1rem;
-            }
-
-            .format-content {
-                font-size: 0.85rem;
-                padding: 0.8rem;
-            }
-        }
-
-        @media (max-width: 768px) {
-            /* 터치 타겟 크기 증가 */
-            .sound-button {
-                padding: 0.8rem;
-            }
-
-            .close-modal {
-                padding: 1rem;
-            }
-
-            /* 터치 피드백 개선 */
-            .word-entry {
-                -webkit-tap-highlight-color: transparent;
-            }
-
-            .word-header:active {
-                background-color: rgba(75, 63, 114, 0.05);
-            }
-        }
-
-        @media (max-width: 768px) {
-            .initial-state .title {
-                font-size: 2rem;
-                padding: 0 1rem;
-            }
-
-            .word-meaning {
-                font-size: 1rem;
-                line-height: 1.5;
-            }
-
-            .word-example {
-                font-size: 0.95rem;
-                padding: 0.8rem 1rem;
-            }
+           /* 초기 화면 자동완성 위치 */
+           .initial-state .search-box .autocomplete-items {
+               bottom: 100%;  /* 검색창 위로 */
+               top: auto;     /* 기본 위치 제거 */
+               margin-bottom: 5px;  /* 검색창과의 간격 */
+           }
+                   
+           /* 헤더 컨텐츠 조정 */
+           .header-content {
+               flex-direction: column;
+               margin: 0 auto;
+               padding: 1rem;
+               text-align: center;  
+               gap: 0.5rem;
+           }
+        
+           /* 우측 컨텐츠를 세로로 변경 */
+           .header-right {
+               width: 100%;
+               flex-direction: column;  
+               gap: 0.5rem;
+               align-items: stretch;    
+               display: flex;
+           }
+        
+           /* 검색창 컨테이너 */
+           .header-content .search-container {
+               width: 100%;
+               display: flex;
+               justify-content: center;
+               max-width: 90%;  
+               margin: 0 auto;  
+           }
+        
+           /* 후반 검색창 자동완성 */
+           .header-content .search-box .autocomplete-items {
+               width: 100%;
+               margin-top: 5px;
+           }
+        
+           .header-content .search-box {
+               width: 100%;     
+               max-width: none;
+           }
+                   
+           /* 검색 버튼과 입력창 */
+           .header-content .search-box input {
+               padding: 0.5rem 1rem;
+               font-size: 0.9rem;
+               height: 40px;
+           }
+        
+           /* 검색 버튼 */
+           .header-content .search-box button {
+               height: 40px;
+               white-space: nowrap;
+               font-size: 0.9rem;
+           }
+        
+           /* 문의하기 버튼 */
+           .request-button {
+               width: 100%;          
+               height: 40px;
+               padding: 0 1rem;
+               margin-left: 0;       
+               justify-content: center;  
+               white-space: nowrap;     
+               font-size: 0.9rem;
+           }
+        
+           /* 초기 검색창 레이아웃 */
+           .initial-state .search-box {
+               flex-direction: column;
+               gap: 0.8rem;
+           }
+        
+           /* 초기 검색창 버튼 */
+           .initial-state .search-box button {
+               width: 100%;            
+               margin-top: 0.5rem;  
+               white-space: nowrap;  
+           }
+        
+           /* 사이트 제목 */
+           .site-title {
+               font-size: 1.5rem;
+           }
+        
+           /* 메인 컨텐츠 영역 */
+           .main-content {
+               margin: 1rem;
+               padding: 1rem;
+           }
+        
+           /* 단어 항목 */
+           .word-entry {
+               padding: 1rem;
+               -webkit-tap-highlight-color: transparent;
+           }
+        
+           .word-header {
+               flex-wrap: wrap;
+               gap: 0.5rem;
+           }
+        
+           .word-header:active {
+               background-color: rgba(75, 63, 114, 0.05);
+           }
+        
+           .word-title {
+               font-size: 1.3rem;
+               width: 100%;
+           }
+        
+           .word-class, .word-ipa {
+               font-size: 0.9rem;
+           }
+        
+           .word-video video {
+               width: 100%;  
+           }
+        
+           /* 모달 */
+           .modal-content {
+               width: 95%;
+               margin: 50vh auto;
+           }
+        
+           .modal-header h2 {
+               font-size: 1.3rem;
+           }
+        
+           .modal-body {
+               padding: 1rem;
+           }
+        
+           .format-content {
+               font-size: 0.85rem;
+               padding: 0.8rem;
+           }
+        
+           /* 터치 관련 최적화 */
+           .sound-button {
+               padding: 0.8rem;
+           }
+        
+           .close-modal {
+               padding: 1rem;
+           }
+        
+           /* 초기 상태 */
+           .initial-state .title {
+               font-size: 2rem;
+               padding: 0 1rem;
+           }
+        
+           .word-meaning {
+               font-size: 1rem;
+               line-height: 1.5;
+           }
+        
+           .word-example {
+               font-size: 0.95rem;
+               padding: 0.8rem 1rem;
+           }
+        
+           /* 자동완성 */
+           .autocomplete-items {
+               max-height: 200px;
+               overflow-y: auto;
+               -webkit-overflow-scrolling: touch;
+           }
+        
+           .autocomplete-item {
+               padding: 1rem;
+               font-size: 0.95rem;
+           }
         }
     </style>
 </head>
