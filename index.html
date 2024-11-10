@@ -689,67 +689,157 @@
         }
 
         @media (max-width: 768px) {
+            /* 헤더 컨텐츠 조정 */
             .header-content {
                 flex-direction: column;
-                padding: 0.5rem;  /* 패딩 축소 */
-                gap: 0.5rem;     /* 간격 축소 */
+                padding: 0.5rem;
+                gap: 0.5rem;
             }
 
+            /* 우측 컨텐츠를 세로로 변경 */
             .header-right {
                 width: 100%;
-                flex-direction: column;
-                gap: 1rem;
+                flex-direction: column;  /* 세로 배치로 변경 */
+                gap: 0.5rem;
+                align-items: stretch;    /* 가로 폭 채우기 */
             }
 
+            /* 검색창 컨테이너 */
             .header-content .search-container {
                 width: 100%;
                 max-width: none;
             }
 
-            /* 검색창 입력필드 조정 */
+            /* 검색 버튼과 입력창 */
             .header-content .search-box input {
-                padding: 0.5rem 1rem;  /* 패딩 축소 */
-                font-size: 0.9rem;     /* 폰트 크기 축소 */
-                height: 40px;          /* 높이 고정 */
+                padding: 0.5rem 1rem;
+                font-size: 0.9rem;
+                height: 40px;
             }
 
-            /* 초기 검색창 조정 */
-            .initial-state .search-box input {
-                padding: 0.5rem 1rem;  /* 패딩 축소 */
-                font-size: 1rem;       /* 폰트 크기 조정 */
-                height: 45px;          /* 높이 고정 */
+            .header-content .search-box button {
+                padding: 0.5rem 1rem;
+                font-size: 0.9rem;
+                height: 40px;
+                min-width: 60px;
+                white-space: nowrap;  /* 텍스트 줄바꿈 방지 */
             }
 
-            .initial-state .search-box button {
-                padding: 0.5rem 1rem;  /* 패딩 축소 */
-                font-size: 1rem;       /* 폰트 크기 조정 */
-                height: 45px;          /* 높이 고정 */
-                min-width: 70px;       /* 최소 너비 설정 */
-            }
-
-            /* 검색창 전체 너비 조정 */
-            .search-box {
-                width: 100%;
-                gap: 0.5rem;          /* 간격 축소 */
-            }
-
-            /* 문의하기 버튼 조정 */
+            /* 문의하기 버튼 */
             .request-button {
-                height: 40px;         /* 높이 고정 */
-                padding: 0 1rem;      /* 패딩 조정 */
+                width: 100%;          /* 전체 너비 사용 */
+                height: 40px;
+                padding: 0 1rem;
                 margin-left: 0;       /* 마진 제거 */
-                width: auto;          /* 너비 자동 */
-                font-size: 0.9rem;    /* 폰트 크기 축소 */
+                justify-content: center;  /* 가운데 정렬 */
+                white-space: nowrap;     /* 텍스트 줄바꿈 방지 */
+                font-size: 0.9rem;
             }
 
-            .header-right {
-                width: 100%;
-                flex-direction: row;  /* 가로 배치 유지 */
-                gap: 0.5rem;         /* 간격 축소 */
-                align-items: center;
-                justify-content: space-between;
+            /* 초기 검색창 버튼 */
+            .initial-state .search-box button {
+                white-space: nowrap;  /* 텍스트 줄바꿈 방지 */
             }
-        }
+
+            /* 사이트 제목 */
+            .site-title {
+                font-size: 1.5rem;
+            }
+
+            /* 메인 컨텐츠 영역 */
+            .main-content {
+                margin: 1rem;
+                padding: 1rem;
+            }
+
+            /* 단어 항목 */
+            .word-entry {
+                padding: 1rem;
+            }
+
+            .word-header {
+                flex-wrap: wrap;
+                gap: 0.5rem;
+            }
+
+            .word-title {
+                font-size: 1.3rem;
+                width: 100%;
+            }
+
+            .word-class, .word-ipa {
+                font-size: 0.9rem;
+            }
+
+            .word-video video {
+                width: 100%;  /* 모바일에서는 전체 너비로 */
+            }
+
+            /* 모달 */
+            .modal-content {
+                width: 95%;
+                margin: 50vh auto;
+            }
+
+            .modal-header h2 {
+                font-size: 1.3rem;
+            }
+
+            .modal-body {
+                padding: 1rem;
+            }
+
+            .format-content {
+                font-size: 0.85rem;
+                padding: 0.8rem;
+            }
+
+            /* 터치 관련 최적화 */
+            .sound-button {
+                padding: 0.8rem;
+            }
+
+            .close-modal {
+                padding: 1rem;
+            }
+
+            /* 터치 피드백 */
+            .word-entry {
+                -webkit-tap-highlight-color: transparent;
+            }
+
+            .word-header:active {
+                background-color: rgba(75, 63, 114, 0.05);
+            }
+
+            /* 초기 상태 */
+            .initial-state .title {
+                font-size: 2rem;
+                padding: 0 1rem;
+            }
+
+            .word-meaning {
+                font-size: 1rem;
+                line-height: 1.5;
+            }
+
+            .word-example {
+                font-size: 0.95rem;
+                padding: 0.8rem 1rem;
+            }
+
+            /* 자동완성 */
+            .autocomplete-items {
+                max-height: 200px;
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            .autocomplete-item {
+                padding: 1rem;
+                font-size: 0.95rem;
+            }
+            }
 
         @media (max-width: 768px) {
             .main-content {
@@ -927,7 +1017,7 @@
                 this.isLoading = true;
 
                 try {
-                    const response = await fetch('./assets/json/dialects.json');
+                    const response = await fetch('/PhamKorean/assets/json/dialects.json');
                     if (!response.ok) {
                         throw new Error(`HTTP error! status: ${response.status}`);
                     }
