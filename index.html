@@ -861,7 +861,23 @@
                font-size: 0.95rem;
                padding: 0.8rem 1rem;
            }
-        
+
+            .word-video {
+                background: rgba(31, 58, 140, 0.05);
+                padding: 1.5rem;
+                border-radius: 10px;
+                max-width: 600px;  /* 추가: 최대 너비 제한 */
+                margin: 0 auto;    /* 추가: 중앙 정렬 */
+            }
+            
+            .word-video video {
+                border-radius: 10px;
+                width: 100%;
+                margin: 0 auto;
+                display: block;
+                margin-bottom: 1rem;
+            }
+            
            /* 자동완성 */
            .autocomplete-items {
                max-height: 200px;
@@ -1050,37 +1066,55 @@
                 </div>
             `;
 
-            filteredData.forEach(dialect => {
-                const entry = document.createElement('div');
-                entry.className = 'word-entry';
-                entry.innerHTML = `
-                    <div class="word-header">
-                        <span class="word-title">${dialect.word}</span>
-                        <span class="word-class">「${dialect.wordClass}」</span>
-                        <span class="word-ipa">${dialect.ipa}</span>
-                        <button class="sound-button" onclick="event.stopPropagation(); playSound('${dialect.audio}', this)">
-                            <i class="fas fa-volume-up"></i>
-                        </button>
+        filteredData.forEach(dialect => {
+            const entry = document.createElement('div');
+            entry.className = 'word-entry';
+            entry.innerHTML = `
+                <div class="word-header">
+                    <span class="word-title">${dialect.word}</span>
+                    <span class="word-class">「${dialect.wordClass}」</span>
+                    <span class="word-ipa">${dialect.ipa}</span>
+                    <button class="sound-button" onclick="event.stopPropagation(); playSound('${dialect.audio}', this)">
+                        <i class="fas fa-volume-up"></i>
+                    </button>
+                </div>
+                <div class="word-content">
+                    <div class="word-meaning">${dialect.meaning}</div>
+                    <div class="word-example">${dialect.example}</div>
+                    <div class="word-video">
+                        <div class="video-title">원본 영상</div>
+                        <video controls class="dialect-video">
+                            <source src="${dialect.video}" type="video/mp4">
+                        </video>
+                        <div class="video-source">출처: ${dialect.source}</div>
                     </div>
-                    <div class="word-content">
-                        <div class="word-meaning">${dialect.meaning}</div>
-                        <div class="word-example">${dialect.example}</div>
-                        <div class="word-video">
-                            <div class="video-title">원본 영상</div>
-                            <video controls>
-                                <source src="${dialect.video}" type="video/mp4">
-                            </video>
-                            <div class="video-source">출처: ${dialect.source}</div>
-                        </div>
-                    </div>
-                `;
-
-                // 클릭 이벤트 추가
-                entry.querySelector('.word-header').addEventListener('click', function() {
-                    entry.classList.toggle('expanded');
+                </div>
+            `;
+        
+            // 비디오 제어 기능 추가
+            const video = entry.querySelector('.dialect-video');
+            video.addEventListener('loadedmetadata', function() {
+                video.addEventListener('timeupdate', function() {
+                    if (video.currentTime >= video.duration - 5) {
+                        video.currentTime = video.duration - 5;
+                        video.pause();
+                    }
                 });
-
-                content.appendChild(entry);
+                
+                video.addEventListener('seeking', function() {
+                    if (video.currentTime >= video.duration - 5) {
+                        video.currentTime = video.duration - 5;
+                        video.pause();
+                    }
+                });
+            });
+        
+            // 클릭 이벤트 추가
+            entry.querySelector('.word-header').addEventListener('click', function() {
+                entry.classList.toggle('expanded');
+            });
+        
+            content.appendChild(entry);
 
                 const copyright = document.createElement('div');
                 copyright.className = 'copyright-notice';
