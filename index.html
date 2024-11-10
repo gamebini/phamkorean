@@ -24,10 +24,10 @@
             line-height: 1.6;
             color: var(--text-color);
             min-height: 100vh;
-            background-image: url('./assets/img/background.png');
+            background-image: url('https://cdn.discordapp.com/attachments/1104585960198524970/1304577131715756113/image_7.png?ex=672fe5a2&is=672e9422&hm=65f6ccc4fbbe0d9389918f9fa9f6fb98a6c7865e94d713210b75304e7250d3bb&');
             background-size: cover;
             background-position: center;
-            background-attachment: fixed;  /* 스크롤 시 배경 고정ㅇ */
+            background-attachment: fixed;  /* 스크롤 시 배경 고정 */
         }
 
         .initial-state {
@@ -41,7 +41,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background-image: url('./assets/img/background.png');
+            background-image: url('https://cdn.discordapp.com/attachments/1104585960198524970/1304577131715756113/image_7.png?ex=672fe5a2&is=672e9422&hm=65f6ccc4fbbe0d9389918f9fa9f6fb98a6c7865e94d713210b75304e7250d3bb&');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -691,8 +691,8 @@
         @media (max-width: 768px) {
             .header-content {
                 flex-direction: column;
-                padding: 1rem;
-                gap: 1rem;
+                padding: 0.5rem;  /* 패딩 축소 */
+                gap: 0.5rem;     /* 간격 축소 */
             }
 
             .header-right {
@@ -706,14 +706,48 @@
                 max-width: none;
             }
 
-            .request-button {
-                width: 100%;
-                justify-content: center;
-                margin-left: 0;
+            /* 검색창 입력필드 조정 */
+            .header-content .search-box input {
+                padding: 0.5rem 1rem;  /* 패딩 축소 */
+                font-size: 0.9rem;     /* 폰트 크기 축소 */
+                height: 40px;          /* 높이 고정 */
             }
 
-            .site-title {
-                font-size: 1.5rem;
+            /* 초기 검색창 조정 */
+            .initial-state .search-box input {
+                padding: 0.5rem 1rem;  /* 패딩 축소 */
+                font-size: 1rem;       /* 폰트 크기 조정 */
+                height: 45px;          /* 높이 고정 */
+            }
+
+            .initial-state .search-box button {
+                padding: 0.5rem 1rem;  /* 패딩 축소 */
+                font-size: 1rem;       /* 폰트 크기 조정 */
+                height: 45px;          /* 높이 고정 */
+                min-width: 70px;       /* 최소 너비 설정 */
+            }
+
+            /* 검색창 전체 너비 조정 */
+            .search-box {
+                width: 100%;
+                gap: 0.5rem;          /* 간격 축소 */
+            }
+
+            /* 문의하기 버튼 조정 */
+            .request-button {
+                height: 40px;         /* 높이 고정 */
+                padding: 0 1rem;      /* 패딩 조정 */
+                margin-left: 0;       /* 마진 제거 */
+                width: auto;          /* 너비 자동 */
+                font-size: 0.9rem;    /* 폰트 크기 축소 */
+            }
+
+            .header-right {
+                width: 100%;
+                flex-direction: row;  /* 가로 배치 유지 */
+                gap: 0.5rem;         /* 간격 축소 */
+                align-items: center;
+                justify-content: space-between;
             }
         }
 
