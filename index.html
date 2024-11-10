@@ -1091,28 +1091,6 @@
                 </div>
             `;
         
-            // 비디오 제어 기능 추가
-            const video = entry.querySelector('.dialect-video');
-            video.addEventListener('loadedmetadata', function() {
-                const maxDuration = video.duration - 5; // 마지막 5초를 제외한 최대 재생 시간
-            
-                video.addEventListener('timeupdate', function() {
-                    // 현재 재생 시간이 (전체 길이 - 5초) 이상일 때만 중지
-                    if (video.currentTime > maxDuration) {
-                        video.currentTime = maxDuration;
-                        video.pause();
-                    }
-                });
-                
-                video.addEventListener('seeking', function() {
-                    // 사용자가 마지막 5초로 이동하려고 할 때만 제한
-                    if (video.currentTime > maxDuration) {
-                        video.currentTime = maxDuration;
-                        video.pause();
-                    }
-                });
-            });
-        
             // 클릭 이벤트 추가
             entry.querySelector('.word-header').addEventListener('click', function() {
                 entry.classList.toggle('expanded');
