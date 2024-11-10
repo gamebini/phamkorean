@@ -24,7 +24,7 @@
             line-height: 1.6;
             color: var(--text-color);
             min-height: 100vh;
-            background-image: url('https://cdn.discordapp.com/attachments/1104585960198524970/1304577131715756113/image_7.png?ex=672fe5a2&is=672e9422&hm=65f6ccc4fbbe0d9389918f9fa9f6fb98a6c7865e94d713210b75304e7250d3bb&');
+            background-image: url('./assets/img/background.jpg');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;  /* 스크롤 시 배경 고정 */
@@ -41,7 +41,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background-image: url('https://cdn.discordapp.com/attachments/1104585960198524970/1304577131715756113/image_7.png?ex=672fe5a2&is=672e9422&hm=65f6ccc4fbbe0d9389918f9fa9f6fb98a6c7865e94d713210b75304e7250d3bb&');
+            background-image: url('./assets/img/background.jpg');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -1017,7 +1017,7 @@
                 this.isLoading = true;
 
                 try {
-                    const response = await fetch('/PhamKorean/assets/json/dialects.json');
+                    const response = await fetch('./assets/json/dialects.json');
                     if (!response.ok) {
                         throw new Error(`HTTP error! status: ${response.status}`);
                     }
