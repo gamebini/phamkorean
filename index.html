@@ -692,7 +692,7 @@
             /* 헤더 컨텐츠 조정 */
             .header-content {
                 flex-direction: column;
-                padding: 0.5rem;
+                padding: 0.5rem 1rem;
                 gap: 0.5rem;
             }
 
@@ -708,8 +708,15 @@
             .header-content .search-container {
                 width: 100%;
                 max-width: none;
+                display: flex;
+                justify-content: center; /* 중앙 정렬 */
             }
 
+            .header-content .search-box {
+                width: 100%;            /* 검색박스 전체 너비 */
+                max-width: 500px;       /* 최대 너비 제한 */
+            }
+            
             /* 검색 버튼과 입력창 */
             .header-content .search-box input {
                 padding: 0.5rem 1rem;
@@ -736,8 +743,15 @@
                 font-size: 0.9rem;
             }
 
+            .initial-state .search-box {
+                flex-direction: column;  /* 버튼을 아래로 */
+                gap: 0.8rem;            /* 간격 조정 */
+            }
+
             /* 초기 검색창 버튼 */
             .initial-state .search-box button {
+                width: 100%;            /* 버튼 전체 너비 */
+                margin-top: 0.5rem;  
                 white-space: nowrap;  /* 텍스트 줄바꿈 방지 */
             }
 
