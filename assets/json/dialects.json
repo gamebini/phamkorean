@@ -5,7 +5,7 @@
             "ipa": "[ʨun.bi gal wʌl.ljo]",
             "meaning": "갈 준비 완료",
             "example": "오늘 Nike Orchard Road Store 준비 갈 완료오오오오",
-            "video": "./videos/준비갈완료.mp4",
+            "video": "./assets/videos/준비갈완료.mp4",
             "source": "유튜브",
             "audio": "./audio/sample.mp3",
             "wordClass": "서술어"
@@ -15,7 +15,7 @@
             "ipa": "[sa.ɾaŋ.he ma.ni ʨu.se.jo]",
             "meaning": "많이 사랑해 주세요",
             "example": "저희 새로운 앨범 사랑해 많이 주세요!",
-            "video": "./videos/사랑해많이주세요.mp4",
+            "video": "./assets/videos/사랑해많이주세요.mp4",
             "source": "유튜브",
             "audio": "./audio/sample.mp3",
             "wordClass": "서술어"
@@ -25,7 +25,7 @@
             "ipa": "[pu.tʰa.gip.ni.da]",
             "meaning": "부탁이 있습니다",
             "example": "저 부타깁니다아..",
-            "video": "./videos/부타깁니다.mp4",
+            "video": "./assets/videos/부타깁니다.mp4",
             "source": "유튜브",
             "audio": "path/to/audio.mp3",
             "wordClass": "서술어"
@@ -35,7 +35,7 @@
             "ipa": "[nwe ʨom nɯ.ɾi.da]",
             "meaning": "뇌가 잘 안돌아간다",
             "example": "아 나 뇌 좀 느리다 오늘",
-            "video": "./videos/뇌좀느리다.mp4",
+            "video": "./assets/videos/뇌좀느리다.mp4",
             "source": "",
             "audio": "",
             "wordClass": "서술어"
@@ -45,7 +45,7 @@
             "ipa": "[nwe.ga jʌl.jʌ.ja dwe]",
             "meaning": "뇌를 써야 돼",
             "example": "뇌가.. 뇌를 열려야 돼!!",
-            "video": "./videos/뇌가열려야돼.mp4",
+            "video": "./assets/videos/뇌가열려야돼.mp4",
             "source": "",
             "audio": "",
             "wordClass": "서술어"
@@ -55,7 +55,7 @@
             "ipa": "[jaŋ.njʌm.tʰe.ipʰɯ]",
             "meaning": "양면테이프",
             "example": "여기여기 양념테이프",
-            "video": "./videos/양념테이프.mp4",
+            "video": "./assets/videos/양념테이프.mp4",
             "source": "",
             "audio": "",
             "wordClass": "명사"
@@ -65,7 +65,7 @@
             "ipa": "[al.lok.tal.lak̚]",
             "meaning": "알록달록",
             "example": "다들 완전 알록달락",
-            "video": "./videos/알록달락.mp4",
+            "video": "./assets/videos/알록달락.mp4",
             "source": "",
             "audio": "",
             "wordClass": "형용사"
@@ -75,7 +75,7 @@
             "ipa": "[a.hɯn.a.hɯn]",
             "meaning": "아흔아홉",
             "example": "한지는 장인의 아흔아흔의..",
-            "video": "./videos/아흔아흔.mp4",
+            "video": "./assets/videos/아흔아흔.mp4",
             "source": "",
             "audio": "",
             "wordClass": "수사"
@@ -85,7 +85,7 @@
             "ipa": "[tɛ.t͡ʃʰaŋ]",
             "meaning": "떼창",
             "example": "아니 근데 대창 진짜",
-            "video": "./videos/대창.mp4",
+            "video": "./assets/videos/대창.mp4",
             "source": "",
             "audio": "",
             "wordClass": "명사"
@@ -95,7 +95,7 @@
             "ipa": "[hɛ.sɯ.ɾam]",
             "meaning": "해산물",
             "example": "근데 여기 왔으니까.. 뭔가 해스람..",
-            "video": "./videos/해스람.mp4",
+            "video": "./assets/videos/해스람.mp4",
             "source": "",
             "audio": "",
             "wordClass": "명사"
@@ -105,7 +105,7 @@
             "ipa": "[k͈we.bɛ.gi]",
             "meaning": "꽈배기",
             "example": "시장에서 꾀배기도 팔겠지?",
-            "video": "./videos/꾀배기.mp4",
+            "video": "./assets/videos/꾀배기.mp4",
             "source": "",
             "audio": "",
             "wordClass": "명사"
@@ -115,7 +115,7 @@
             "ipa": "[tʰan.su.na.mul]",
             "meaning": "탄수화물",
             "example": "역시.. 탄수나물",
-            "video": "./videos/탄수나물.mp4",
+            "video": "./assets/videos/탄수나물.mp4",
             "source": "",
             "audio": "",
             "wordClass": "명사"
@@ -125,7 +125,7 @@
             "ipa": "[t͡ʃʰo.kʰo.d͡ʑuk̚]",
             "meaning": "팥죽",
             "example": "이게 뭐지? 초코.. 초코죽?",
-            "video": "./videos/초코죽.mp4",
+            "video": "./assets/videos/초코죽.mp4",
             "source": "ㅇㅇ",
             "audio": "",
             "wordClass": "명사"
@@ -135,7 +135,7 @@
             "ipa": "[me.ɾon.p͈an.p͈am]",
             "meaning": "메론빵",
             "example": "저 오늘 메론빤빰처럼 생겼어요",
-            "video": "./videos/메론빤빰.mp4",
+            "video": "./assets/videos/메론빤빰.mp4",
             "source": "",
             "audio": "",
             "wordClass": "명사"
@@ -145,7 +145,7 @@
             "ipa": "[tam.dam]",
             "meaning": "담당",
             "example": "저 오늘 비하인드 담담이거든요",
-            "video": "./videos/담담.mp4",
+            "video": "./assets/videos/담담.mp4",
             "source": "",
             "audio": "",
             "wordClass": "명사"
@@ -155,7 +155,7 @@
             "ipa": "[t͈ɯn.gʌp.sɛ.ɾo]",
             "meaning": "뜬금없이",
             "example": "준비하셔야돼요~ 이런거는.. 뜬겁새로",
-            "video": "./videos/뜬겁새로.mp4",
+            "video": "./assets/videos/뜬겁새로.mp4",
             "source": "NewJeans Official Youtube",
             "audio": "",
             "wordClass": "부사"
@@ -165,7 +165,7 @@
             "ipa": "[ʌŋ.maŋ.d͡ʑan.t͡ɕʰiŋ]",
             "meaning": "엉망진창",
             "example": "엉망잔칭이야!!! ",
-            "video": "./videos/엉망잔칭.mp4",
+            "video": "./assets/videos/엉망잔칭.mp4",
             "source": "",
             "audio": "",
             "wordClass": "명사"
@@ -175,7 +175,7 @@
             "ipa": "[pi.mil.d͡ʑaŋ.wʌn]",
             "meaning": "비밀정원",
             "example": "그.. 되게 비밀장원",
-            "video": "./videos/비밀장원.mp4",
+            "video": "./assets/videos/비밀장원.mp4",
             "source": "",
             "audio": "",
             "wordClass": "명사"
@@ -185,7 +185,7 @@
             "ipa": "[ʨʰɛ.ɾjo]",
             "meaning": "재료",
             "example": "채료 사줘야지",
-            "video": "./videos/채료.mp4",
+            "video": "./assets/videos/채료.mp4",
             "source": "",
             "audio": "",
             "wordClass": "명사"
@@ -195,7 +195,7 @@
             "ipa": "[hu.du.da.dak̚]",
             "meaning": "후다다닥",
             "example": "화장실 가는게 너무 민망했던것 같아.. (그래서) 후두다닥 (나왔지)",
-            "video": "./videos/후두다닥.mp4",
+            "video": "./assets/videos/후두다닥.mp4",
             "source": "",
             "audio": "",
             "wordClass": "부사"
@@ -205,7 +205,7 @@
             "ipa": "[po.d͡ʑɛ be.tʰʌ.ɾi]",
             "meaning": "보조 베터리",
             "example": "저는.. 보재 베터리..?",
-            "video": "./videos/보재배터리.mp4",
+            "video": "./assets/videos/보재배터리.mp4",
             "source": "",
             "audio": "",
             "wordClass": ""
@@ -215,7 +215,7 @@
             "ipa": "[tap̚.ʨʌŋ]",
             "meaning": "정답",
             "example": "이 안에..? 답정을?",
-            "video": "./videos/답정.mp4",
+            "video": "./assets/videos/답정.mp4",
             "source": "",
             "audio": "",
             "wordClass": "명사"
@@ -225,7 +225,7 @@
             "ipa": "[kaŋ.d͡ʑʌŋ kwa tan.ʨʌm]",
             "meaning": "장점과 단점",
             "example": "목소리가 너무 부드러워서 발음이 많이 흘러가더라고요.. (이게) 강정과? 단점 (같아요)",
-            "video": "./videos/강정과단점.mp4",
+            "video": "./assets/videos/강정과단점.mp4",
             "source": "",
             "audio": "",
             "wordClass": "명사 / 접속사"
@@ -235,7 +235,7 @@
             "ipa": "[tɛ.pʰju.nim]",
             "meaning": "대표님",
             "example": "안녕하세요 대퓨님!!",
-            "video": "./videos/대퓨님.mp4",
+            "video": "./assets/videos/대퓨님.mp4",
             "source": "",
             "audio": "",
             "wordClass": "명사"
@@ -245,7 +245,7 @@
             "ipa": "[a.gi.so]",
             "meaning": "송아지",
             "example": "",
-            "video": "./videos/아기소.mp4",
+            "video": "./assets/videos/아기소.mp4",
             "source": "",
             "audio": "",
             "wordClass": "명사"
@@ -255,7 +255,7 @@
             "ipa": "[ka.di.ri.ʃʌt.tɕo]",
             "meaning": "기다리셨죠",
             "example": "버니즈! 모두 Hi~~~! 저희 이번 컴백을 많이 가디리셨죠?",
-            "video": "./videos/가다리셨죠.mp4",
+            "video": "./assets/videos/가다리셨죠.mp4",
             "source": "",
             "audio": "",
             "wordClass": "서술어"
@@ -265,7 +265,7 @@
             "ipa": "[al.gɛt.sɯm.ni.kka]",
             "meaning": "알겠습니까?",
             "example": "끝까지 즐겨주시면 됩니다! 알겠습니다?",
-            "video": "./videos/알겠습니까.mp4",
+            "video": "./assets/videos/알겠습니까.mp4",
             "source": "",
             "audio": "",
             "wordClass": "서술어"
@@ -275,7 +275,7 @@
             "ipa": "[tɕu.tɕu.ga.ja]",
             "meaning": "쫓아가야",
             "example": "너까지 좀 이렇게.. 동그랗게게 쭈쭈가야",
-            "video": "./videos/쭈쭈가야.mp4",
+            "video": "./assets/videos/쭈쭈가야.mp4",
             "source": "",
             "audio": "",
             "wordClass": "서술어"
@@ -285,7 +285,7 @@
             "ipa": "[je.pʰɯn ma.ni]",
             "meaning": "많이 예쁜",
             "example": "예쁜 많이 집게핀이 있어서어..",
-            "video": "./videos/예쁜많이.mp4",
+            "video": "./assets/videos/예쁜많이.mp4",
             "source": "",
             "audio": "",
             "wordClass": "형용사"
@@ -295,7 +295,7 @@
             "ipa": "[pʰol.lo.ro]",
             "meaning": "폴라로이드",
             "example": "폴로로 찍으려고",
-            "video": "./videos/폴로로.mp4",
+            "video": "./assets/videos/폴로로.mp4",
             "source": "",
             "audio": "",
             "wordClass": "명사"
@@ -305,7 +305,7 @@
             "ipa": "[tɕʰɛŋ.gin.gan.da]",
             "meaning": "챙겨간다",
             "example": "나 이제 녹음할때마다 얘 챙긴간다",
-            "video": "./videos/챙긴간다.mp4",
+            "video": "./assets/videos/챙긴간다.mp4",
             "source": "",
             "audio": "",
             "wordClass": "서술어"
@@ -315,7 +315,7 @@
             "ipa": "[ʌ.tɯ.kʰa.jo]",
             "meaning": "어떡해요?",
             "example": "..ㅋㅋ 맨날 놀라시면 어뜨카요?",
-            "video": "./videos/어뜨카요.mp4",
+            "video": "./assets/videos/어뜨카요.mp4",
             "source": "",
             "audio": "",
             "wordClass": "서술어"
@@ -325,7 +325,7 @@
             "ipa": "[kʷi tʰʌ.dʒil pʰul.lat.ne]",
             "meaning": "귀 터질 뻔했네",
             "example": "어으.. 귀 터질 뿔랐네",
-            "video": "./videos/귀 터질 뿔랐네.mp4",
+            "video": "./assets/videos/귀 터질 뿔랐네.mp4",
             "source": "",
             "audio": "",
             "wordClass": "서술어"
@@ -335,7 +335,7 @@
             "ipa": "[ɛ.pi.ga]",
             "meaning": "어플이",
             "example": "앱이가 (...)",
-            "video": "./videos/앱이가.mp4",
+            "video": "./assets/videos/앱이가.mp4",
             "source": "",
             "audio": "",
             "wordClass": "명사"
@@ -345,7 +345,7 @@
             "ipa": "[he.ra.ba.gi]",
             "meaning": "해바라기",
             "example": "(뭔가) 해라바기로 가야겠어요",
-            "video": "./videos/해라바기.mp4",
+            "video": "./assets/videos/해라바기.mp4",
             "source": "",
             "audio": "",
             "wordClass": "명사"
@@ -355,7 +355,7 @@
             "ipa": "[k͈o.jaŋ.i]",
             "meaning": "고양이",
             "example": "꼬양이.. 있는데 꼬양이 이름 필요하다고 했어",
-            "video": "./videos/꼬양이.mp4",
+            "video": "./assets/videos/꼬양이.mp4",
             "source": "",
             "audio": "",
             "wordClass": "명사"
@@ -365,7 +365,7 @@
             "ipa": "[sa.u.dʒi.ma.se.jʌ]",
             "meaning": "싸우지마세요",
             "example": "저기요 사우지마세여",
-            "video": "./videos/사우지마세여.mp4",
+            "video": "./assets/videos/사우지마세여.mp4",
             "source": "",
             "audio": "",
             "wordClass": "서술어"
@@ -375,7 +375,7 @@
             "ipa": "[tʰi.mi.di.ʃal.mal.li]",
             "meaning": "티모시샬라메",
             "example": "정답! 티미디샬말리",
-            "video": "./videos/티미디샬말레레.mp4",
+            "video": "./assets/videos/티미디샬말레레.mp4",
             "source": "",
             "audio": "",
             "wordClass": "고유명사"
@@ -385,7 +385,7 @@
             "ipa": "[ka.roŋ.bon]",
             "meaning": "가로본능",
             "example": "이거 뭐지? 가롱본?",
-            "video": "./videos/가롱본.mp4",
+            "video": "./assets/videos/가롱본.mp4",
             "source": "",
             "audio": "",
             "wordClass": "명사"
@@ -395,7 +395,7 @@
             "ipa": "[bʌ.nʌ.dʒi]",
             "meaning": "버니즈",
             "example": "우리 버넞.. 버너지분들!!",
-            "video": "./videos/버너지.mp4",
+            "video": "./assets/videos/버너지.mp4",
             "source": "",
             "audio": "",
             "wordClass": "고유명사"
@@ -405,7 +405,7 @@
             "ipa": "[tol.lʌ.bo.go]",
             "meaning": "둘러보고",
             "example": "주변을 돌러보고",
-            "video": "./videos/돌러보고.mp4",
+            "video": "./assets/videos/돌러보고.mp4",
             "source": "",
             "audio": "",
             "wordClass": "서술어"
@@ -415,7 +415,7 @@
             "ipa": "[ma.ri.ʌp.ta]",
             "meaning": "많이없다",
             "example": "아니 많이 없어요!!",
-            "video": "./videos/말이없다.mp4",
+            "video": "./assets/videos/말이없다.mp4",
             "source": "",
             "audio": "",
             "wordClass": "형용사"
@@ -425,7 +425,7 @@
             "ipa": "[pʰjo.dʒʌŋ.i tʌ.rʌ.dʒi.ʃʌ.ne.jo]",
             "meaning": "표정이 어두어지셨네요",
             "example": "김민지씨 표정이 좀 많이 떨어지셨네요",
-            "video": "./videos/표정이떨어지셨네요.mp4",
+            "video": "./assets/videos/표정이떨어지셨네요.mp4",
             "source": "",
             "audio": "",
             "wordClass": "형용사"
@@ -435,7 +435,7 @@
             "ipa": "[bʌ.gʌ]",
             "meaning": "버겁다",
             "example": "(뭐가) 버거?",
-            "video": "./videos/버거.mp4",
+            "video": "./assets/videos/버거.mp4",
             "source": "",
             "audio": "",
             "wordClass": "형용사"
@@ -445,7 +445,7 @@
             "ipa": "[sʰu.mul]",
             "meaning": "스무개",
             "example": "그럼 너한테 스물개 줄 수 있어",
-            "video": "./videos/스물개.mp4",
+            "video": "./assets/videos/스물개.mp4",
             "source": "",
             "audio": "",
             "wordClass": "수사"
@@ -455,7 +455,7 @@
             "ipa": "[pa.rɯm.i]",
             "meaning": "발음이",
             "example": "발음이는 (괜찮나요?)",
-            "video": "./videos/바름이.mp4",
+            "video": "./assets/videos/바름이.mp4",
             "source": "",
             "audio": "",
             "wordClass": "명사"
@@ -465,7 +465,7 @@
             "ipa": "[hi.mi.man]",
             "meaning": "힘만",
             "example": "힘이만 있는 뿐이고",
-            "video": "./videos/힘이만.mp4",
+            "video": "./assets/videos/힘이만.mp4",
             "source": "",
             "audio": "",
             "wordClass": "명사"
@@ -475,7 +475,7 @@
             "ipa": "[ki.bu.ni.ma.da]",
             "meaning": "기분마다",
             "example": "기분이마다 바뀌는것같아요",
-            "video": "./videos/기분이마다.mp4",
+            "video": "./assets/videos/기분이마다.mp4",
             "source": "",
             "audio": "",
             "wordClass": "부사"
@@ -485,7 +485,7 @@
             "ipa": "[ma.tʃʰʌn.ga.dʒi]",
             "meaning": "마찬가지",
             "example": "(Ditto는) 마천가지 (약간 이런 뜻이에요)",
-            "video": "./videos/마천가지.mp4",
+            "video": "./assets/videos/마천가지.mp4",
             "source": "",
             "audio": "",
             "wordClass": "명사"
@@ -495,7 +495,7 @@
             "ipa": "[tʃu.tal.la.go]",
             "meaning": "해달라고",
             "example": "스포 주달라고",
-            "video": "./videos/주달라고.mp4",
+            "video": "./assets/videos/주달라고.mp4",
             "source": "",
             "audio": "",
             "wordClass": "서술어"
@@ -505,7 +505,7 @@
             "ipa": "[no.ran.i]",
             "meaning": "노른자",
             "example": "그그 계란 써니싸이드 업 할 때 있잖아.. 그때 노란이",
-            "video": "./videos/노란이.mp4",
+            "video": "./assets/videos/노란이.mp4",
             "source": "",
             "audio": "",
             "wordClass": "명사"
