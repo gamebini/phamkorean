@@ -1066,35 +1066,35 @@
                 </div>
             `;
 
-        filteredData.forEach(dialect => {
-            const entry = document.createElement('div');
-            entry.className = 'word-entry';
-            entry.innerHTML = `
-                <div class="word-header">
-                    <span class="word-title">${dialect.word}</span>
-                    <span class="word-class">「${dialect.wordClass}」</span>
-                    <span class="word-ipa">${dialect.ipa}</span>
-                    <button class="sound-button" onclick="event.stopPropagation(); playSound('${dialect.audio}', this)">
-                        <i class="fas fa-volume-up"></i>
-                    </button>
-                </div>
-                <div class="word-content">
-                    <div class="word-meaning">${dialect.meaning}</div>
-                    <div class="word-example">${dialect.example}</div>
-                    <div class="word-video">
-                        <div class="video-title">원본 영상</div>
-                        <video controls class="dialect-video">
-                            <source src="${dialect.video}" type="video/mp4">
-                        </video>
-                        <div class="video-source">출처: ${dialect.source}</div>
+            filteredData.forEach(dialect => {
+                const entry = document.createElement('div');
+                entry.className = 'word-entry';
+                entry.innerHTML = `
+                    <div class="word-header">
+                        <span class="word-title">${dialect.word}</span>
+                        <span class="word-class">「${dialect.wordClass}」</span>
+                        <span class="word-ipa">${dialect.ipa}</span>
+                        <button class="sound-button" onclick="event.stopPropagation(); playSound('${dialect.audio}', this)">
+                            <i class="fas fa-volume-up"></i>
+                        </button>
                     </div>
-                </div>
-            `;
-        
-            // 클릭 이벤트 추가
-            entry.querySelector('.word-header').addEventListener('click', function() {
-                entry.classList.toggle('expanded');
-            });
+                    <div class="word-content">
+                        <div class="word-meaning">${dialect.meaning}</div>
+                        <div class="word-example">${dialect.example}</div>
+                        <div class="word-video">
+                            <div class="video-title">원본 영상</div>
+                            <video controls>
+                                <source src="${dialect.video}" type="video/mp4">
+                            </video>
+                            <div class="video-source">출처: ${dialect.source}</div>
+                        </div>
+                    </div>
+                `;
+            
+                // 클릭 이벤트 추가
+                entry.querySelector('.word-header').addEventListener('click', function() {
+                    entry.classList.toggle('expanded');
+                });
         
             content.appendChild(entry);
 
