@@ -1083,8 +1083,15 @@
                         <div class="word-example">${dialect.example}</div>
                         <div class="word-video">
                             <div class="video-title">원본 영상</div>
-                            <video controls>
+                            <video 
+                                controls 
+                                preload="metadata"
+                                controlsList="nodownload" 
+                                onplay="handleVideoPlay(this)"
+                                onerror="handleVideoError(this)"
+                            >
                                 <source src="${dialect.video}" type="video/mp4">
+                                <p>브라우저가 비디오 재생을 지원하지 않습니다.</p>
                             </video>
                             <div class="video-source">출처: ${dialect.source}</div>
                         </div>
@@ -1108,6 +1115,40 @@
             content.appendChild(copyright);
             });
             setRandomPlaceholder();
+        }
+
+        // 비디오 재생 관련 새로운 함수들 추가
+        function handleVideoPlay(videoElement) {
+            // 현재 재생 중인 다른 비디오들 정지
+            document.querySelectorAll('video').forEach(video => {
+                if (video !== videoElement && !video.paused) {
+                    video.pause();
+                }
+            });
+
+            // 비디오 재생 상태 모니터링
+            const checkPlayback = setInterval(() => {
+                if (videoElement.paused) {
+                    clearInterval(checkPlayback);
+                }
+            }, 1000);
+
+            // 에러 발생 시 자동 재시도
+            videoElement.addEventListener('stalled', () => {
+                setTimeout(() => {
+                    videoElement.load();
+                    videoElement.play().catch(err => console.log('재생 재시도 실패:', err));
+                }, 1000);
+            });
+        }
+
+        function handleVideoError(videoElement) {
+            console.error('비디오 재생 에러 발생');
+            // 에러 발생 시 재시도
+            videoElement.load();
+            setTimeout(() => {
+                videoElement.play().catch(err => console.log('재생 재시도 실패:', err));
+            }, 1000);
         }
 
         // 자동완성 함수
