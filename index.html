@@ -924,22 +924,43 @@
             </div>
         </div>
     </header>
+    <!-- 첫 번째 모달: 팜국어 소개 -->
+    <div id="introModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>환영합니다</h2>
+            </div>
+            <div class="modal-body">
+                <div style="text-align: center; margin-bottom: 1.5rem;">
+                    <i class="fas fa-book" style="font-size: 3rem; color: #4B3F72; margin-bottom: 1rem;"></i>
+                </div>
+                <div style="display: inline-block; background: rgba(75, 63, 114, 0.1); padding: 0.5rem 1rem; border-radius: 20px; margin-bottom: 1rem;">
+                    <span style="font-weight: 700; color: #4B3F72; font-size: 1.1rem;">📚 팜국어란?</span>
+                </div>
+                <p style="margin-bottom: 2rem; line-height: 1.6;">
+                    '팜국어'는 하니(HANNI)가 자주 사용하는 독특한 말투와 표현을 뜻합니다. 팜하니의 언어 습관과 재치있는 표현들을 모아놓은 이 사전은 현재 베타 서비스 중입니다.
+                </p>
+                <button onclick="showBetaModal()" style="width: 100%; padding: 1rem; background: #4B3F72; color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; transition: opacity 0.2s; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                    <span>다음으로</span>
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 두 번째 모달: 베타 버전 안내 -->
     <div id="betaNoticeModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2>팜국어대사전</h2>
+                <h2>베타 버전 안내</h2>
                 <span class="close-modal" onclick="closeBetaModal()">&times;</span>
             </div>
             <div class="modal-body">
                 <div style="text-align: center; margin-bottom: 1.5rem;">
                     <i class="fas fa-flask" style="font-size: 3rem; color: #4B3F72; margin-bottom: 1rem;"></i>
-                    <h3 style="color: #4B3F72; margin-bottom: 0.5rem;">팜국어대사전에 오신걸 환영해요!</h3>
-                </div>
-                <div style="display: inline-block; background: rgba(75, 63, 114, 0.1); padding: 0.5rem 1rem; border-radius: 20px; margin-bottom: 1rem;">
-                    <span style="font-weight: 700; color: #4B3F72; font-size: 1.1rem;">📚 팜국어란?</span>
                 </div>
                 <p style="margin-bottom: 1rem; line-height: 1.6;">
-                    '팜국어'는 뉴진스(NewJeans) 멤버인 하니(HANNI)가 사용한 독특하고 재치 있는 말투와 언어 표현을 뜻합니다. 이 페이지는 하니가 사용했던 팜국어들을 모아놓은 사전입니다.<br><strong>현재 팜국어대사전은 베타 서비스 중이며 아래와 같은 제한사항이 있을 수 있습니다.</strong>
+                    베타 서비스 기간 동안 아래와 같은 제한사항이 있을 수 있습니다:
                 </p>
                 <ul style="list-style-type: none; padding: 1rem; background: #f8f9fa; border-radius: 10px; margin-bottom: 1.5rem;">
                     <li style="margin-bottom: 0.5rem;">
@@ -1330,14 +1351,27 @@
                 // 1초마다 변경 시작
                 setInterval(setRandomPlaceholder, 1500);
                 // 페이지 로드 시 바로 베타 공지 모달 표시
-                showBetaModal();
+                showIntroModal();
             });
         });
         
-        function showBetaModal() {
-            const modal = document.getElementById('betaNoticeModal');
+        function showIntroModal() {
+            const modal = document.getElementById('introModal');
             modal.style.display = 'block';
             setTimeout(() => modal.classList.add('show'), 10);
+        }
+        
+        function showBetaModal() {
+            // 첫 번째 모달 닫기
+            const introModal = document.getElementById('introModal');
+            introModal.classList.remove('show');
+            setTimeout(() => {
+                introModal.style.display = 'none';
+                // 두 번째 모달 열기
+                const betaModal = document.getElementById('betaNoticeModal');
+                betaModal.style.display = 'block';
+                setTimeout(() => betaModal.classList.add('show'), 10);
+            }, 300);
         }
         
         function closeBetaModal() {
