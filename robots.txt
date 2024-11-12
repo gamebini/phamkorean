@@ -1,0 +1,27 @@
+User-agent: *
+Allow: /
+Allow: /index.html
+Allow: /assets/
+Disallow: /assets/json/
+
+# Sitemap
+Sitemap: https://phamkorean.com/sitemap.xml
+
+# 크롤링 제한
+Crawl-delay: 10
+
+# Google bot
+User-agent: Googlebot
+Allow: /
+Allow: /index.html
+Allow: /assets/img/
+Allow: /assets/css/
+Disallow: /assets/json/
+
+# Naver bot
+User-agent: Yeti
+Allow: /
+Allow: /index.html
+Allow: /assets/img/
+Allow: /assets/css/
+Disallow: /assets/json/
