@@ -1,360 +1,331 @@
-            class DialectManager {
-            constructor() {
-                this.dialects = [];
-                this.loadData();
-            }
+class DialectManager {
+   constructor() {
+       this.dialects = [];
+       this.loadData();
+   }
 
-            // JSON 파일에서 데이터 로드
-            async loadData() {
-                if (this.isLoading) return;
-                this.isLoading = true;
+   async loadData() {
+       if (this.isLoading) return;
+       this.isLoading = true;
 
-                try {
-                    const response = await fetch('./assets/json/dialects.json');
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-                    const data = await response.json();
-                    this.dialects = data.dialects;
-                    console.log('데이터 로드 완료:', this.dialects);
-                    
-                    // 데이터 로드 후 랜덤 placeholder 설정
-                    setRandomPlaceholder();
-                } catch (error) {
-                    console.error('데이터 로드 실패:', error);
-                } finally {
-                    this.isLoading = false;
-                }
-            }
+       try {
+           const response = await fetch('./assets/json/dialects.json');
+           if (!response.ok) {
+               throw new Error(`HTTP error! status: ${response.status}`);
+           }
+           const data = await response.json();
+           this.dialects = data.dialects;
+           console.log('데이터 로드 완료:', this.dialects);
+           
+           setRandomPlaceholder();
+       } catch (error) {
+           console.error('데이터 로드 실패:', error);
+       } finally {
+           this.isLoading = false;
+       }
+   }
 
-            // 검색 함수
-            search(query) {
-                if (!query) return [];
-                query = query.toLowerCase();
-                return this.dialects.filter(dialect => 
-                    dialect.word.toLowerCase().includes(query) ||
-                    dialect.meaning.toLowerCase().includes(query)
-                );
-            }
+   search(query) {
+       if (!query) return [];
+       query = query.toLowerCase();
+       return this.dialects.filter(dialect => 
+           dialect.word.toLowerCase().includes(query) ||
+           dialect.meaning.toLowerCase().includes(query)
+       );
+   }
 
-            // 데이터 저장
-            saveData() {
-                localStorage.setItem('dialectData', JSON.stringify(this.dialects));
-            }
+   saveData() {
+       localStorage.setItem('dialectData', JSON.stringify(this.dialects));
+   }
 
-            // 데이터 내보내기
-            exportData() {
-                const dataStr = JSON.stringify({ dialects: this.dialects }, null, 2);
-                const blob = new Blob([dataStr], { type: 'application/json' });
-                const url = URL.createObjectURL(blob);
-                
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = 'dialects_backup.json';
-                a.click();
-                
-                URL.revokeObjectURL(url);
-            }
-        }
+   exportData() {
+       const dataStr = JSON.stringify({ dialects: this.dialects }, null, 2);
+       const blob = new Blob([dataStr], { type: 'application/json' });
+       const url = URL.createObjectURL(blob);
+       
+       const a = document.createElement('a');
+       a.href = url;
+       a.download = 'dialects_backup.json';
+       a.click();
+       
+       URL.revokeObjectURL(url);
+   }
+}
 
-        const dialectManager = new DialectManager();
+const dialectManager = new DialectManager();
 
-        async function performSearch(type = 'initial') {
-            if (dialectManager.dialects.length === 0) {
-                await dialectManager.loadData();
-            }
-            const searchTerm = type === 'main' 
-                ? document.getElementById('mainSearchInput').value
-                : document.getElementById('searchInput').value;
+async function performSearch(type = 'initial') {
+   if (dialectManager.dialects.length === 0) {
+       await dialectManager.loadData();
+   }
+   const searchTerm = type === 'main' 
+       ? document.getElementById('mainSearchInput').value
+       : document.getElementById('searchInput').value;
 
-            if (type === 'initial') {
-                // 초기 검색창 숨기기
-                document.getElementById('initialView').classList.add('move-up');
-                document.getElementById('header').style.display = 'block';
-                document.getElementById('mainContent').style.display = 'block';
-                document.getElementById('mainSearchInput').value = searchTerm;
-                
-                setTimeout(() => {
-                    document.getElementById('header').classList.add('visible');
-                    document.getElementById('dictionaryContent').classList.add('visible');
-                    setTimeout(() => {
-                        document.getElementById('initialView').style.display = 'none';
-                    }, 500);
-                }, 300);
-            }
+   if (type === 'initial') {
+       document.getElementById('initialView').classList.add('move-up');
+       document.getElementById('header').style.display = 'block';
+       document.getElementById('mainContent').style.display = 'block';
+       document.getElementById('mainSearchInput').value = searchTerm;
+       
+       setTimeout(() => {
+           document.getElementById('header').classList.add('visible');
+           document.getElementById('dictionaryContent').classList.add('visible');
+           setTimeout(() => {
+               document.getElementById('initialView').style.display = 'none';
+           }, 500);
+       }, 300);
+   }
 
-            const content = document.getElementById('dictionaryContent');
-    
-            if (!searchTerm) {
-                content.innerHTML = '<div class="initial-message">검색어를 입력해주세요.</div>';
-                return;
-            }
+   const content = document.getElementById('dictionaryContent');
 
-            // 데이터가 아직 로드되지 않았다면 기다립니다
-            if (dialectManager.dialects.length === 0) {
-                await dialectManager.loadData();
-            }
+   if (!searchTerm) {
+       content.innerHTML = '<div class="initial-message">검색어를 입력해주세요.</div>';
+       return;
+   }
 
-            const filteredData = dialectManager.search(searchTerm);
+   if (dialectManager.dialects.length === 0) {
+       await dialectManager.loadData();
+   }
 
-            if (filteredData.length === 0) {
-                content.innerHTML = '<div class="search-result-header">검색 결과가 없습니다.</div>';
-                return;
-            }
+   const filteredData = dialectManager.search(searchTerm);
 
-            content.innerHTML = `
-                <div class="search-result-header">
-                    '<strong>${searchTerm}</strong>' 검색 결과 (<strong>${filteredData.length}</strong>건)
-                </div>
-            `;
+   if (filteredData.length === 0) {
+       content.innerHTML = '<div class="search-result-header">검색 결과가 없습니다.</div>';
+       return;
+   }
 
-            filteredData.forEach(dialect => {
-                const entry = document.createElement('div');
-                entry.className = 'word-entry';
-                entry.innerHTML = `
-                    <div class="word-header">
-                        <span class="word-title">${dialect.word}</span>
-                        <span class="word-class">「${dialect.wordClass}」</span>
-                        <span class="word-ipa">${dialect.ipa}</span>
-                        <button class="sound-button" onclick="event.stopPropagation(); playSound('${dialect.audio}', this)">
-                            <i class="fas fa-volume-up"></i>
-                        </button>
-                    </div>
-                    <div class="word-content">
-                        <div class="word-meaning">${dialect.meaning}</div>
-                        <div class="word-example">${dialect.example}</div>
-                        <div class="word-video">
-                            <div class="video-title">원본 영상</div>
-                            <video controls>
-                                <source src="${dialect.video}" type="video/mp4">
-                                <p>브라우저가 비디오 재생을 지원하지 않습니다.</p>
-                            </video>
-                            <div class="video-source">출처: ${dialect.source}</div>
-                        </div>
-                    </div>
-                `;
-            
-                // 클릭 이벤트 추가
-                entry.querySelector('.word-header').addEventListener('click', function() {
-                    entry.classList.toggle('expanded');
-                });
-        
-            content.appendChild(entry);
+   content.innerHTML = `
+       <div class="search-result-header">
+           '<strong>${searchTerm}</strong>' 검색 결과 (<strong>${filteredData.length}</strong>건)
+       </div>
+   `;
 
-            const copyright = document.createElement('div');
-            copyright.className = 'copyright-notice';
-            copyright.innerHTML = `
-                Data by NewJeans<br>
-                Made By One of Bunnies(freelancerbini@gmail.com)<br>
-                © 2024 팜국어대사전. All rights reserved.
-            `;
-            content.appendChild(copyright);
-            });
-            setRandomPlaceholder();
-        }
+   filteredData.forEach(dialect => {
+       const entry = document.createElement('div');
+       entry.className = 'word-entry';
+       entry.innerHTML = `
+           <div class="word-header">
+               <span class="word-title">${dialect.word}</span>
+               <span class="word-class">「${dialect.wordClass}」</span>
+               <span class="word-ipa">${dialect.ipa}</span>
+               <button class="sound-button" onclick="event.stopPropagation(); playSound('${dialect.audio}', this)">
+                   <i class="fas fa-volume-up"></i>
+               </button>
+           </div>
+           <div class="word-content">
+               <div class="word-meaning">${dialect.meaning}</div>
+               <div class="word-example">${dialect.example}</div>
+               <div class="word-video">
+                   <div class="video-title">원본 영상</div>
+                   <video controls>
+                       <source src="${dialect.video}" type="video/mp4">
+                       <p>브라우저가 비디오 재생을 지원하지 않습니다.</p>
+                   </video>
+                   <div class="video-source">출처: ${dialect.source}</div>
+               </div>
+           </div>
+       `;
+   
+       entry.querySelector('.word-header').addEventListener('click', function() {
+           entry.classList.toggle('expanded');
+       });
 
-        // 자동완성 함수
-        async function showAutocomplete(inputId, listId) {
-            // 데이터가 로드될 때까지 대기
-            if (dialectManager.dialects.length === 0) {
-                await dialectManager.loadData();
-            }
+       content.appendChild(entry);
 
-            const input = document.getElementById(inputId);
-            const list = document.getElementById(listId);
-            const value = input.value.toLowerCase();
+       const copyright = document.createElement('div');
+       copyright.className = 'copyright-notice';
+       copyright.innerHTML = `
+           Data by NewJeans<br>
+           Made By Bini(freelancerbini@gmail.com)<br>
+           © 2024 팜국어대사전. All rights reserved.
+       `;
+       content.appendChild(copyright);
+   });
+   setRandomPlaceholder();
+}
 
-            if (!value) {
-                list.style.display = 'none';
-                return;
-            }
+async function showAutocomplete(inputId, listId) {
+   if (dialectManager.dialects.length === 0) {
+       await dialectManager.loadData();
+   }
 
-            const matches = dialectManager.dialects.filter(item => 
-                item.word.toLowerCase().includes(value)
-            );
+   const input = document.getElementById(inputId);
+   const list = document.getElementById(listId);
+   const value = input.value.toLowerCase();
 
-            if (matches.length > 0) {
-                list.innerHTML = '';
-                matches.forEach(item => {
-                    const div = document.createElement('div');
-                    div.className = 'autocomplete-item';
-                    div.textContent = item.word;
-                    div.onclick = () => {
-                        input.value = item.word;
-                        list.style.display = 'none';
-                        performSearch(inputId === 'mainSearchInput' ? 'main' : 'initial');
-                    };
-                    list.appendChild(div);
-                });
-                list.style.display = 'block';
-            } else {
-                list.style.display = 'none';
-            }
-        }
+   if (!value) {
+       list.style.display = 'none';
+       return;
+   }
 
-        window.onload = async function() {
-            await dialectManager.loadData();
-            console.log('데이터 로드 완료:', dialectManager.dialects);
-        };
+   const matches = dialectManager.dialects.filter(item => 
+       item.word.toLowerCase().includes(value)
+   );
 
-        // 모달 관련 함수
-        function showRequestModal() {
-            const modal = document.getElementById('requestModal');
-            modal.style.display = 'block';
-            setTimeout(() => modal.classList.add('show'), 10);
-        }
+   if (matches.length > 0) {
+       list.innerHTML = '';
+       matches.forEach(item => {
+           const div = document.createElement('div');
+           div.className = 'autocomplete-item';
+           div.textContent = item.word;
+           div.onclick = () => {
+               input.value = item.word;
+               list.style.display = 'none';
+               performSearch(inputId === 'mainSearchInput' ? 'main' : 'initial');
+           };
+           list.appendChild(div);
+       });
+       list.style.display = 'block';
+   } else {
+       list.style.display = 'none';
+   }
+}
 
-        function closeRequestModal() {
-            const modal = document.getElementById('requestModal');
-            modal.classList.remove('show');
-            setTimeout(() => modal.style.display = 'none', 300);
-        }
+window.onload = async function() {
+   await dialectManager.loadData();
+   console.log('데이터 로드 완료:', dialectManager.dialects);
+};
 
-        // 이벤트 리스너 추가
-        document.addEventListener('DOMContentLoaded', () => {
-            // 모달 닫기 버튼
-            document.querySelector('.close-modal').addEventListener('click', closeRequestModal);
-            
-            // 모달 외부 클릭시 닫기
-            document.getElementById('requestModal').addEventListener('click', (e) => {
-                if (e.target === document.getElementById('requestModal')) {
-                    closeRequestModal();
-                }
-            });
-        });
+function showRequestModal() {
+   const modal = document.getElementById('requestModal');
+   modal.style.display = 'block';
+   setTimeout(() => modal.classList.add('show'), 10);
+}
 
-        // 버튼 클릭 이벤트 수정
-        document.querySelector('.request-button').onclick = showRequestModal;
+function closeRequestModal() {
+   const modal = document.getElementById('requestModal');
+   modal.classList.remove('show');
+   setTimeout(() => modal.style.display = 'none', 300);
+}
 
-        function addExportImportButtons() {
-            const header = document.querySelector('.header-content');
-            
-            // 내보내기 버튼
-            const exportBtn = document.createElement('button');
-            exportBtn.innerHTML = '<i class="fas fa-download"></i> 내보내기';
-            exportBtn.onclick = () => dialectManager.exportData();
-            
-            // 가져오기 버튼
-            const importBtn = document.createElement('button');
-            importBtn.innerHTML = '<i class="fas fa-upload"></i> 가져오기';
-            const fileInput = document.createElement('input');
-            fileInput.type = 'file';
-            fileInput.accept = '.json';
-            fileInput.style.display = 'none';
-            fileInput.onchange = (e) => {
-                if (e.target.files.length > 0) {
-                    dialectManager.importData(e.target.files[0])
-                        .then(() => alert('데이터를 성공적으로 가져왔습니다.'))
-                        .catch(error => alert('데이터 가져오기 실패: ' + error));
-                }
-            };
-            importBtn.onclick = () => fileInput.click();
-            
-            header.appendChild(exportBtn);
-            header.appendChild(importBtn);
-            header.appendChild(fileInput);
-        }
+document.addEventListener('DOMContentLoaded', () => {
+   document.querySelector('.close-modal').addEventListener('click', closeRequestModal);
+   
+   document.getElementById('requestModal').addEventListener('click', (e) => {
+       if (e.target === document.getElementById('requestModal')) {
+           closeRequestModal();
+       }
+   });
+});
 
-        // 음성 재생 함수
-        function playSound(audioPath, button) {
-            const icon = button.querySelector('i');
-            icon.className = 'fas fa-volume-high'; // 재생 시작 시 아이콘 변경
-            
-            const audio = new Audio(audioPath);
-            
-            audio.onended = function() {
-                icon.className = 'fas fa-volume-up'; // 재생 완료 시 아이콘 원복
-            };
-            
-            audio.play().catch(error => {
-                console.log('오디오 재생에 실패했습니다:', error);
-                icon.className = 'fas fa-volume-up'; // 에러 시 아이콘 원복
-            });
-        }
+document.querySelector('.request-button').onclick = showRequestModal;
 
-        // 자동완성 이벤트 리스너
-        ['searchInput', 'mainSearchInput'].forEach(id => {
-            document.getElementById(id).addEventListener('input', () => {
-                showAutocomplete(
-                    id,
-                    id === 'searchInput' ? 'autocompleteList' : 'mainAutocompleteList'
-                );
-            });
-        });
+function addExportImportButtons() {
+   const header = document.querySelector('.header-content');
+   
+   const exportBtn = document.createElement('button');
+   exportBtn.innerHTML = '<i class="fas fa-download"></i> 내보내기';
+   exportBtn.onclick = () => dialectManager.exportData();
+   
+   const importBtn = document.createElement('button');
+   importBtn.innerHTML = '<i class="fas fa-upload"></i> 가져오기';
+   const fileInput = document.createElement('input');
+   fileInput.type = 'file';
+   fileInput.accept = '.json';
+   fileInput.style.display = 'none';
+   fileInput.onchange = (e) => {
+       if (e.target.files.length > 0) {
+           dialectManager.importData(e.target.files[0])
+               .then(() => alert('데이터를 성공적으로 가져왔습니다.'))
+               .catch(error => alert('데이터 가져오기 실패: ' + error));
+       }
+   };
+   importBtn.onclick = () => fileInput.click();
+   
+   header.appendChild(exportBtn);
+   header.appendChild(importBtn);
+   header.appendChild(fileInput);
+}
 
-        // 엔터 키 이벤트 리스너
-        ['searchInput', 'mainSearchInput'].forEach(id => {
-            document.getElementById(id).addEventListener('keyup', function(event) {
-                if (event.key === 'Enter') {
-                    performSearch(id === 'mainSearchInput' ? 'main' : 'initial');
-                }
-            });
-        });
+function playSound(audioPath, button) {
+   const icon = button.querySelector('i');
+   icon.className = 'fas fa-volume-high';
+   
+   const audio = new Audio(audioPath);
+   
+   audio.onended = function() {
+       icon.className = 'fas fa-volume-up';
+   };
+   
+   audio.play().catch(error => {
+       console.log('오디오 재생에 실패했습니다:', error);
+       icon.className = 'fas fa-volume-up';
+   });
+}
 
-        // 클릭 시 자동완성 숨기기
-        document.addEventListener('click', function(e) {
-            if (!e.target.closest('.search-box')) {
-                document.querySelectorAll('.autocomplete-items').forEach(list => {
-                    list.style.display = 'none';
-                });
-            }
-        });
+['searchInput', 'mainSearchInput'].forEach(id => {
+   document.getElementById(id).addEventListener('input', () => {
+       showAutocomplete(
+           id,
+           id === 'searchInput' ? 'autocompleteList' : 'mainAutocompleteList'
+       );
+   });
+});
 
-        document.addEventListener('DOMContentLoaded', () => {
-            dialectManager.loadData();
-        });
+['searchInput', 'mainSearchInput'].forEach(id => {
+   document.getElementById(id).addEventListener('keyup', function(event) {
+       if (event.key === 'Enter') {
+           performSearch(id === 'mainSearchInput' ? 'main' : 'initial');
+       }
+   });
+});
 
-        function setRandomPlaceholder() {
-            if (dialectManager.dialects.length > 0) {
-                const randomIndex = Math.floor(Math.random() * dialectManager.dialects.length);
-                const randomWord = dialectManager.dialects[randomIndex].word;
-                const placeholder = `'${randomWord}' 검색하기`;
-                
-                document.getElementById('searchInput').placeholder = placeholder;
-                document.getElementById('mainSearchInput').placeholder = placeholder;
-            }
-        }
+document.addEventListener('click', function(e) {
+   if (!e.target.closest('.search-box')) {
+       document.querySelectorAll('.autocomplete-items').forEach(list => {
+           list.style.display = 'none';
+       });
+   }
+});
 
-        // 초기 로드 시에도 실행
-        document.addEventListener('DOMContentLoaded', () => {
-            dialectManager.loadData().then(() => {
-                setRandomPlaceholder();
-                // 1초마다 변경 시작
-                setInterval(setRandomPlaceholder, 1500);
-            });
-        });
-        
-        document.addEventListener('DOMContentLoaded', () => {
-            dialectManager.loadData().then(() => {
-                setRandomPlaceholder();
-                // 1초마다 변경 시작
-                setInterval(setRandomPlaceholder, 1500);
-                // 페이지 로드 시 바로 베타 공지 모달 표시
-                showIntroModal();
-            });
-        });
-        
-        function showIntroModal() {
-            const modal = document.getElementById('introModal');
-            modal.style.display = 'block';
-            // 첫 진입 시에만 페이드 인 효과
-            setTimeout(() => modal.classList.add('show'), 10);
-        }
-        
-        function showBetaModal() {
-            // 첫 번째 모달 즉시 숨기기
-            const introModal = document.getElementById('introModal');
-            introModal.style.display = 'none';
-            
-            // 두 번째 모달 즉시 표시
-            const betaModal = document.getElementById('betaNoticeModal');
-            betaModal.style.display = 'block';
-            betaModal.classList.add('show');
-        }
-        
-        function closeBetaModal() {
-            const modal = document.getElementById('betaNoticeModal');
-            // 최종 종료 시에만 페이드 아웃 효과
-            modal.classList.remove('show');
-            setTimeout(() => modal.style.display = 'none', 300);
-        }
+document.addEventListener('DOMContentLoaded', () => {
+   dialectManager.loadData();
+});
+
+function setRandomPlaceholder() {
+   if (dialectManager.dialects.length > 0) {
+       const randomIndex = Math.floor(Math.random() * dialectManager.dialects.length);
+       const randomWord = dialectManager.dialects[randomIndex].word;
+       const placeholder = `'${randomWord}' 검색하기`;
+       
+       document.getElementById('searchInput').placeholder = placeholder;
+       document.getElementById('mainSearchInput').placeholder = placeholder;
+   }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+   dialectManager.loadData().then(() => {
+       setRandomPlaceholder();
+       setInterval(setRandomPlaceholder, 1500);
+   });
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+   dialectManager.loadData().then(() => {
+       setRandomPlaceholder();
+       setInterval(setRandomPlaceholder, 1500);
+       showIntroModal();
+   });
+});
+
+function showIntroModal() {
+   const modal = document.getElementById('introModal');
+   modal.style.display = 'block';
+   setTimeout(() => modal.classList.add('show'), 10);
+}
+
+function showBetaModal() {
+   const introModal = document.getElementById('introModal');
+   introModal.style.display = 'none';
+   
+   const betaModal = document.getElementById('betaNoticeModal');
+   betaModal.style.display = 'block';
+   betaModal.classList.add('show');
+}
+
+function closeBetaModal() {
+   const modal = document.getElementById('betaNoticeModal');
+   modal.classList.remove('show');
+   setTimeout(() => modal.style.display = 'none', 300);
+}
