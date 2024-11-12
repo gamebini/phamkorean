@@ -1,7 +1,7 @@
 {
   "name": "팜국어대사전",
   "short_name": "팜국어",
-  "description": "뉴진스 하니의 특별한 한국어 표현 모음",
+  "description": "뉴진스 하니의 팜국어 대사전",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#4B3F72",
