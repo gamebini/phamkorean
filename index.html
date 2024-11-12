@@ -924,6 +924,35 @@
             </div>
         </div>
     </header>
+    <div id="betaNoticeModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>베타 버전 안내</h2>
+                <span class="close-modal" onclick="closeBetaModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div style="text-align: center; margin-bottom: 1.5rem;">
+                    <i class="fas fa-flask" style="font-size: 3rem; color: #4B3F72; margin-bottom: 1rem;"></i>
+                    <h3 style="color: #4B3F72; margin-bottom: 0.5rem;">팜국어대사전 베타 버전</h3>
+                </div>
+                <p style="margin-bottom: 1rem; line-height: 1.6;">
+                    현재 팜국어대사전은 베타 서비스 중입니다. 아래와 같은 제한사항이 있을 수 있습니다:
+                </p>
+                <ul style="list-style-type: none; padding: 1rem; background: #f8f9fa; border-radius: 10px; margin-bottom: 1.5rem;">
+                    <li style="margin-bottom: 0.5rem;"><i class="fas fa-info-circle" style="color: #4B3F72; margin-right: 0.5rem;"></i>일부 데이터가 누락되어 있을 수 있습니다</li>
+                    <li style="margin-bottom: 0.5rem;"><i class="fas fa-info-circle" style="color: #4B3F72; margin-right: 0.5rem;"></i>검색 결과가 부정확할 수 있습니다</li>
+                    <li style="margin-bottom: 0.5rem;"><i class="fas fa-info-circle" style="color: #4B3F72; margin-right: 0.5rem;"></i>영상 및 음성이 제한적일 수 있습니다</li>
+                    <li><i class="fas fa-info-circle" style="color: #4B3F72; margin-right: 0.5rem;"></i>일부 기능이 완성되지 않았을 수 있습니다</li>
+                </ul>
+                <p style="margin-bottom: 1.5rem; color: #666;">
+                    더 나은 서비스를 위해 지속적으로 업데이트할 예정입니다. 불편사항이나 개선사항이 있다면 '문의하기' 버튼을 통해 알려주시면 감사하겠습니다.
+                </p>
+                <button onclick="closeBetaModal()" style="width: 100%; padding: 1rem; background: #4B3F72; color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; transition: opacity 0.2s;">
+                    확인했습니다
+                </button>
+            </div>
+        </div>
+    </div>
     <div id="requestModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -1283,6 +1312,28 @@
                 setInterval(setRandomPlaceholder, 1500);
             });
         });
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            dialectManager.loadData().then(() => {
+                setRandomPlaceholder();
+                // 1초마다 변경 시작
+                setInterval(setRandomPlaceholder, 1500);
+                // 페이지 로드 시 바로 베타 공지 모달 표시
+                showBetaModal();
+            });
+        });
+        
+        function showBetaModal() {
+            const modal = document.getElementById('betaNoticeModal');
+            modal.style.display = 'block';
+            setTimeout(() => modal.classList.add('show'), 10);
+        }
+        
+        function closeBetaModal() {
+            const modal = document.getElementById('betaNoticeModal');
+            modal.classList.remove('show');
+            setTimeout(() => modal.style.display = 'none', 300);
+        }
     </script>
 </body>
 </html>
