@@ -1358,24 +1358,24 @@
         function showIntroModal() {
             const modal = document.getElementById('introModal');
             modal.style.display = 'block';
+            // 첫 진입 시에만 페이드 인 효과
             setTimeout(() => modal.classList.add('show'), 10);
         }
         
         function showBetaModal() {
-            // 첫 번째 모달 닫기
+            // 첫 번째 모달 즉시 숨기기
             const introModal = document.getElementById('introModal');
-            introModal.classList.remove('show');
-            setTimeout(() => {
-                introModal.style.display = 'none';
-                // 두 번째 모달 열기
-                const betaModal = document.getElementById('betaNoticeModal');
-                betaModal.style.display = 'block';
-                setTimeout(() => betaModal.classList.add('show'), 10);
-            }, 300);
+            introModal.style.display = 'none';
+            
+            // 두 번째 모달 즉시 표시
+            const betaModal = document.getElementById('betaNoticeModal');
+            betaModal.style.display = 'block';
+            betaModal.classList.add('show');
         }
         
         function closeBetaModal() {
             const modal = document.getElementById('betaNoticeModal');
+            // 최종 종료 시에만 페이드 아웃 효과
             modal.classList.remove('show');
             setTimeout(() => modal.style.display = 'none', 300);
         }
