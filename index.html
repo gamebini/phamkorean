@@ -1246,6 +1246,14 @@
                 'search_term': searchTerm,
                 'search_type': type  // 'initial' 또는 'main'
             });
+
+            if (filteredData.length > 0) {
+                gtag('event', 'conversion', {
+                    'send_to': 'G-D37XS581FJ',
+                    'event_category': 'engagement',
+                    'event_label': '단어_검색_완료'
+                });
+            }
         }
 
         function trackVideoPlay(videoTitle) {
@@ -1336,6 +1344,34 @@
                 if (e.target === document.getElementById('requestModal')) {
                     closeRequestModal();
                 }
+            });
+
+            const isNewUser = !localStorage.getItem('returning_user');
+            if (isNewUser) {
+                localStorage.setItem('returning_user', 'true');
+            }
+            
+            // 사용자 유형 추적
+            gtag('event', 'user_type', {
+                'platform': 'web',
+                'is_new_user': isNewUser,
+                'device_type': /Android|iPhone|iPad|iPod/i.test(navigator.userAgent) ? 'mobile' : 'desktop'
+            });
+        
+            // 스크롤 깊이 측정
+            let maxScroll = 0;
+            window.addEventListener('scroll', () => {
+                const scrollPercent = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+                maxScroll = Math.max(maxScroll, scrollPercent);
+            });
+        
+            // 페이지 떠날 때 체류시간과 스크롤 깊이 전송
+            window.addEventListener('beforeunload', () => {
+                const timeOnPage = Math.round((Date.now() - window.performance.timing.navigationStart) / 1000);
+                gtag('event', 'session_quality', {
+                    'time_on_page': timeOnPage,
+                    'scroll_depth': Math.round(maxScroll)
+                });
             });
         });
 
