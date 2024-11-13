@@ -62,7 +62,13 @@
       }
     }
     </script>
-    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-D37XS581FJ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-D37XS581FJ');
+    </script>
     <title>팜국어대사전(Beta)</title>
     <link rel="icon" type="image/png" href="./assets/img/favicon.png">
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
@@ -1246,6 +1252,18 @@
                 'video_title': videoTitle
             });
         }
+
+        document.querySelectorAll('.word-header').forEach(header => {
+            header.addEventListener('click', function() {
+                const wordTitle = this.querySelector('.word-title').textContent;
+                const wordClass = this.querySelector('.word-class').textContent;
+                
+                gtag('event', 'word_view', {
+                    'word_title': wordTitle,
+                    'word_class': wordClass
+                });
+            });
+        });
         
         // 자동완성 함수
         async function showAutocomplete(inputId, listId) {
@@ -1367,6 +1385,9 @@
             gtag('event', 'audio_play', {
                 'audio_path': audioPath
             });
+            gtag('event', 'pronunciation_play', {
+                'word': button.closest('.word-header').querySelector('.word-title').textContent
+            });
         }
 
         // 자동완성 이벤트 리스너
@@ -1457,11 +1478,4 @@
         }
     </script>
 </body>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-D37XS581FJ"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-D37XS581FJ');
-</script>
 </html>
