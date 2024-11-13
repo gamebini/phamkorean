@@ -5,7 +5,7 @@ Allow: /assets/
 Disallow: /assets/json/
 
 # Sitemap
-Sitemap: https://phamkorean.com/sitemap.xml
+Sitemap: https://phamkorean.kro.kr/sitemap.xml
 
 # 크롤링 제한
 Crawl-delay: 10
