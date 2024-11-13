@@ -1243,7 +1243,8 @@
             });
             setRandomPlaceholder();
             gtag('event', 'search', {
-                'search_term': searchTerm
+                'search_term': searchTerm,
+                'search_type': type  // 'initial' 또는 'main'
             });
         }
 
@@ -1314,6 +1315,9 @@
             const modal = document.getElementById('requestModal');
             modal.style.display = 'block';
             setTimeout(() => modal.classList.add('show'), 10);
+            gtag('event', 'modal_open', {
+                'modal_type': 'request'
+            });
         }
 
         function closeRequestModal() {
@@ -1457,6 +1461,9 @@
             modal.style.display = 'block';
             // 첫 진입 시에만 페이드 인 효과
             setTimeout(() => modal.classList.add('show'), 10);
+            gtag('event', 'modal_open', {
+                'modal_type': 'intro'
+            });
         }
         
         function showBetaModal() {
@@ -1468,6 +1475,9 @@
             const betaModal = document.getElementById('betaNoticeModal');
             betaModal.style.display = 'block';
             betaModal.classList.add('show');
+            gtag('event', 'modal_open', {
+                'modal_type': 'beta'
+            });
         }
         
         function closeBetaModal() {
@@ -1476,6 +1486,15 @@
             modal.classList.remove('show');
             setTimeout(() => modal.style.display = 'none', 300);
         }
+
+        document.querySelectorAll('video').forEach(video => {
+            video.addEventListener('play', function() {
+                const wordTitle = this.closest('.word-entry').querySelector('.word-title').textContent;
+                gtag('event', 'video_play', {
+                    'word_title': wordTitle
+                });
+            });
+        });
     </script>
 </body>
 </html>
