@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+   <title>팜국어대사전 | 404</title>
+
+   <!-- GA4 태그 -->
+   <script async src="https://www.googletagmanager.com/gtag/js?id=G-D37XS581FJ"></script>
+   <script>
+     window.dataLayer = window.dataLayer || [];
+     function gtag(){dataLayer.push(arguments);}
+     gtag('js', new Date());
+     gtag('config', 'G-D37XS581FJ');
+   </script>
+
+   <style>
+       body {
+           font-family: 'Noto Sans KR', sans-serif;
+           margin: 0;
+           padding: 0;
+           min-height: 100vh;
+           display: flex;
+           flex-direction: column;
+           align-items: center;
+           justify-content: center;
+           background-image: url('./assets/img/background.png');
+           background-size: cover;
+           background-position: center;
+           background-attachment: fixed;
+           position: relative;
+       }
+
+       /* 어두운 오버레이 */
+       body::before {
+           content: '';
+           position: absolute;
+           top: 0;
+           left: 0;
+           right: 0;
+           bottom: 0;
+           background-color: rgba(0, 0, 0, 0.5);
+           z-index: 1;
+       }
+
+       .error-container {
+           position: relative;
+           z-index: 2;
+           text-align: center;
+           padding: 2rem;
+           background: rgba(255, 255, 255, 0.95);
+           border-radius: 20px;
+           box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+           max-width: 500px;
+           width: 90%;
+           margin: 1rem;
+       }
+
+       h1 {
+           color: #4B3F72;
+           font-size: 2rem;
+           margin-bottom: 1rem;
+       }
+
+       p {
+           color: #666;
+           font-size: 1.1rem;
+           margin-bottom: 2rem;
+           line-height: 1.6;
+       }
+
+       .home-button {
+           display: inline-block;
+           padding: 1rem 2rem;
+           background: linear-gradient(to right, #4B3F72, #1F3A8C);
+           color: white;
+           text-decoration: none;
+           border-radius: 50px;
+           font-weight: bold;
+           transition: all 0.3s ease;
+           margin-top: 1rem;
+       }
+
+       .home-button:hover {
+           transform: translateY(-2px);
+           box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+       }
+
+       .error-code {
+           font-size: 5rem;
+           font-weight: bold;
+           color: #4B3F72;
+           margin: 0;
+           line-height: 1;
+           opacity: 0.2;
+           position: absolute;
+           top: 50%;
+           left: 50%;
+           transform: translate(-50%, -50%);
+           z-index: -1;
+       }
+
+       .message {
+           position: relative;
+           z-index: 1;
+           padding: 2rem 0;
+       }
+
+       @media (max-width: 768px) {
+           h1 {
+               font-size: 1.5rem;
+           }
+
+           p {
+               font-size: 1rem;
+           }
+
+           .error-code {
+               font-size: 4rem;
+           }
+
+           .error-container {
+               padding: 1.5rem;
+           }
+       }
+   </style>
+</head>
+<body>
+   <div class="error-container">
+       <div class="error-code">404</div>
+       <div class="message">
+           <h1><strong>페이지를 찾을 수 없습니다</strong></h1>
+           <p>찾으시려는 페이지가 삭제되었거나 이동되었을 수 있습니다.<br>
+           아래 버튼을 클릭하여 메인 페이지로 이동하세요.</p>
+           <a href="/" class="home-button" onclick="gtag('event', 'click', {'event_category': '404', 'event_label': 'home_button'});">
+               메인으로 돌아가기
+           </a>
+       </div>
+   </div>
+</body>
+</html>
