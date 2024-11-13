@@ -1373,6 +1373,58 @@
                     'scroll_depth': Math.round(maxScroll)
                 });
             });
+
+            document.addEventListener('DOMContentLoaded', () => {
+                // 1. 모달 관련 코드
+                initModalHandlers();
+                
+                // 2. 사용자 추적 코드
+                initUserTracking();
+                
+                // 3. 스크롤 추적 코드
+                initScrollTracking();
+            });
+            
+            // 모달 핸들러 초기화
+            function initModalHandlers() {
+                document.querySelector('.close-modal').addEventListener('click', closeRequestModal);
+                document.getElementById('requestModal').addEventListener('click', (e) => {
+                    if (e.target === document.getElementById('requestModal')) {
+                        closeRequestModal();
+                    }
+                });
+            }
+            
+            // 사용자 추적 초기화
+            function initUserTracking() {
+                const isNewUser = !localStorage.getItem('returning_user');
+                if (isNewUser) {
+                    localStorage.setItem('returning_user', 'true');
+                }
+                
+                gtag('event', 'user_type', {
+                    'platform': 'web',
+                    'is_new_user': isNewUser,
+                    'device_type': /Android|iPhone|iPad|iPod/i.test(navigator.userAgent) ? 'mobile' : 'desktop'
+                });
+            }
+            
+            // 스크롤 추적 초기화
+            function initScrollTracking() {
+                let maxScroll = 0;
+                window.addEventListener('scroll', () => {
+                    const scrollPercent = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+                    maxScroll = Math.max(maxScroll, scrollPercent);
+                });
+            
+                window.addEventListener('beforeunload', () => {
+                    const timeOnPage = Math.round((Date.now() - window.performance.timing.navigationStart) / 1000);
+                    gtag('event', 'session_quality', {
+                        'time_on_page': timeOnPage,
+                        'scroll_depth': Math.round(maxScroll)
+                    });
+                });
+            }
         });
 
         // 버튼 클릭 이벤트 수정
