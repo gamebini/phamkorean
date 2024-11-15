@@ -821,10 +821,9 @@
             .buttons-container {
                 display: flex;
                 width: 100%;
-                gap: 0.8rem;
+                gap: 0; /* 버튼 사이 간격 제거 */
             }
         
-            /* 검색 및 문의하기 버튼 */
             .search-button,
             .request-button {
                 flex: 1;
@@ -835,10 +834,37 @@
                 justify-content: center;
                 align-items: center;
                 gap: 0.5rem;
-                border-radius: 22px;
                 white-space: nowrap;
             }
+
+            .search-button {
+                border-top-right-radius: 0;
+                border-bottom-right-radius: 0;
+                border-top-left-radius: 22px;
+                border-bottom-left-radius: 22px;
+            }
         
+            /* 문의하기 버튼 둥근 모서리 수정 */
+            .request-button {
+                margin-left: 0;
+                border-top-left-radius: 0;
+                border-bottom-left-radius: 0;
+                border-top-right-radius: 22px;
+                border-bottom-right-radius: 22px;
+            }
+        
+            /* 버튼 호버 효과 */
+            .search-button:hover,
+            .request-button:hover {
+                transform: none; /* 모바일에서는 호버 효과 제거 */
+                box-shadow: none;
+            }
+
+            .search-button:active,
+            .request-button:active {
+                background-color: #f0f0f0;
+            }
+            
             /* 초기 검색 화면 */
             .initial-state {
                 padding: 1rem;
@@ -865,10 +891,14 @@
         
             .initial-state .search-box input {
                 width: 100%;
-                height: 44px;
-                font-size: 16px;
-                padding: 0 1.2rem;
-                border-radius: 22px;
+                height: auto; /* 44px에서 auto로 변경 */
+                font-size: 1.2rem;
+                padding: 1rem 1.5rem; /* 원래 패딩으로 복원 */
+                border-radius: 50px;
+                background-color: rgba(255, 255, 255, 0.9);
+                border: none;
+                color: #333;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             }
         
             .initial-state .search-box button {
