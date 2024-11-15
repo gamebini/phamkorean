@@ -821,7 +821,8 @@
             .buttons-container {
                 display: flex;
                 width: 100%;
-                gap: 0; /* 버튼 사이 간격 제거 */
+                gap: 0;
+                flex-direction: row-reverse; /* 버튼 순서 반전 */
             }
         
             .search-button,
@@ -837,16 +838,16 @@
                 white-space: nowrap;
             }
 
-            .search-button {
-                border-top-right-radius: 0;
-                border-bottom-right-radius: 0;
-                border-top-left-radius: 22px;
-                border-bottom-left-radius: 22px;
-            }
-        
-            /* 문의하기 버튼 둥근 모서리 수정 */
             .request-button {
                 margin-left: 0;
+                border-top-left-radius: 22px;
+                border-bottom-left-radius: 22px;
+                border-top-right-radius: 0;
+                border-bottom-right-radius: 0;
+            }
+        
+            /* 검색 버튼 (이제 오른쪽에 위치) */
+            .search-button {
                 border-top-left-radius: 0;
                 border-bottom-left-radius: 0;
                 border-top-right-radius: 22px;
@@ -906,6 +907,9 @@
                 height: 44px;
                 font-size: 1rem;
                 border-radius: 22px;
+                display: flex;
+                justify-content: center;
+                align-items: center; /* 텍스트 수직 중앙 정렬 */
             }
         
             /* 자동완성 드롭다운 */
