@@ -800,8 +800,9 @@
             }
         
             .header-content .search-container {
-                width: 100%; /* 전체 너비로 변경 */
-                margin: 0; /* 마진 제거 */
+                width: calc(100% - 2rem); /* 전체 너비에서 좌우 패딩 제외 */
+                max-width: 130px; /* 최대 너비 지정 */
+                margin: 0 auto;
             }
         
             /* 검색창 스타일링 */
@@ -810,11 +811,8 @@
             }
         
             .header-content .search-box input {
-                width: 130%;
-                height: 44px;
-                padding: 0 1.2rem;
-                font-size: 16px;
-                border-radius: 22px;
+                width: 100%;
+                box-sizing: border-box; /* 패딩을 너비에 포함 */
             }
         
             /* 버튼 컨테이너 */
