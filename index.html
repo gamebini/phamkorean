@@ -40,6 +40,8 @@
     <meta property="discord:image" content="https://phamkorean.kro.kr/assets/img/favicon.png">
     <meta name="theme-color" content="#4B3F72">
 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
     <meta name="application-name" content="팜국어대사전">
     <meta name="apple-mobile-web-app-title" content="팜국어대사전">
     <meta property="og:site_name" content="팜국어대사전">
@@ -75,577 +77,95 @@
     <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
+        /* 기본 스타일 */
         :root {
-            --primary-color: #7BA5A5;
-            --border-color: #ddd;
-            --text-color: #333;
+          --primary-color: #4B3F72;
+          --background-color: #ffffff;
+          --text-color: #333333;
+          --border-radius: 20px;
+          --padding-mobile: 16px;
         }
         
+        /* 반응형 기본 설정 */
         * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+          box-sizing: border-box;
+          margin: 0;
+          padding: 0;
         }
-
+        
         body {
-            font-family: 'Noto Sans KR', sans-serif;
-            line-height: 1.6;
-            color: var(--text-color);
-            min-height: 100vh;
-            background-image: url('./assets/img/background.png');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;  /* 스크롤 시 배경 고정 */
-        }
-
-        .initial-state {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-image: url('./assets/img/background.png');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            transition: all 0.5s ease;
-            position: relative;
-        }
-
-        /* 어두운 오버레이 추가 */
-        .initial-state::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: rgba(0, 0, 0, 0.5); /* 어둡기 조절 가능 (0.5 = 50% 어둡게) */
-            z-index: 1;
-        }
-
-        /* 컨텐츠를 오버레이 위에 보이게 */
-        .initial-state .title,
-        .initial-state .subtitle,
-        .initial-state .search-container {
-            position: relative;
-            z-index: 2;
-            color: white; /* 텍스트 색상을 흰색으로 변경 */
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+          line-height: 1.6;
+          color: var(--text-color);
+          background-color: var(--background-color);
         }
         
-        /* 검색창 스타일 수정 */
-        .initial-state .search-box input {
-            font-size: 1.2rem;
-            padding: 1rem 1.5rem;
-            border-radius: 50px;
-            background-color: rgba(255, 255, 255, 0.9);
-            border: none;
-            color: #333;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-
-        /* 검색창 placeholder 색상 수정 */
-        .initial-state .search-box input::placeholder {
-            color: #666;
-        }
-
-        .initial-state.move-up {
-            opacity: 0;  /* translateY 제거하고 opacity만 사용 */
-            transition: opacity 0.5s ease;
-        }
-
-        .initial-state .title {
-            font-size: 3rem;
-            margin-bottom: 1.5rem;
-            text-align: center;
-        }
-
-        .initial-state .subtitle {
-            font-size: 1.3rem;
-            color: #fff;
-            margin-bottom: 3rem;
-            text-align: center;
-        }
-
-        header {
-            background: linear-gradient(to right, #4B3F72, #1F3A8C);  /* 이미지와 어울리는 그라데이션 */
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            background-color: var(--primary-color);
-            color: white;
-            padding: 1rem 2rem;
-            opacity: 0;
-            transform: translateY(-20px);
-            transition: all 0.5s ease;
-            width: 100%;
-        }
-
-        .header-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            padding: 0 1rem;  /* 패딩 추가 */
-            gap: 2rem; /* 추가 */
-            justify-content: space-between; /* 추가 */
-        }
-
-        .header-right {
-            display: flex;
-            align-items: center;
-            flex: 1;  /* 남은 공간 모두 차지 */
-            justify-content: flex-end;  /* 오른쪽 정렬 */
-            gap: 2rem;  /* 검색창과 버튼 사이 간격 */
-        }
-
-        .site-title {
-            font-size: 1.8rem;
-            font-weight: bold;
-        }
-
-        header.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .main-content {
-            max-width: 1200px;
-            margin: 2rem auto;
-            padding: 2rem;
-            background-color: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-        }
-
-        .search-result-header {
-            padding: 1.5rem 0;
-            margin-bottom: 2rem;
-            font-size: 1.2rem;
-            color: #4B3F72;
-            border-bottom: 2px solid rgba(75, 63, 114, 0.2);
-        }
-
-        .search-result-header strong {
-            color: #1F3A8C;
-            font-weight: 700;
+        /* 초기 화면 스타일 */
+        #initialView {
+          min-height: 100vh;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          padding: 20px;
         }
         
+        /* 검색 컨테이너 스타일 */
         .search-container {
-            max-width: 800px;
-            margin: 2rem auto;
-            padding: 0 1rem;
+          width: 100%;
+          max-width: 600px;
+          margin: 0 auto;
         }
-
-        .header-content .search-container {
-            max-width: 400px;  /* 검색창 너비 조정 */
-            width: 100%;
-            margin: 0;
-            opacity: 1; /* 추가 */
-            transform: none; /* 추가 */
-        }
-
-        .header-content .search-box {
-            margin-bottom: 0;
-        }
-
-        .header-content .search-box input::placeholder {
-            color: #666;
-        }
-
-        .header-content .search-box input {
-            background-color: white;
-            border: 1px solid rgba(75, 63, 114, 0.2);
-            color: var(--text-color);
-            border-radius: 50px;  /* 둥근 모서리 */
-            padding: 0.8rem 1.5rem;  /* 패딩 증가 */
-            font-size: 1rem;
-        }
-
-        .header-content .search-box button {
-            border-radius: 50px;
-            padding: 0.8rem 1.5rem;
-            background: white;
-            border: none;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            /* 그라데이션 텍스트 적용 */
-            background: white;  /* 흰색 배경 */
-            position: relative;  /* 위치 지정 */
-            z-index: 1;  /* 레이어 순서 */
-        }
-
-        .header-content .search-box button span {
-            background: linear-gradient(to right, #4B3F72, #1F3A8C);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            color: transparent;
-        }
-
-        header .search-box input {
-            background-color: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: white;
-        }
-
-        header .search-box input::placeholder {
-            color: rgba(255, 255, 255, 0.7);
-        }
-
-        .initial-state .search-container.initial .search-box button {
-            font-size: 1.2rem;
-            padding: 1rem 2rem;
-            border-radius: 50px;
-            background: linear-gradient(to right, #4B3F72, #1F3A8C);
-            color: white;
-            border: none;
-            font-weight: bold;
-            transition: all 0.3s ease;
-        }
-
-        .initial-state .search-container.initial .search-box button:hover {
-            opacity: 0.9;
-            transform: translateY(-1px);
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        }
-
-        .header-content .autocomplete-item {
-            padding: 0.8rem 1.5rem;
-            transition: background-color 0.2s ease;
-        }
-
-        .header-content .autocomplete-item:first-child {
-            border-top-left-radius: 25px;
-            border-top-right-radius: 25px;
-        }
-
-        .header-content .autocomplete-item:last-child {
-            border-bottom-left-radius: 25px;
-            border-bottom-right-radius: 25px;
-        }
-
-        .header-content .autocomplete-item:hover {
-            background-color: rgba(75, 63, 114, 0.05);
-        }
-
-        header .search-box button:hover {
-            background-color: rgba(255, 255, 255, 0.2);
-        }
-
-        .header-content .search-box button:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-
-        .search-container {
-            max-width: 800px;
-            margin: 2rem auto;
-            padding: 0 1rem;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.5s ease 0.2s; /* 딜레이 추가 */
-        }
-
-        .search-container.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .search-container.initial {
-            margin: 0 auto;
-            opacity: 1;
-            transform: none;
-            width: 80%;
-            max-width: 800px;  /* 크기 증가 */
-        }
-
-        .header-content .search-box input {
-            background-color: rgba(255, 255, 255, 0.9);
-            border: none;
-            color: #333;
-            border-radius: 50px;
-            padding: 0.8rem 1.5rem;
-            font-size: 1rem;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-
-        .initial-state .search-box button {
-            font-size: 1.2rem;
-            padding: 1rem 2rem;
-            border-radius: 50px;
-            background: white;
-            color: #4B3F72;
-            border: none;
-            font-weight: bold;
-            transition: all 0.3s ease;
-        }
-
-        input {
-            border-radius: 20px;  /* 기본 검색창도 둥글게 */
-        }
-
-        button {
-            border-radius: 20px;  /* 기본 버튼도 둥글게 */
-            background: linear-gradient(to right, #4B3F72, #1F3A8C);
-            border: none;
-            transition: all 0.3s ease;
-        }
-
+        
         .search-box {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 1rem;
-            position: relative;
-        }
-
-        input {
-            flex: 1;
-            padding: 0.5rem;
-            font-size: 1rem;
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-        }
-
-        button {
-            padding: 0.5rem 1rem;
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background: linear-gradient(to right, #5B4F82, #2F4A9C);
-            opacity: 1;
-        }
-
-        .autocomplete-items {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            border: 1px solid var(--border-color);
-            border-radius: 20px;  /* 하나만 남기고 중복 제거 */
-            margin-top: 5px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            background-color: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(5px);
-        }
-
-        .autocomplete-item:first-child {
-            border-top-left-radius: 20px;
-            border-top-right-radius: 20px;
-        }
-
-        .autocomplete-item:last-child {
-            border-bottom-left-radius: 20px;
-            border-bottom-right-radius: 20px;
-        }
-
-        .autocomplete-item {
-            padding: 0.8rem 1.5rem;  /* 패딩 증가 */
-            color: #333;
-            background-color: white;
-        }
-
-        .autocomplete-item:hover {
-            background-color: rgba(75, 63, 114, 0.1);
-            color: #222;  /* hover 시 텍스트를 더 진하게 */
-        }
-
-        .header-content .search-box button {
-            padding: 0.5rem 1rem;
-            font-size: 0.9rem;
-            height: 40px;
-            min-width: 60px;
-            white-space: nowrap;  /* 텍스트 줄바꿈 방지 */
+          width: 100%;
+          position: relative;
         }
         
-        .dictionary-content {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.5s ease 0.3s; /* 딜레이 추가 */
+        .search-box input {
+          width: 100%;
+          padding: 15px 20px;
+          border: 2px solid var(--primary-color);
+          border-radius: var(--border-radius);
+          font-size: 16px;
+          outline: none;
         }
 
-        .dictionary-content.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .word-entry {
-            padding: 2rem;
-            margin-bottom: 1.5rem;
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 15px;
-            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        .word-entry:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-        }
-
-        .word-header {
-            cursor: pointer;  /* 클릭 가능함을 표시 */
-            user-select: none;  /* 텍스트 선택 방지 */
-        }
-
-        .word-header::after {
-            content: '\f107';  /* FontAwesome 아이콘 (아래 화살표) */
-            font-family: 'Font Awesome 6 Free';
-            font-weight: 900;
-            margin-left: auto;
-            transition: transform 0.3s ease;
-        }
-
-
-        .word-title {
-            font-size: 1.6rem;
-            color: #4B3F72;
-            font-weight: 700;
-        }
-
-        .word-ipa {
-            color: #666;
-            font-style: italic;
-            font-size: 1rem;
-        }
-
-        .word-class {
-            color: #1F3A8C;
-            font-size: 1rem;
-            font-weight: 500;
-            padding: 0.2rem 0.5rem;
-            background: rgba(31, 58, 140, 0.1);
-            border-radius: 5px;
-        }
-
-        .word-content {
-            display: none;  /* 기본적으로 내용 숨김 */
-            padding-top: 1rem;
-            z-index: 900;
-        }
-
-        .word-entry.expanded .word-content {
-            display: block;  /* expanded 클래스가 있을 때 내용 표시 */
-        }
-
-        .word-entry.expanded .word-header::after {
-            transform: rotate(180deg);  /* 확장 시 화살표 회전 */
-        }
-
-        .sound-button {
-            padding: 0.5rem;
-            border-radius: 50%;
-            background: rgba(75, 63, 114, 0.1);
-            color: #4B3F72;
-            transition: all 0.2s ease;
-        }
-
-        .sound-button:hover {
-            background: rgba(75, 63, 114, 0.2);
-            transform: scale(1.1);
-        }
-
-        .word-meaning {
-            font-size: 1.1rem;
-            line-height: 1.7;
-            color: #333;
-            margin-bottom: 1.2rem;
-        }
-
-        .word-example {
-            font-size: 1rem;
-            color: #666;
-            background: rgba(75, 63, 114, 0.05);
-            padding: 1rem 1.5rem;
-            border-radius: 10px;
-            margin-bottom: 1.5rem;
-        }
-
-        .word-video {
-            background: rgba(31, 58, 140, 0.05);
-            padding: 1.5rem;
-            border-radius: 10px;
-        }
-
-        .video-title {
-            color: #4B3F72;
-            font-weight: 600;
-            margin-bottom: 1rem;
-        }
-
-        .word-video video {
-            border-radius: 10px;
-            width: 80%;  /* 100%에서 80%로 변경 */
-            margin: 0 auto;  /* 중앙 정렬 */
-            display: block;  /* 블록 요소로 변경하여 margin auto 적용 */
-            margin-bottom: 1rem;
-        }
-
-        .video-source {
-            font-size: 0.9rem;
-            color: #666;
-        }
-
-        .copyright-notice {
-            text-align: center;
-            margin-top: 3rem;
-            margin-bottom: 1rem;
-            color: #666;
-            font-size: 0.9rem;
-            line-height: 1.6;
-        }
-
-        .request-button {
-            margin-left: 2rem;  /* 버튼 왼쪽 마진 증가 */
-            padding: 0.6rem 1.2rem;
-            background: white;
-            color: #4B3F72;
+        .search-box button {
+            position: absolute;
+            right: 0;
+            top: 0;
+            height: 100%;
+            padding: 0 20px;
+            background: var(--primary-color);
+            color: white;
             border: none;
-            border-radius: 50px;
-            font-size: 0.9rem;
-            font-weight: bold;
-            text-decoration: none !important;  /* 링크 스타일 제거 */
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            opacity: 0;  /* 초기에는 투명하게 */
-            transform: translateY(-10px);  /* 약간 위로 올라간 상태에서 시작 */
-            cursor: pointer;  /* 커서 추가 */
-            position: relative;  /* 위치 설정 */
-            z-index: 10;  /* z-index 추가 */
-            pointer-events: auto;  /* 클릭 가능하도록 설정 */
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+            cursor: pointer;
+            transition: background-color 0.2s;
         }
-
-        /* 헤더가 visible일 때 버튼도 보이게 */
-        header.visible .request-button {
-            opacity: 1;
-            transform: translateY(0);
-            transition: all 0.5s ease 0.3s;  /* 헤더 나타난 후 약간 딜레이를 두고 나타남 */
-            pointer-events: auto;
+        
+        .search-box button:hover {
+            background-color: #3b3259;
         }
-
-        .request-button i {
-            font-size: 0.9rem;
+        
+        .search-box input {
+            padding-right: 60px; /* 검색 버튼이 텍스트를 가리지 않도록 */
         }
-
-        .request-button:hover {
-            background: #f5f5f5;  /* 배경색 살짝 변경 */
-            color: #1F3A8C;  /* 텍스트 색상 변경 */
-            transform: translateY(-2px);  /* 살짝 위로 */
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);  /* 그림자 강화 */
+        
+        /* 자동완성 리스트 스타일 */
+        .autocomplete-items {
+          position: absolute;
+          width: 100%;
+          background: var(--background-color);
+          border: 1px solid #ddd;
+          border-radius: 0 0 var(--border-radius) var(--border-radius);
+          max-height: 300px;
+          overflow-y: auto;
+          z-index: 1000;
         }
-
+        
+        /* 모달 스타일 */
         .modal {
             display: none;
             position: fixed;
@@ -653,312 +173,156 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 1000;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
             opacity: 0;
-            transition: opacity 0.3s ease;
+            visibility: hidden;
+            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
         }
-
+        
         .modal.show {
             opacity: 1;
+            visibility: visible;
+            display: block;
         }
-
+        
         .modal-content {
-            position: relative;
-            background-color: white;
-            margin: 50vh auto; /* 변경 */
-            padding: 0;
+            background: var(--background-color);
             width: 90%;
             max-width: 500px;
-            border-radius: 15px;
-            transform: translateY(-50%); /* 추가 */
-            transition: transform 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            margin: 20px auto;
+            border-radius: var(--border-radius);
+            position: relative;
+            top: 50%;
+            transform: translateY(-40%);
+            opacity: 0;
+            transition: all 0.3s ease-in-out;
         }
-
-        /* 모달이 표시될 때의 애니메이션도 수정 */
+        
         .modal.show .modal-content {
-            transform: translateY(-50%); /* 변경 */
+            transform: translateY(-50%);
+            opacity: 1;
         }
-
-        .modal-header {
-            padding: 1.5rem;
-            border-bottom: 1px solid #eee;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .modal-header h2 {
-            margin: 0;
-            color: #4B3F72;
-            font-size: 1.5rem;
-        }
-
-        .close-modal {
-            font-size: 1.8rem;
-            color: #666;
-            cursor: pointer;
-            transition: color 0.2s ease;
-        }
-
-        .close-modal:hover {
-            color: #333;
-        }
-
-        .modal-body {
-            padding: 1.5rem;
-        }
-
-        .contact-method {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1rem;
-            background: #f8f9fa;
-            border-radius: 10px;
-            margin-top: 1rem;
-        }
-
-        .contact-method i {
-            color: #4B3F72;
-            font-size: 1.2rem;
-        }
-
-        .request-format {
-            margin-top: 1.5rem;
-            background: #f8f9fa;
-            border-radius: 10px;
-            padding: 1.5rem;
-        }
-
-        .format-title {
-            color: #4B3F72;
-            margin-bottom: 1rem;
-            font-size: 1.1rem;
-        }
-
-        .format-content {
-            font-family: 'Noto Sans KR', sans-serif;
-            white-space: pre-wrap;
-            font-size: 0.9rem;
-            line-height: 1.6;
-            color: #666;
-            background: white;
-            padding: 1rem;
-            border-radius: 8px;
-            border: 1px solid #eee;
-        }
-
-        @media (max-width: 600px) {
-            .initial-state .title {
-                font-size: 2rem;
-            }
-            
-            .initial-state .subtitle {
-                font-size: 1.1rem;
-            }
-            
-            .search-container.initial {
-                width: 90%;
-            }
-        }
-
-        @media (max-width: 768px) {
-           /* 초기 화면 자동완성 위치 */
-           .initial-state .search-box .autocomplete-items {
-               bottom: 100%;  /* 검색창 위로 */
-               top: auto;     /* 기본 위치 제거 */
-               margin-bottom: 5px;  /* 검색창과의 간격 */
-           }
-                   
-           /* 헤더 컨텐츠 조정 */
-           .header-content {
-               flex-direction: column;
-               margin: 0 auto;
-               padding: 1rem;
-               text-align: center;  
-               gap: 0.5rem;
-           }
         
-           /* 우측 컨텐츠를 세로로 변경 */
-           .header-right {
-               width: 100%;
-               flex-direction: column;  
-               gap: 0.5rem;
-               align-items: stretch;    
-               display: flex;
-           }
-        
-           /* 검색창 컨테이너 */
-           .header-content .search-container {
-               width: 100%;
-               display: flex;
-               justify-content: center;
-               max-width: 90%;  
-               margin: 0 auto;  
-           }
-        
-           /* 후반 검색창 자동완성 */
-           .header-content .search-box .autocomplete-items {
-               width: 100%;
-               margin-top: 5px;
-               z-index: 1500;
-           }
-        
-           .header-content .search-box {
-               width: 100%;     
-               max-width: none;
-           }
-                   
-           /* 검색 버튼과 입력창 */
-           .header-content .search-box input {
-               padding: 0.5rem 1rem;
-               font-size: 0.9rem;
-               height: 40px;
-           }
-        
-           /* 검색 버튼 */
-           .header-content .search-box button {
-               height: 40px;
-               white-space: nowrap;
-               font-size: 0.9rem;
-           }
-        
-           /* 문의하기 버튼 */
-           .request-button {
-               width: 100%;          
-               height: 40px;
-               padding: 0 1rem;
-               margin-left: 0;       
-               justify-content: center;  
-               white-space: nowrap;     
-               font-size: 0.9rem;
-           }
-        
-           /* 초기 검색창 레이아웃 */
-           .initial-state .search-box {
-               flex-direction: column;
-               gap: 0.8rem;
-           }
-        
-           /* 초기 검색창 버튼 */
-           .initial-state .search-box button {
-               width: 100%;            
-               margin-top: 0.5rem;  
-               white-space: nowrap;  
-           }
-        
-           /* 사이트 제목 */
-           .site-title {
-               font-size: 1.5rem;
-           }
-        
-           /* 메인 컨텐츠 영역 */
-           .main-content {
-               margin: 1rem;
-               padding: 1rem;
-           }
-        
-           /* 단어 항목 */
-           .word-entry {
-               padding: 1rem;
-               -webkit-tap-highlight-color: transparent;
-           }
-        
-           .word-header {
-               flex-wrap: wrap;
-               gap: 0.5rem;
-           }
-        
-           .word-header:active {
-               background-color: rgba(75, 63, 114, 0.05);
-           }
-        
-           .word-title {
-               font-size: 1.3rem;
-               width: 100%;
-           }
-        
-           .word-class, .word-ipa {
-               font-size: 0.9rem;
-           }
-        
-           .word-video video {
-               width: 100%;  
-           }
-        
-           /* 모달 */
-           .modal-content {
-               width: 95%;
-               margin: 50vh auto;
-           }
-        
-           .modal-header h2 {
-               font-size: 1.3rem;
-           }
-        
-           .modal-body {
-               padding: 1rem;
-           }
-        
-           .format-content {
-               font-size: 0.85rem;
-               padding: 0.8rem;
-           }
-        
-           /* 터치 관련 최적화 */
-           .sound-button {
-               padding: 0.8rem;
-           }
-        
-           .close-modal {
-               padding: 1rem;
-           }
-        
-           /* 초기 상태 */
-           .initial-state .title {
-               font-size: 2rem;
-               padding: 0 1rem;
-           }
-        
-           .word-meaning {
-               font-size: 1rem;
-               line-height: 1.5;
-           }
-        
-           .word-example {
-               font-size: 0.95rem;
-               padding: 0.8rem 1rem;
-           }
-
-            .word-video {
-                background: rgba(31, 58, 140, 0.05);
-                padding: 1.5rem;
-                border-radius: 10px;
-                max-width: 600px;  /* 추가: 최대 너비 제한 */
-                margin: 0 auto;    /* 추가: 중앙 정렬 */
-            }
-            
-            .word-video video {
-                border-radius: 10px;
+        @media screen and (max-width: 480px) {
+            .modal-content {
+                transform: translateY(100%);
                 width: 100%;
-                margin: 0 auto;
-                display: block;
-                margin-bottom: 1rem;
+                height: 100%;
+                margin: 0;
+                border-radius: 0;
             }
             
-           /* 자동완성 */
-           .autocomplete-items {
-               max-height: 200px;
-               overflow-y: auto;
-               -webkit-overflow-scrolling: touch;
-           }
+            .modal.show .modal-content {
+                transform: translateY(0);
+            }
+        }
         
-           .autocomplete-item {
-               padding: 1rem;
-               font-size: 0.95rem;
-           }
+        /* 반응형 스타일 */
+        @media screen and (max-width: 768px) {
+          /* 태블릿 */
+          .modal-content {
+            width: 95%;
+            margin: 10px auto;
+          }
+        
+          .search-container {
+            padding: 0 var(--padding-mobile);
+          }
+          
+          .title {
+            font-size: 24px;
+            text-align: center;
+            margin-bottom: 20px;
+          }
+        }
+        
+        @media screen and (max-width: 480px) {
+          /* 모바일 */
+          .modal-content {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            border-radius: 0;
+          }
+        
+          .modal-header {
+            padding: 15px;
+          }
+        
+          .modal-body {
+            padding: 15px;
+          }
+        
+          .search-box input {
+            padding: 12px 15px;
+            font-size: 14px;
+          }
+
+            .search-box button {
+                padding: 0 15px;
+            }
+            
+            .search-box button span {
+                display: none; /* 모바일에서는 아이콘만 표시 */
+            }
+            
+          .title {
+            font-size: 20px;
+          }
+        
+          /* 모바일에서의 스크롤 처리 */
+          .autocomplete-items {
+            max-height: 50vh;
+          }
+        }
+        
+        /* 헤더 스타일 */
+        #header {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          background: var(--background-color);
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+          z-index: 1000;
+          padding: 10px 0;
+        }
+        
+        .header-content {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 0 20px;
+          max-width: 1200px;
+          margin: 0 auto;
+        }
+        
+        .site-title {
+          font-size: 1.5rem;
+          margin: 0;
+        }
+        
+        .header-right {
+          display: flex;
+          align-items: center;
+          gap: 20px;
+        }
+        
+        /* 메인 콘텐츠 영역 */
+        .main-content {
+          margin-top: 60px;
+          padding: 20px;
+          max-width: 1200px;
+          margin: 60px auto 0;
+        }
+        
+        /* 사전 콘텐츠 스타일 */
+        .dictionary-content {
+          background: #fff;
+          border-radius: var(--border-radius);
+          padding: 20px;
+          margin-top: 20px;
         }
     </style>
 </head>
@@ -967,7 +331,7 @@
         <h1 class="title">팜국어대사전(Beta)</h1>
         <div class="search-container initial">
             <div class="search-box">
-                <input type="text" id="searchInput" placeholder="팜국어 검색하기...">
+                <input type="text" id="searchInput" placeholder="팜국어 검색하기...", aria-label="검색">
                 <button onclick="performSearch()">검색</button>
                 <div id="autocompleteList" class="autocomplete-items"></div>
             </div>
@@ -980,7 +344,7 @@
             <div class="header-right">
                 <div class="search-container">
                     <div class="search-box">
-                        <input type="text" id="mainSearchInput" placeholder="팜국어 검색하기...">
+                        <input type="text" id="mainSearchInput" placeholder="팜국어 검색하기...", aria-label="검색">
                         <button onclick="performSearch('main')"><span>검색</span></button>
                         <div id="mainAutocompleteList" class="autocomplete-items"></div>
                     </div>
@@ -1150,16 +514,15 @@
 
         const dialectManager = new DialectManager();
 
-        async function performSearch(type = 'initial') {
+    async function performSearch(type = 'initial') {
             if (dialectManager.dialects.length === 0) {
                 await dialectManager.loadData();
             }
             const searchTerm = type === 'main' 
                 ? document.getElementById('mainSearchInput').value
                 : document.getElementById('searchInput').value;
-
+    
             if (type === 'initial') {
-                // 초기 검색창 숨기기
                 document.getElementById('initialView').classList.add('move-up');
                 document.getElementById('header').style.display = 'block';
                 document.getElementById('mainContent').style.display = 'block';
@@ -1173,21 +536,16 @@
                     }, 500);
                 }, 300);
             }
-
+    
             const content = document.getElementById('dictionaryContent');
     
             if (!searchTerm) {
                 content.innerHTML = '<div class="initial-message">검색어를 입력해주세요.</div>';
                 return;
             }
-
-            // 데이터가 아직 로드되지 않았다면 기다립니다
-            if (dialectManager.dialects.length === 0) {
-                await dialectManager.loadData();
-            }
-
+    
             const filteredData = dialectManager.search(searchTerm);
-
+    
             if (filteredData.length === 0) {
                 content.innerHTML = '<div class="search-result-header">검색 결과가 없습니다.</div>';
                 return;
@@ -1547,7 +905,6 @@
         function showIntroModal() {
             const modal = document.getElementById('introModal');
             modal.style.display = 'block';
-            // 첫 진입 시에만 페이드 인 효과
             setTimeout(() => modal.classList.add('show'), 10);
             gtag('event', 'modal_open', {
                 'modal_type': 'intro'
@@ -1555,11 +912,9 @@
         }
         
         function showBetaModal() {
-            // 첫 번째 모달 즉시 숨기기
             const introModal = document.getElementById('introModal');
             introModal.style.display = 'none';
             
-            // 두 번째 모달 즉시 표시
             const betaModal = document.getElementById('betaNoticeModal');
             betaModal.style.display = 'block';
             betaModal.classList.add('show');
