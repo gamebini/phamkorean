@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ㅁ<!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
@@ -797,11 +797,12 @@
                 width: 100%;
                 flex-direction: column;
                 gap: 0.8rem;
+                align-items: center; /* 중앙 정렬 추가 */
             }
         
             .header-content .search-container {
-                width: 500px;
-                margin: 0 auto;
+                width: 100%; /* 전체 너비로 변경 */
+                max-width: 500px; /* max-width 값을 조정 */
             }
         
             /* 검색창 스타일링 */
@@ -816,11 +817,10 @@
         
             /* 버튼 컨테이너 */
             .buttons-container {
-                width: 100%; /* 전체 너비로 변경 */
-                margin: 0; /* 마진 제거 */
+                width: 100%; /* 전체 너비로 설정 */
+                max-width: 500px; /* 검색창과 동일한 max-width 설정 */
                 display: flex;
                 gap: 0;
-                flex-direction: row-reverse;
             }
         
             .search-button,
@@ -828,12 +828,7 @@
                 flex: 1;
                 height: 44px;
                 padding: 0;
-                font-size: 0.9rem;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                gap: 0.5rem;
-                white-space: nowrap;
+                margin: 0;
             }
 
             .request-button {
