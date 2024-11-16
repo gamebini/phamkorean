@@ -87,6 +87,30 @@
             box-sizing: border-box;
         }
 
+        .header-content .search-container {
+            position: relative;
+            max-width: 400px;
+            width: 100%;
+            margin: 0;
+            opacity: 1; /* 추가 */
+            transform: none; /* 추가 */
+            z-index: 1000;
+        }
+
+        .header-content .autocomplete-items {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            z-index: 1001;      /* 검색창보다 더 높은 z-index */
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            margin-top: 5px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(5px);
+        }
+        
         body {
             font-family: 'Noto Sans KR', sans-serif;
             line-height: 1.6;
@@ -182,6 +206,7 @@
             transform: translateY(-20px);
             transition: all 0.5s ease;
             width: 100%;
+            z-index: 999;
         }
 
         .header-content {
@@ -238,15 +263,6 @@
             max-width: 800px;
             margin: 2rem auto;
             padding: 0 1rem;
-        }
-
-        .header-content .search-container {
-            position: relative;
-            max-width: 400px;
-            width: 100%;
-            margin: 0;
-            opacity: 1; /* 추가 */
-            transform: none; /* 추가 */
         }
 
         .header-content .search-box {
@@ -626,7 +642,7 @@
             transform: translateY(-10px);  /* 약간 위로 올라간 상태에서 시작 */
             cursor: pointer;  /* 커서 추가 */
             position: relative;  /* 위치 설정 */
-            z-index: 10;  /* z-index 추가 */
+            z-index: 999;  /* z-index 추가 */
             pointer-events: auto;  /* 클릭 가능하도록 설정 */
         }
 
@@ -682,7 +698,7 @@
             width: 100%;
             height: 100%;
             background-color: rgba(0, 0, 0, 0.5);
-            z-index: 1000;
+            z-index: 1002;
             opacity: 0;
             transition: opacity 0.3s ease;
         }
