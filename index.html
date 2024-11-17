@@ -423,13 +423,11 @@
             top: 100%;
             left: 0;
             right: 0;
-            z-index: 1050; /* 팜국어 컨테이너 위로 표시 */
-            max-height: 200px; /* 최대 높이 지정 */
-            overflow-y: auto; /* 스크롤 가능 */
+            z-index: 1000;
             border: 1px solid var(--border-color);
-            border-radius: 20px;
+            border-radius: 20px;  /* 하나만 남기고 중복 제거 */
             margin-top: 5px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             background-color: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(5px);
         }
@@ -914,8 +912,9 @@
         
             /* 자동완성 드롭다운 */
             .autocomplete-items {
-                max-height: 150px;
-                font-size: 0.9rem; /* 폰트 크기 축소 */
+                border-radius: 15px;
+                margin-top: 0.5rem;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             }
         
             .autocomplete-item {
@@ -1299,23 +1298,24 @@
         
         // 자동완성 함수
         async function showAutocomplete(inputId, listId) {
+            // 데이터가 로드될 때까지 대기
             if (dialectManager.dialects.length === 0) {
                 await dialectManager.loadData();
             }
-        
+
             const input = document.getElementById(inputId);
             const list = document.getElementById(listId);
             const value = input.value.toLowerCase();
-        
+
             if (!value) {
                 list.style.display = 'none';
                 return;
             }
-        
-            const matches = dialectManager.dialects.filter(item =>
+
+            const matches = dialectManager.dialects.filter(item => 
                 item.word.toLowerCase().includes(value)
             );
-        
+
             if (matches.length > 0) {
                 list.innerHTML = '';
                 matches.forEach(item => {
@@ -1330,12 +1330,6 @@
                     list.appendChild(div);
                 });
                 list.style.display = 'block';
-        
-                // 리스트가 검색창 외에 가려지지 않도록 스크롤 조정
-                const bounding = list.getBoundingClientRect();
-                if (bounding.bottom > window.innerHeight) {
-                    list.style.maxHeight = `${window.innerHeight - bounding.top - 20}px`;
-                }
             } else {
                 list.style.display = 'none';
             }
