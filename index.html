@@ -821,12 +821,14 @@
         
             /* 검색창 스타일링 */
             .header-content .search-box {
-                width: 100%;
+                display: flex;
+                align-items: center;
+                gap: 0;
             }
         
             .header-content .search-box input {
-                width: 100%;
-                box-sizing: border-box; /* 패딩을 너비에 포함 */
+                border-radius: 0;  /* 각진 모서리 */
+                height: 40px;
             }
         
             /* 버튼 컨테이너 */
@@ -834,7 +836,7 @@
                 width: 100%; /* 전체 너비로 변경 */
                 margin: 0; /* 마진 제거 */
                 display: flex;
-                gap: 0;
+                gap: 0.5rem;  /* 버튼 사이 간격 줄이기 */
                 flex-direction: row-reverse;
             }
         
@@ -852,19 +854,14 @@
             }
 
             .request-button {
-                margin-left: 0;
-                border-top-left-radius: 22px;
-                border-bottom-left-radius: 22px;
-                border-top-right-radius: 0;
-                border-bottom-right-radius: 0;
+                margin-left: 0.5rem;  /* 간격 줄이기 */
             }
         
             /* 검색 버튼 (이제 오른쪽에 위치) */
             .search-button {
-                border-top-left-radius: 0;
-                border-bottom-left-radius: 0;
-                border-top-right-radius: 22px;
-                border-bottom-right-radius: 22px;
+                border-radius: 0;  /* 각진 모서리 */
+                margin-left: 0;  /* 마진 제거 */
+                height: 40px;
             }
         
             /* 버튼 호버 효과 */
