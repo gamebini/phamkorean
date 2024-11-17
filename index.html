@@ -244,6 +244,8 @@
         }
 
         .header-content .search-box {
+            display: flex;
+            gap: 0;  /* 간격 제거 */
             margin-bottom: 0;
         }
 
@@ -252,12 +254,14 @@
         }
 
         .header-content .search-box input {
-            background-color: white;
-            border: 1px solid rgba(75, 63, 114, 0.2);
-            color: var(--text-color);
-            border-radius: 50px;  /* 둥근 모서리 */
-            padding: 0.8rem 1.5rem;  /* 패딩 증가 */
+            height: 40px;  /* 높이 명시적 지정 */
+            background-color: rgba(255, 255, 255, 0.9);
+            border: none;
+            color: #333;
+            border-radius: 50px 0 0 50px;  /* 오른쪽 모서리는 각진 형태로 */
+            padding: 0 1.5rem;
             font-size: 1rem;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
 
         .header-content .search-box button {
@@ -628,11 +632,12 @@
         }
 
         .search-button {
-            padding: 0.6rem 1.2rem;
+            height: 40px;  /* 입력창과 같은 높이 */
+            padding: 0 1.2rem;
             background: white;
             color: #4B3F72;
             border: none;
-            border-radius: 50px;
+            border-radius: 0 50px 50px 0;  /* 왼쪽 모서리는 각진 형태로 */
             font-size: 0.9rem;
             font-weight: bold;
             display: inline-flex;
@@ -642,6 +647,7 @@
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             cursor: pointer;
             white-space: nowrap;
+            margin-left: -1px;  /* 경계선 겹침 방지 */
         }
         
         .search-button:hover,
