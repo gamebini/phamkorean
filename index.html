@@ -63,13 +63,15 @@
         }
 
         .header-content .search-container {
+            position: relative;
             max-width: 400px;
             width: 100%;
             margin: 0;
-            opacity: 1; /* 추가 */
-            transform: none; /* 추가 */
-            position: relative;
-            z-index: 1001;  /* 증가 */
+            opacity: 1;
+            transform: none;
+            z-index: 1001;
+            display: flex;  /* 추가: flexbox 사용 */
+            align-items: center;  /* 추가: 수직 가운데 정렬 */
         }
 
         .header-content .autocomplete-items {
@@ -244,10 +246,9 @@
         }
 
         .header-content .search-box {
+            flex: 1;  /* 추가: 남은 공간 채우기 */
             display: flex;
-            gap: 0;  /* 간격 제거 */
-            margin-bottom: 0;
-            position: relative;
+            gap: 0;
         }
 
         .header-content .search-box input::placeholder {
@@ -255,15 +256,15 @@
         }
 
         .header-content .search-box input {
+            flex: 1;
             height: 40px;
             background-color: rgba(255, 255, 255, 0.9);
             border: none;
             color: #333;
-            border-radius: 0;  /* 모든 모서리를 각진 형태로 변경 */
+            border-radius: 0;  /* 모든 모서리를 각진 형태로 */
             padding: 0 1.5rem;
             font-size: 1rem;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            flex: 1;  /* 추가: 남은 공간 채우기 */
         }
 
         .header-content .search-box button {
