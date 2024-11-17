@@ -479,6 +479,8 @@
             border-radius: 15px;
             box-shadow: 0 2px 15px rgba(0,0,0,0.05);
             transition: transform 0.2s ease, box-shadow 0.2s ease;
+            position: relative;
+            z-index: 10; /* header(999)와 자동완성(1000/1001)보다 낮은 값으로 설정 */
         }
 
         .word-entry:hover {
