@@ -247,6 +247,7 @@
             display: flex;
             gap: 0;  /* 간격 제거 */
             margin-bottom: 0;
+            position: relative;
         }
 
         .header-content .search-box input::placeholder {
@@ -254,14 +255,15 @@
         }
 
         .header-content .search-box input {
-            height: 40px;  /* 높이 명시적 지정 */
+            height: 40px;
             background-color: rgba(255, 255, 255, 0.9);
             border: none;
             color: #333;
-            border-radius: 50px 0 0 50px;  /* 오른쪽 모서리는 각진 형태로 */
+            border-radius: 0;  /* 모든 모서리를 각진 형태로 변경 */
             padding: 0 1.5rem;
             font-size: 1rem;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            flex: 1;  /* 추가: 남은 공간 채우기 */
         }
 
         .header-content .search-box button {
@@ -632,12 +634,12 @@
         }
 
         .search-button {
-            height: 40px;  /* 입력창과 같은 높이 */
+            height: 40px;
             padding: 0 1.2rem;
             background: white;
             color: #4B3F72;
             border: none;
-            border-radius: 0 50px 50px 0;  /* 왼쪽 모서리는 각진 형태로 */
+            border-radius: 0;  /* 모든 모서리를 각진 형태로 변경 */
             font-size: 0.9rem;
             font-weight: bold;
             display: inline-flex;
