@@ -63,13 +63,13 @@
         }
 
         .header-content .search-container {
-            position: relative;
             max-width: 400px;
             width: 100%;
             margin: 0;
             opacity: 1; /* 추가 */
             transform: none; /* 추가 */
-            z-index: 1000;
+            position: relative;
+            z-index: 1001;  /* 증가 */
         }
 
         .header-content .autocomplete-items {
@@ -181,7 +181,8 @@
             transform: translateY(-20px);
             transition: all 0.5s ease;
             width: 100%;
-            z-index: 999;
+            position: relative;  /* 추가 */
+            z-index: 1000;      /* 기존 값 유지 또는 조정 */
         }
 
         .header-content {
@@ -219,6 +220,8 @@
             background-color: rgba(255, 255, 255, 0.95);
             border-radius: 20px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            position: relative;  /* 추가 */
+            z-index: 2;         /* 낮은 값으로 설정 */
         }
 
         .search-result-header {
@@ -393,7 +396,8 @@
             display: flex;
             gap: 1rem;
             margin-bottom: 1rem;
-            position: relative;
+            position: relative;  /* 추가 */
+            z-index: 1001;      /* 증가 */
         }
 
         input {
@@ -423,7 +427,7 @@
             top: 100%;
             left: 0;
             right: 0;
-            z-index: 1000;
+            z-index: 1002;      /* 증가 */
             border: 1px solid var(--border-color);
             border-radius: 20px;  /* 하나만 남기고 중복 제거 */
             margin-top: 5px;
@@ -479,8 +483,8 @@
             border-radius: 15px;
             box-shadow: 0 2px 15px rgba(0,0,0,0.05);
             transition: transform 0.2s ease, box-shadow 0.2s ease;
-            position: relative;
-            z-index: 10; /* header(999)와 자동완성(1000/1001)보다 낮은 값으로 설정 */
+            position: relative;  /* 이미 있지만 확실히 하기 위해 명시 */
+            z-index: 1;         /* 매우 낮은 값으로 설정 */
         }
 
         .word-entry:hover {
