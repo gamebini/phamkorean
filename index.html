@@ -1826,8 +1826,9 @@
             });
         });
 
-        document.addEventListener('DOMContentLoaded', () => {
-            // 기존 코드...
+        document.addEventListener('DOMContentLoaded', async () => {  // async 추가
+            // 먼저 데이터 로딩을 기다립니다
+            await dialectManager.loadData();  // await 추가
         
             // URL 파라미터에서 검색어 확인
             const urlParams = new URLSearchParams(window.location.search);
@@ -1843,8 +1844,8 @@
                 document.getElementById('dictionaryContent').classList.add('visible');
                 document.getElementById('mainSearchInput').value = searchWord;
                 
-                // 검색 실행
-                performSearch('main');
+                // 검색 실행 (이제 데이터가 로드된 상태임)
+                await performSearch('main');  // await 추가
             } else {
                 // 검색어가 없으면 원래대로 초기 화면 표시
                 showIntroModal();
