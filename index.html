@@ -656,10 +656,7 @@
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             cursor: pointer;
             white-space: nowrap;
-            border-top-left-radius: 0;
-            border-bottom-left-radius: 0;
-            border-top-right-radius: 50px;
-            border-bottom-right-radius: 50px;
+            border-radius: 50px;
             height: 40px;
             padding: 0 1.5rem;
             margin-left: -1px; /* 경계선 겹침 방지 */
@@ -863,16 +860,13 @@
 
             .header-content .search-box input {
                 flex: 1;
+                height: 48px; /* 40px에서 48px로 증가 */
+                padding: 0.8rem 1.5rem; /* 패딩도 약간 증가 */
+                font-size: 1.1rem; /* 폰트 크기도 살짝 키움 */
                 background-color: rgba(255, 255, 255, 0.9);
                 border: none;
                 color: #333;
-                border-top-right-radius: 0;
-                border-bottom-right-radius: 0;
-                border-top-left-radius: 50px;
-                border-bottom-left-radius: 50px;
-                height: 40px;
-                padding: 0 1.5rem;
-                font-size: 1rem;
+                border-radius: 50px;
                 box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             }
         
@@ -904,9 +898,8 @@
         
             /* 검색 버튼 (이제 오른쪽에 위치) */
             .search-button {
-                border-radius: 0;  /* 각진 모서리 */
+                border-radius: 50px;  /* 각진 모서리 */
                 margin-left: 0;  /* 마진 제거 */
-                height: 40px;
             }
         
             /* 버튼 호버 효과 */
