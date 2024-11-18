@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <title>팜국어대사전</title>
+    <title>팜국어대사전 - 뉴진스 하니의 표현 모음 사전</title>
     <meta name="description" content="팜국어는 뉴진스(NewJeans) 멤버인 하니(HANNI)가 사용한 독특하고 재치있는 말투와 표현을 뜻합니다. 이 페이지는 하니의 팜국어를 모아놓은 사전형 페이지입니다.">
     <meta name="keywords" content="팜국어, 뉴진스, NewJeans, 하니, HANNI, K-pop, 아이돌, 팜국어대사전, 한국어, 사전">
     <meta name="author" content="팜국어대사전 | Bini">
@@ -286,6 +286,7 @@
             align-items: center;
             justify-content: center;
             transition: all 0.3s ease;
+            margin-left: 0; /* 버튼의 여백 제거 */
         }
 
         .header-content .search-box button span {
@@ -1279,9 +1280,28 @@
                         <span class="word-title">${dialect.word}</span>
                         <span class="word-class">「${dialect.wordClass}」</span>
                         <span class="word-ipa">${dialect.ipa}</span>
-                        <button class="sound-button" onclick="event.stopPropagation(); playSound('${dialect.audio}', this)">
-                            <i class="fas fa-volume-up"></i>
-                        </button>
+                        <div class="button-group">
+                            <button class="sound-button" onclick="event.stopPropagation(); playSound('${dialect.audio}', this)">
+                                <i class="fas fa-volume-up"></i>
+                            </button>
+                            <button class="share-button" onclick="event.stopPropagation(); shareDialect(this)" data-word="${dialect.word}" data-meaning="${dialect.meaning}" data-example="${dialect.example}">
+                                <i class="fas fa-share-alt"></i>
+                            </button>
+                            <div class="share-dropdown">
+                                <a href="#" class="share-option discord" onclick="event.preventDefault(); shareToService('discord', this)">
+                                    <i class="fab fa-discord"></i> Discord
+                                </a>
+                                <a href="#" class="share-option instagram" onclick="event.preventDefault(); shareToService('instagram', this)">
+                                    <i class="fab fa-instagram"></i> Instagram
+                                </a>
+                                <a href="#" class="share-option kakao" onclick="event.preventDefault(); shareToService('kakao', this)">
+                                    <i class="fas fa-comment"></i> KakaoTalk
+                                </a>
+                                <a href="#" class="share-option twitter" onclick="event.preventDefault(); shareToService('twitter', this)">
+                                    <i class="fab fa-twitter"></i> Twitter
+                                </a>
+                            </div>
+                        </div>
                     </div>
                     <div class="word-content">
                         <div class="word-meaning">${dialect.meaning}</div>
@@ -1346,6 +1366,140 @@
             });
         });
         
+        const styles = `
+            .button-group {
+                display: flex;
+                gap: 0.5rem;
+                align-items: center;
+            }
+
+            .share-button {
+                padding: 0.5rem;
+                border-radius: 50%;
+                background: rgba(75, 63, 114, 0.1);
+                color: #4B3F72;
+                transition: all 0.2s ease;
+                border: none;
+                cursor: pointer;
+            }
+
+            .share-button:hover {
+                background: rgba(75, 63, 114, 0.2);
+                transform: scale(1.1);
+            }
+
+            .share-dropdown {
+                display: none;
+                position: absolute;
+                background: white;
+                border-radius: 10px;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+                padding: 0.5rem;
+                z-index: 1000;
+            }
+
+            .share-button.active + .share-dropdown {
+                display: block;
+            }
+
+            .share-option {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                padding: 0.5rem 1rem;
+                color: #333;
+                text-decoration: none;
+                transition: background-color 0.2s ease;
+                border-radius: 5px;
+            }
+
+            .share-option:hover {
+                background-color: rgba(75, 63, 114, 0.1);
+            }
+
+            .share-option i {
+                font-size: 1.2rem;
+            }
+
+            .share-option.discord i { color: #7289DA; }
+            .share-option.instagram i { color: #E1306C; }
+            .share-option.kakao i { color: #FAE100; }
+            .share-option.twitter i { color: #1DA1F2; }
+        `;
+
+        // 스타일 태그 추가
+        const styleSheet = document.createElement("style");
+        styleSheet.textContent = styles;
+        document.head.appendChild(styleSheet);
+
+        // 공유 기능 구현
+        function shareDialect(button) {
+            // 모든 다른 드롭다운 닫기
+            document.querySelectorAll('.share-button').forEach(btn => {
+                if (btn !== button) btn.classList.remove('active');
+            });
+            
+            button.classList.toggle('active');
+            event.stopPropagation();
+        }
+
+        function shareToService(service, element) {
+            const wordEntry = element.closest('.word-entry');
+            const word = wordEntry.querySelector('.word-title').textContent;
+            const meaning = wordEntry.querySelector('.word-meaning').textContent;
+            const example = wordEntry.querySelector('.word-example').textContent;
+            
+            const shareText = `팜국어: ${word}\n의미: ${meaning}\n예시: ${example}\n\n출처: 팜국어대사전 (https://phamkorean.kro.kr)`;
+            
+            let shareUrl;
+            switch(service) {
+                case 'twitter':
+                    shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}`;
+                    break;
+                case 'discord':
+                    // Discord는 클립보드에 복사
+                    navigator.clipboard.writeText(shareText).then(() => {
+                        alert('Discord에 붙여넣을 수 있도록 클립보드에 복사되었습니다.');
+                    });
+                    return;
+                case 'instagram':
+                    // Instagram은 클립보드에 복사
+                    navigator.clipboard.writeText(shareText).then(() => {
+                        alert('Instagram에 붙여넣을 수 있도록 클립보드에 복사되었습니다.');
+                    });
+                    return;
+                case 'kakao':
+                    // Kakao SDK 연동이 필요하므로 임시로 클립보드 복사
+                    navigator.clipboard.writeText(shareText).then(() => {
+                        alert('카카오톡에 붙여넣을 수 있도록 클립보드에 복사되었습니다.');
+                    });
+                    return;
+            }
+            
+            if (shareUrl) {
+                window.open(shareUrl, '_blank');
+            }
+            
+            // 공유 후 드롭다운 닫기
+            element.closest('.word-entry').querySelector('.share-button').classList.remove('active');
+            
+            // 공유 이벤트 추적
+            gtag('event', 'share', {
+                'method': service,
+                'content_type': 'dialect',
+                'item_id': word
+            });
+        }
+
+        // 문서 클릭 시 모든 드롭다운 닫기
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.button-group')) {
+                document.querySelectorAll('.share-button').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+            }
+        });
+
         // 자동완성 함수
         async function showAutocomplete(inputId, listId) {
             // 데이터가 로드될 때까지 대기
