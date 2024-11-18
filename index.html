@@ -1231,15 +1231,30 @@
         const dialectManager = new DialectManager();
 
         async function performSearch(type = 'initial') {
+
             if (dialectManager.dialects.length === 0) {
                 await dialectManager.loadData();
             }
-            const searchTerm = type === 'main' 
-                ? document.getElementById('mainSearchInput').value
-                : document.getElementById('searchInput').value;
-
-            if (type === 'initial' && !new URLSearchParams(window.location.search).get('word')) {
-                // 초기 검색창 숨기기
+            
+            let searchTerm = '';
+            const urlParams = new URLSearchParams(window.location.search);
+            const urlWord = urlParams.get('word');
+            
+            if (urlWord && !type) {  // URL에서 온 초기 검색
+                searchTerm = urlWord;
+            } else {  // 일반 검색
+                searchTerm = type === 'main' 
+                    ? document.getElementById('mainSearchInput').value
+                    : document.getElementById('searchInput').value;
+                
+                // URL 업데이트
+                const newUrl = new URL(window.location);
+                newUrl.searchParams.set('word', searchTerm);
+                window.history.pushState({}, '', newUrl);
+            }
+        
+            // 인터페이스 전환 (URL 파라미터로 온 검색이 아닐 경우에만)
+            if (type === 'initial' && !urlWord) {
                 document.getElementById('initialView').classList.add('move-up');
                 document.getElementById('header').style.display = 'block';
                 document.getElementById('mainContent').style.display = 'block';
@@ -1253,21 +1268,18 @@
                     }, 500);
                 }, 300);
             }
-
+        
             const content = document.getElementById('dictionaryContent');
-    
+            
+            // 검색어 검증
             if (!searchTerm) {
                 content.innerHTML = '<div class="initial-message">검색어를 입력해주세요.</div>';
                 return;
             }
-
-            // 데이터가 아직 로드되지 않았다면 기다립니다
-            if (dialectManager.dialects.length === 0) {
-                await dialectManager.loadData();
-            }
-
+        
+            // 검색 실행
             const filteredData = dialectManager.search(searchTerm);
-
+        
             if (filteredData.length === 0) {
                 content.innerHTML = '<div class="search-result-header">검색 결과가 없습니다.</div>';
                 return;
@@ -1827,27 +1839,26 @@
         });
 
         document.addEventListener('DOMContentLoaded', async () => {  // async 추가
-            // 먼저 데이터 로딩을 기다립니다
-            await dialectManager.loadData();  // await 추가
-        
-            // URL 파라미터에서 검색어 확인
+            await dialectManager.loadData();
+            
             const urlParams = new URLSearchParams(window.location.search);
             const searchWord = urlParams.get('word');
             
             if (searchWord) {
-                // 검색어가 있으면 초기 화면을 건너뛰고 바로 검색 결과 표시
-                document.getElementById('searchInput').value = searchWord;
+                // 초기 화면 건너뛰기
                 document.getElementById('initialView').style.display = 'none';
                 document.getElementById('header').style.display = 'block';
                 document.getElementById('mainContent').style.display = 'block';
                 document.getElementById('header').classList.add('visible');
                 document.getElementById('dictionaryContent').classList.add('visible');
+                
+                // 검색창에 값 설정
+                document.getElementById('searchInput').value = searchWord;
                 document.getElementById('mainSearchInput').value = searchWord;
                 
-                // 검색 실행 (이제 데이터가 로드된 상태임)
-                await performSearch('main');  // await 추가
+                // 검색 실행
+                await performSearch();
             } else {
-                // 검색어가 없으면 원래대로 초기 화면 표시
                 showIntroModal();
             }
         });
