@@ -51,6 +51,13 @@
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
+    <script>
+        // 카카오 SDK 초기화
+        Kakao.init('a606fa8f9f2a34ae63f802dc25e6e46b');
+    </script>
+
     <style>
         :root {
             --primary-color: #7BA5A5;
@@ -1277,9 +1284,11 @@
                 entry.className = 'word-entry';
                 entry.innerHTML = `
                     <div class="word-header">
-                        <span class="word-title">${dialect.word}</span>
-                        <span class="word-class">「${dialect.wordClass}」</span>
-                        <span class="word-ipa">${dialect.ipa}</span>
+                        <div class="word-info">
+                            <span class="word-title">${dialect.word}</span>
+                            <span class="word-class">「${dialect.wordClass}」</span>
+                            <span class="word-ipa">${dialect.ipa}</span>
+                        </div>
                         <div class="button-group">
                             <button class="sound-button" onclick="event.stopPropagation(); playSound('${dialect.audio}', this)">
                                 <i class="fas fa-volume-up"></i>
@@ -1367,12 +1376,28 @@
         });
         
         const styles = `
+            .word-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                cursor: pointer;
+                user-select: none;
+            }
+
+            .word-info {
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+            }
+
             .button-group {
                 display: flex;
                 gap: 0.5rem;
                 align-items: center;
+                position: relative;
             }
 
+            .sound-button,
             .share-button {
                 padding: 0.5rem;
                 border-radius: 50%;
@@ -1381,8 +1406,14 @@
                 transition: all 0.2s ease;
                 border: none;
                 cursor: pointer;
+                width: 32px;
+                height: 32px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
             }
 
+            .sound-button:hover,
             .share-button:hover {
                 background: rgba(75, 63, 114, 0.2);
                 transform: scale(1.1);
@@ -1391,11 +1422,14 @@
             .share-dropdown {
                 display: none;
                 position: absolute;
+                right: 0;
+                top: 100%;
                 background: white;
                 border-radius: 10px;
                 box-shadow: 0 2px 10px rgba(0,0,0,0.1);
                 padding: 0.5rem;
                 z-index: 1000;
+                min-width: 150px;
             }
 
             .share-button.active + .share-dropdown {
@@ -1411,6 +1445,7 @@
                 text-decoration: none;
                 transition: background-color 0.2s ease;
                 border-radius: 5px;
+                white-space: nowrap;
             }
 
             .share-option:hover {
@@ -1449,35 +1484,56 @@
             const meaning = wordEntry.querySelector('.word-meaning').textContent;
             const example = wordEntry.querySelector('.word-example').textContent;
             
-            const shareText = `팜국어: ${word}\n의미: ${meaning}\n예시: ${example}\n\n출처: 팜국어대사전 (https://phamkorean.kro.kr)`;
+            // 현재 페이지의 URL에 해당 단어를 파라미터로 추가
+            const shareUrl = `https://phamkorean.kro.kr?word=${encodeURIComponent(word)}`;
             
-            let shareUrl;
+            let shareLink;
             switch(service) {
                 case 'twitter':
-                    shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}`;
+                    shareLink = `https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl)}`;
+                    window.open(shareLink, '_blank');
                     break;
                 case 'discord':
-                    // Discord는 클립보드에 복사
-                    navigator.clipboard.writeText(shareText).then(() => {
+                    // Discord는 URL만 붙여넣어도 OG 태그를 자동으로 읽어옴
+                    navigator.clipboard.writeText(shareUrl).then(() => {
                         alert('Discord에 붙여넣을 수 있도록 클립보드에 복사되었습니다.');
                     });
-                    return;
+                    break;
                 case 'instagram':
-                    // Instagram은 클립보드에 복사
-                    navigator.clipboard.writeText(shareText).then(() => {
+                    // Instagram은 웹에서 직접 공유가 제한적이므로 클립보드 복사
+                    navigator.clipboard.writeText(shareUrl).then(() => {
                         alert('Instagram에 붙여넣을 수 있도록 클립보드에 복사되었습니다.');
                     });
-                    return;
+                    break;
                 case 'kakao':
-                    // Kakao SDK 연동이 필요하므로 임시로 클립보드 복사
-                    navigator.clipboard.writeText(shareText).then(() => {
-                        alert('카카오톡에 붙여넣을 수 있도록 클립보드에 복사되었습니다.');
-                    });
-                    return;
-            }
-            
-            if (shareUrl) {
-                window.open(shareUrl, '_blank');
+                    if (window.Kakao) {
+                        Kakao.Link.sendDefault({
+                            objectType: 'feed',
+                            content: {
+                                title: `팜국어: ${word}`,
+                                description: `${meaning}\n${example}`,
+                                imageUrl: 'https://phamkorean.kro.kr/assets/img/icon-192.png',
+                                link: {
+                                    mobileWebUrl: shareUrl,
+                                    webUrl: shareUrl,
+                                },
+                            },
+                            buttons: [
+                                {
+                                    title: '웹으로 보기',
+                                    link: {
+                                        mobileWebUrl: shareUrl,
+                                        webUrl: shareUrl,
+                                    },
+                                },
+                            ],
+                        });
+                    } else {
+                        navigator.clipboard.writeText(shareUrl).then(() => {
+                            alert('카카오톡에 붙여넣을 수 있도록 클립보드에 복사되었습니다.');
+                        });
+                    }
+                    break;
             }
             
             // 공유 후 드롭다운 닫기
