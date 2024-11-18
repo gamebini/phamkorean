@@ -1238,7 +1238,7 @@
                 ? document.getElementById('mainSearchInput').value
                 : document.getElementById('searchInput').value;
 
-            if (type === 'initial') {
+            if (type === 'initial' && !new URLSearchParams(window.location.search).get('word')) {
                 // 초기 검색창 숨기기
                 document.getElementById('initialView').classList.add('move-up');
                 document.getElementById('header').style.display = 'block';
