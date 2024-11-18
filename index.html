@@ -1825,6 +1825,31 @@
                 showIntroModal();
             });
         });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // 기존 코드...
+        
+            // URL 파라미터에서 검색어 확인
+            const urlParams = new URLSearchParams(window.location.search);
+            const searchWord = urlParams.get('word');
+            
+            if (searchWord) {
+                // 검색어가 있으면 초기 화면을 건너뛰고 바로 검색 결과 표시
+                document.getElementById('searchInput').value = searchWord;
+                document.getElementById('initialView').style.display = 'none';
+                document.getElementById('header').style.display = 'block';
+                document.getElementById('mainContent').style.display = 'block';
+                document.getElementById('header').classList.add('visible');
+                document.getElementById('dictionaryContent').classList.add('visible');
+                document.getElementById('mainSearchInput').value = searchWord;
+                
+                // 검색 실행
+                performSearch('main');
+            } else {
+                // 검색어가 없으면 원래대로 초기 화면 표시
+                showIntroModal();
+            }
+        });
         
         function showIntroModal() {
             const modal = document.getElementById('introModal');
