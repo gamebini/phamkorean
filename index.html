@@ -19,6 +19,8 @@
     <meta name="twitter:description" content="팜국어는 뉴진스(NewJeans) 멤버인 하니(HANNI)가 사용한 독특하고 재치있는 말투와 표현을 뜻합니다. 이 페이지는 하니의 팜국어를 모아놓은 사전형 페이지입니다.">
     <meta name="twitter:image" content="https://phamkorean.kro.kr/assets/img/icon-192.png">
 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
     <!-- Schema.org -->
     <script type="application/ld+json">
     {
@@ -246,9 +248,9 @@
         }
 
         .header-content .search-box {
-            flex: 1;  /* 추가: 남은 공간 채우기 */
             display: flex;
-            gap: 0;
+            align-items: center;
+            gap: 0; /* 간격 제거 */
         }
 
         .header-content .search-box input::placeholder {
@@ -257,11 +259,14 @@
 
         .header-content .search-box input {
             flex: 1;
-            height: 40px;
             background-color: rgba(255, 255, 255, 0.9);
             border: none;
             color: #333;
-            border-radius: 0;  /* 모든 모서리를 각진 형태로 */
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+            border-top-left-radius: 50px;
+            border-bottom-left-radius: 50px;
+            height: 40px;
             padding: 0 1.5rem;
             font-size: 1rem;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -635,7 +640,6 @@
         }
 
         .search-button {
-            height: 40px;
             padding: 0 1.2rem;
             background: white;
             color: #4B3F72;
@@ -650,7 +654,13 @@
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             cursor: pointer;
             white-space: nowrap;
-            margin-left: -1px;  /* 경계선 겹침 방지 */
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+            border-top-right-radius: 50px;
+            border-bottom-right-radius: 50px;
+            height: 40px;
+            padding: 0 1.5rem;
+            margin-left: -1px; /* 경계선 겹침 방지 */
         }
         
         .search-button:hover,
@@ -786,6 +796,13 @@
 
         @media (max-width: 768px) {
 
+            @viewport {
+                width: device-width;
+                initial-scale: 1;
+                maximum-scale: 1;
+                user-scalable: no;
+            }
+            
             body {
                 background-image: url('./assets/img/background-mobile.png');
             }
