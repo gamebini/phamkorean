@@ -1236,41 +1236,28 @@
             }
             
             let searchTerm = '';
+            const urlParams = new URLSearchParams(window.location.search);
+            const urlWord = urlParams.get('word');
             
-            if (type === 'url') {
-                // URL 파라미터로 접근한 경우
-                const urlParams = new URLSearchParams(window.location.search);
-                searchTerm = urlParams.get('word');
+            // searchTerm 결정
+            if (type === 'initial' && urlWord) {
+                searchTerm = urlWord;
             } else {
-                // 일반 검색의 경우
                 searchTerm = type === 'main' 
                     ? document.getElementById('mainSearchInput').value
                     : document.getElementById('searchInput').value;
-                
-                // URL 업데이트
-                const newUrl = new URL(window.location);
-                newUrl.searchParams.set('word', searchTerm);
-                window.history.pushState({}, '', newUrl);
-                
-                // 초기 화면에서의 전환 처리
-                if (type === 'initial') {
-                    document.getElementById('initialView').classList.add('move-up');
-                    document.getElementById('header').style.display = 'block';
-                    document.getElementById('mainContent').style.display = 'block';
-                    document.getElementById('mainSearchInput').value = searchTerm;
                     
-                    setTimeout(() => {
-                        document.getElementById('header').classList.add('visible');
-                        document.getElementById('dictionaryContent').classList.add('visible');
-                        setTimeout(() => {
-                            document.getElementById('initialView').style.display = 'none';
-                        }, 500);
-                    }, 300);
+                // 일반 검색일 때만 URL 업데이트
+                if (type !== 'initial') {
+                    const newUrl = new URL(window.location);
+                    newUrl.searchParams.set('word', searchTerm);
+                    window.history.pushState({}, '', newUrl);
                 }
             }
         
+            // UI 상태 업데이트
             const content = document.getElementById('dictionaryContent');
-            
+        
             // 검색어 검증
             if (!searchTerm) {
                 content.innerHTML = '<div class="initial-message">검색어를 입력해주세요.</div>';
@@ -1284,7 +1271,8 @@
                 content.innerHTML = '<div class="search-result-header">검색 결과가 없습니다.</div>';
                 return;
             }
-
+        
+            // 검색 결과 표시
             content.innerHTML = `
                 <div class="search-result-header">
                     '<strong>${searchTerm}</strong>' 검색 결과 (<strong>${filteredData.length}</strong>건)
