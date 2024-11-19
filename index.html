@@ -1847,93 +1847,107 @@
             const searchWord = urlParams.get('word');
             
             if (searchWord) {
-                // URL 파라미터가 있는 경우
+                // 초기 화면 상태 설정
                 document.getElementById('initialView').style.display = 'none';
                 document.getElementById('header').style.display = 'block';
                 document.getElementById('mainContent').style.display = 'block';
+                
+                // 헤더와 콘텐츠 영역 표시
                 document.getElementById('header').classList.add('visible');
                 document.getElementById('dictionaryContent').classList.add('visible');
                 
+                // 검색어 입력창에 값 설정
                 document.getElementById('searchInput').value = searchWord;
                 document.getElementById('mainSearchInput').value = searchWord;
-
-                await performSearch('initial');  // 검색 실행
                 
-                // 직접 검색어 전달
+                // 검색 실행
                 const content = document.getElementById('dictionaryContent');
                 const filteredData = dialectManager.search(searchWord);
                 
-                if (filteredData.length > 0) {
-                    content.innerHTML = `
-                        <div class="search-result-header">
-                            '<strong>${searchWord}</strong>' 검색 결과 (<strong>${filteredData.length}</strong>건)
+                if (filteredData.length === 0) {
+                    content.innerHTML = '<div class="search-result-header">검색 결과가 없습니다.</div>';
+                    return;
+                }
+                
+                // 검색 결과 헤더 생성
+                content.innerHTML = `
+                    <div class="search-result-header">
+                        '<strong>${searchWord}</strong>' 검색 결과 (<strong>${filteredData.length}</strong>건)
+                    </div>
+                `;
+                
+                // 검색 결과 렌더링
+                filteredData.forEach(dialect => {
+                    const entry = document.createElement('div');
+                    entry.className = 'word-entry';
+                    entry.innerHTML = `
+                        <div class="word-header">
+                            <div class="word-info">
+                                <span class="word-title">${dialect.word}</span>
+                                <span class="word-class">「${dialect.wordClass}」</span>
+                                <span class="word-ipa">${dialect.ipa}</span>
+                            </div>
+                            <div class="button-group">
+                                <button class="sound-button" onclick="event.stopPropagation(); playSound('${dialect.audio}', this)">
+                                    <i class="fas fa-volume-up"></i>
+                                </button>
+                                <button class="share-button" onclick="event.stopPropagation(); shareDialect(this)" data-word="${dialect.word}" data-meaning="${dialect.meaning}" data-example="${dialect.example}">
+                                    <i class="fas fa-share-alt"></i>
+                                </button>
+                                <div class="share-dropdown">
+                                    <a href="#" class="share-option discord" onclick="event.preventDefault(); shareToService('discord', this)">
+                                        <i class="fab fa-discord"></i> Discord
+                                    </a>
+                                    <a href="#" class="share-option instagram" onclick="event.preventDefault(); shareToService('instagram', this)">
+                                        <i class="fab fa-instagram"></i> Instagram
+                                    </a>
+                                    <a href="#" class="share-option kakao" onclick="event.preventDefault(); shareToService('kakao', this)">
+                                        <i class="fas fa-comment"></i> KakaoTalk
+                                    </a>
+                                    <a href="#" class="share-option twitter" onclick="event.preventDefault(); shareToService('twitter', this)">
+                                        <i class="fab fa-twitter"></i> Twitter
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="word-content">
+                            <div class="word-meaning">${dialect.meaning}</div>
+                            <div class="word-example">${dialect.example}</div>
+                            <div class="word-video">
+                                <div class="video-title">원본 영상</div>
+                                <video controls>
+                                    <source src="${dialect.video}" type="video/mp4">
+                                    <p>브라우저가 비디오 재생을 지원하지 않습니다.</p>
+                                </video>
+                                <div class="video-source">출처: ${dialect.source}</div>
+                            </div>
                         </div>
                     `;
-        
-                    filteredData.forEach(dialect => {
-                        const entry = document.createElement('div');
-                        entry.className = 'word-entry';
-                        entry.innerHTML = `
-                            <div class="word-header">
-                                <div class="word-info">
-                                    <span class="word-title">${dialect.word}</span>
-                                    <span class="word-class">「${dialect.wordClass}」</span>
-                                    <span class="word-ipa">${dialect.ipa}</span>
-                                </div>
-                                <div class="button-group">
-                                    <button class="sound-button" onclick="event.stopPropagation(); playSound('${dialect.audio}', this)">
-                                        <i class="fas fa-volume-up"></i>
-                                    </button>
-                                    <button class="share-button" onclick="event.stopPropagation(); shareDialect(this)" data-word="${dialect.word}" data-meaning="${dialect.meaning}" data-example="${dialect.example}">
-                                        <i class="fas fa-share-alt"></i>
-                                    </button>
-                                    <div class="share-dropdown">
-                                        <a href="#" class="share-option discord" onclick="event.preventDefault(); shareToService('discord', this)">
-                                            <i class="fab fa-discord"></i> Discord
-                                        </a>
-                                        <a href="#" class="share-option instagram" onclick="event.preventDefault(); shareToService('instagram', this)">
-                                            <i class="fab fa-instagram"></i> Instagram
-                                        </a>
-                                        <a href="#" class="share-option kakao" onclick="event.preventDefault(); shareToService('kakao', this)">
-                                            <i class="fas fa-comment"></i> KakaoTalk
-                                        </a>
-                                        <a href="#" class="share-option twitter" onclick="event.preventDefault(); shareToService('twitter', this)">
-                                            <i class="fab fa-twitter"></i> Twitter
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="word-content">
-                                <div class="word-meaning">${dialect.meaning}</div>
-                                <div class="word-example">${dialect.example}</div>
-                                <div class="word-video">
-                                    <div class="video-title">원본 영상</div>
-                                    <video controls>
-                                        <source src="${dialect.video}" type="video/mp4">
-                                        <p>브라우저가 비디오 재생을 지원하지 않습니다.</p>
-                                    </video>
-                                    <div class="video-source">출처: ${dialect.source}</div>
-                                </div>
-                            </div>
-                        `;
                     
-                        // 클릭 이벤트 추가
-                        entry.querySelector('.word-header').addEventListener('click', function() {
-                            entry.classList.toggle('expanded');
-                        });
-                
-                        content.appendChild(entry);
+                    // 클릭 이벤트 추가
+                    entry.querySelector('.word-header').addEventListener('click', function() {
+                        entry.classList.toggle('expanded');
                     });
-        
-                    const copyright = document.createElement('div');
-                    copyright.className = 'copyright-notice';
-                    copyright.innerHTML = `
-                        Data by NewJeans<br>
-                        Made By One of Bunnies(freelancerbini@gmail.com)<br>
-                        © 2024 팜국어대사전. All rights reserved.
-                    `;
-                    content.appendChild(copyright);
-                }
+                    
+                    content.appendChild(entry);
+                });
+                
+                // 저작권 정보 추가
+                const copyright = document.createElement('div');
+                copyright.className = 'copyright-notice';
+                copyright.innerHTML = `
+                    Data by NewJeans<br>
+                    Made By One of Bunnies(freelancerbini@gmail.com)<br>
+                    © 2024 팜국어대사전. All rights reserved.
+                `;
+                content.appendChild(copyright);
+                
+                // 분석 이벤트 트래킹
+                gtag('event', 'search', {
+                    'search_term': searchWord,
+                    'search_type': 'url_parameter'
+                });
+                
             } else {
                 showIntroModal();
             }
