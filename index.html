@@ -1169,9 +1169,52 @@
     </div>
 
     <script>
+
+        class AppStateManager {
+            constructor() {
+                this.currentState = {
+                    searchTerm: '',
+                    isInitialView: true
+                };
+            }
+        
+            handleRefresh() {  // 직접 처리하도록 수정
+                if (performance.navigation.type === 1) {
+                    window.location.href = window.location.origin;
+                    return true;
+                }
+                return false;
+            }
+
+            updateState(newState) {
+                this.currentState = { ...this.currentState, ...newState };
+                this.updateURL();
+            }
+        
+            updateURL() {
+                const newUrl = new URL(window.location);
+                if (this.currentState.searchTerm) {
+                    newUrl.searchParams.set('word', this.currentState.searchTerm);
+                } else {
+                    newUrl.searchParams.delete('word');
+                }
+                window.history.pushState({}, '', newUrl);
+            }
+        
+            handleRefresh() {
+                if (performance.navigation.type === 1) { // 1은 새로고침을 의미
+                    window.location.href = window.location.origin;
+                    return true;
+                }
+                return false;
+            }
+        }
+        
         class DialectManager {
             constructor() {
                 this.dialects = [];
+                this.isLoading = false;
+                this.appState = new AppStateManager(); // 이 부분이 누락됨
                 this.loadData();
             }
 
@@ -1229,7 +1272,7 @@
         }
 
         const dialectManager = new DialectManager();
-
+        
         async function performSearch(type = 'initial') {
             if (dialectManager.dialects.length === 0) {
                 await dialectManager.loadData();
@@ -1841,10 +1884,23 @@
         });
 
         document.addEventListener('DOMContentLoaded', async () => {
+            const dialectManager = new DialectManager();
             await dialectManager.loadData();
             
+            // 새로고침 처리
+            if (dialectManager.handleRefresh()) {
+                return; // 새로고침이면 여기서 종료
+            }
+            
+            // URL 파라미터 검색어 가져오기
             const urlParams = new URLSearchParams(window.location.search);
             const searchWord = urlParams.get('word');
+            
+            if (searchWord) {
+                await dialectManager.performSearch('url', searchWord);
+            } else {
+                showIntroModal();
+            } 
             
             if (searchWord) {
                 // 초기 화면 상태 설정
