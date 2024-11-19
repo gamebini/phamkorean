@@ -1200,14 +1200,6 @@
                 }
                 window.history.pushState({}, '', newUrl);
             }
-        
-            handleRefresh() {
-                if (performance.navigation.type === 1) { // 1은 새로고침을 의미
-                    window.location.href = window.location.origin;
-                    return true;
-                }
-                return false;
-            }
         }
         
         class DialectManager {
