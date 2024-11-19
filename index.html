@@ -1239,21 +1239,35 @@
             const urlParams = new URLSearchParams(window.location.search);
             const urlWord = urlParams.get('word');
             
-            // searchTerm 결정
-            if (type === 'initial' && urlWord) {
+            if (urlWord && type === 'url') {
                 searchTerm = urlWord;
             } else {
                 searchTerm = type === 'main' 
                     ? document.getElementById('mainSearchInput').value
                     : document.getElementById('searchInput').value;
+                
+                // 일반 검색일 때 UI 전환
+                if (type === 'initial') {
+                    document.getElementById('initialView').classList.add('move-up');
+                    document.getElementById('header').style.display = 'block';
+                    document.getElementById('mainContent').style.display = 'block';
+                    document.getElementById('mainSearchInput').value = searchTerm;
                     
-                // 일반 검색일 때만 URL 업데이트
-                if (type !== 'initial') {
-                    const newUrl = new URL(window.location);
-                    newUrl.searchParams.set('word', searchTerm);
-                    window.history.pushState({}, '', newUrl);
+                    setTimeout(() => {
+                        document.getElementById('header').classList.add('visible');
+                        document.getElementById('dictionaryContent').classList.add('visible');
+                        setTimeout(() => {
+                            document.getElementById('initialView').style.display = 'none';
+                        }, 500);
+                    }, 300);
                 }
+                    
+                // URL 업데이트
+                const newUrl = new URL(window.location);
+                newUrl.searchParams.set('word', searchTerm);
+                window.history.pushState({}, '', newUrl);
             }
+
         
             // UI 상태 업데이트
             const content = document.getElementById('dictionaryContent');
@@ -1842,12 +1856,85 @@
                 
                 document.getElementById('searchInput').value = searchWord;
                 document.getElementById('mainSearchInput').value = searchWord;
+
+                await performSearch('initial');  // 검색 실행
                 
-                await performSearch('url');  // 특별한 타입을 지정
+                // 직접 검색어 전달
+                const content = document.getElementById('dictionaryContent');
+                const filteredData = dialectManager.search(searchWord);
+                
+                if (filteredData.length > 0) {
+                    content.innerHTML = `
+                        <div class="search-result-header">
+                            '<strong>${searchWord}</strong>' 검색 결과 (<strong>${filteredData.length}</strong>건)
+                        </div>
+                    `;
+        
+                    filteredData.forEach(dialect => {
+                        const entry = document.createElement('div');
+                        entry.className = 'word-entry';
+                        entry.innerHTML = `
+                            <div class="word-header">
+                                <div class="word-info">
+                                    <span class="word-title">${dialect.word}</span>
+                                    <span class="word-class">「${dialect.wordClass}」</span>
+                                    <span class="word-ipa">${dialect.ipa}</span>
+                                </div>
+                                <div class="button-group">
+                                    <button class="sound-button" onclick="event.stopPropagation(); playSound('${dialect.audio}', this)">
+                                        <i class="fas fa-volume-up"></i>
+                                    </button>
+                                    <button class="share-button" onclick="event.stopPropagation(); shareDialect(this)" data-word="${dialect.word}" data-meaning="${dialect.meaning}" data-example="${dialect.example}">
+                                        <i class="fas fa-share-alt"></i>
+                                    </button>
+                                    <div class="share-dropdown">
+                                        <a href="#" class="share-option discord" onclick="event.preventDefault(); shareToService('discord', this)">
+                                            <i class="fab fa-discord"></i> Discord
+                                        </a>
+                                        <a href="#" class="share-option instagram" onclick="event.preventDefault(); shareToService('instagram', this)">
+                                            <i class="fab fa-instagram"></i> Instagram
+                                        </a>
+                                        <a href="#" class="share-option kakao" onclick="event.preventDefault(); shareToService('kakao', this)">
+                                            <i class="fas fa-comment"></i> KakaoTalk
+                                        </a>
+                                        <a href="#" class="share-option twitter" onclick="event.preventDefault(); shareToService('twitter', this)">
+                                            <i class="fab fa-twitter"></i> Twitter
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="word-content">
+                                <div class="word-meaning">${dialect.meaning}</div>
+                                <div class="word-example">${dialect.example}</div>
+                                <div class="word-video">
+                                    <div class="video-title">원본 영상</div>
+                                    <video controls>
+                                        <source src="${dialect.video}" type="video/mp4">
+                                        <p>브라우저가 비디오 재생을 지원하지 않습니다.</p>
+                                    </video>
+                                    <div class="video-source">출처: ${dialect.source}</div>
+                                </div>
+                            </div>
+                        `;
+                    
+                        // 클릭 이벤트 추가
+                        entry.querySelector('.word-header').addEventListener('click', function() {
+                            entry.classList.toggle('expanded');
+                        });
+                
+                        content.appendChild(entry);
+                    });
+        
+                    const copyright = document.createElement('div');
+                    copyright.className = 'copyright-notice';
+                    copyright.innerHTML = `
+                        Data by NewJeans<br>
+                        Made By One of Bunnies(freelancerbini@gmail.com)<br>
+                        © 2024 팜국어대사전. All rights reserved.
+                    `;
+                    content.appendChild(copyright);
+                }
             } else {
-                // 일반적인 접근의 경우
-                setRandomPlaceholder();
-                setInterval(setRandomPlaceholder, 1500);
                 showIntroModal();
             }
         });
