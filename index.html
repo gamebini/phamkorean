@@ -1178,14 +1178,14 @@
                 };
             }
         
-            handleRefresh() {  // 직접 처리하도록 수정
-                if (performance.navigation.type === 1) {
+            handleRefresh() {
+                if (performance.navigation.type === 1) { // Check if it's a page refresh
                     window.location.href = window.location.origin;
                     return true;
                 }
                 return false;
             }
-
+        
             updateState(newState) {
                 this.currentState = { ...this.currentState, ...newState };
                 this.updateURL();
@@ -1206,7 +1206,7 @@
             constructor() {
                 this.dialects = [];
                 this.isLoading = false;
-                this.appState = new AppStateManager(); // 이 부분이 누락됨
+                this.appState = new AppStateManager();
                 this.loadData();
             }
 
