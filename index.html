@@ -2002,41 +2002,6 @@
                 });
             });
         });
-
-        document.addEventListener('DOMContentLoaded', async () => {
-            const dialectManager = new DialectManager();
-            await dialectManager.loadData();
-            
-            const urlParams = new URLSearchParams(window.location.search);
-            const searchWord = urlParams.get('word');
-            
-            // Page refresh detection and handling
-            if (performance.navigation.type === 1) { // 1 indicates page refresh
-                if (searchWord) {
-                    // Maintain current view state on refresh when word parameter exists
-                    document.getElementById('initialView').style.display = 'none';
-                    document.getElementById('header').style.display = 'block';
-                    document.getElementById('header').classList.add('visible');
-                    document.getElementById('mainContent').style.display = 'block';
-                    document.getElementById('dictionaryContent').classList.add('visible');
-                    
-                    // Set search input values
-                    document.getElementById('searchInput').value = searchWord;
-                    document.getElementById('mainSearchInput').value = searchWord;
-                    
-                    // Perform search
-                    performSearch('url');
-                }
-                return;
-            }
-            
-            // Handle initial load cases
-            if (searchWord) {
-                performSearch('url');
-            } else {
-                showIntroModal();
-            }
-        });
     </script>
 </body>
 </html>
