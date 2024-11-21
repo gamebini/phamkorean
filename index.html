@@ -1857,6 +1857,13 @@
             }
         }
 
+        document.addEventListener('DOMContentLoaded', () => {
+            if (performance.navigation.type === 1 && window.location.search) {
+                // 파라미터 제거하고 루트 경로로 이동
+                window.location.href = window.location.origin;
+            }
+        });
+        
         // 초기 로드 시에도 실행
         document.addEventListener('DOMContentLoaded', () => {
             dialectManager.loadData().then(() => {
