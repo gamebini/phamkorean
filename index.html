@@ -1851,7 +1851,7 @@
             const searchWord = urlParams.get('word');
             
             if (searchWord) {
-                await dialectManager.performSearch('url', searchWord);
+                performSearch('url');
             } else {
                 showIntroModal();
             } 
