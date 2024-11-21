@@ -1179,13 +1179,14 @@
             }
         
             handleRefresh() {
-                if (performance.navigation.type === 1) { // Check if it's a page refresh
-                    window.location.href = window.location.origin;
+                // 페이지 새로고침이고 URL에 파라미터가 있는 경우 검사
+                if (performance.navigation.type === 1 && window.location.search) {
+                    window.location.href = 'https://phamkorean.kro.kr';
                     return true;
                 }
                 return false;
             }
-        
+            
             updateState(newState) {
                 this.currentState = { ...this.currentState, ...newState };
                 this.updateURL();
