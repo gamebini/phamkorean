@@ -1282,7 +1282,6 @@
                     ? document.getElementById('mainSearchInput').value
                     : document.getElementById('searchInput').value;
                 
-                // 일반 검색일 때 UI 전환
                 if (type === 'initial') {
                     document.getElementById('initialView').classList.add('move-up');
                     document.getElementById('header').style.display = 'block';
@@ -1297,7 +1296,7 @@
                         }, 500);
                     }, 300);
                 }
-                    
+            }         
                 // URL 업데이트
                 const newUrl = new URL(window.location);
                 newUrl.searchParams.set('word', searchTerm);
@@ -1856,13 +1855,6 @@
                 document.getElementById('mainSearchInput').placeholder = placeholder;
             }
         }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            if (performance.navigation.type === 1 && window.location.search) {
-                // 파라미터 제거하고 루트 경로로 이동
-                window.location.href = window.location.origin;
-            }
-        });
         
         // 초기 로드 시에도 실행
         document.addEventListener('DOMContentLoaded', () => {
