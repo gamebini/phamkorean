@@ -1179,14 +1179,13 @@
             }
         
             handleRefresh() {
-                // 페이지 새로고침이고 URL에 파라미터가 있는 경우 검사
-                if (performance.navigation.type === 1 && window.location.search) {
-                    window.location.href = 'https://phamkorean.kro.kr';
+                if (performance.navigation.type === 1) { // Check if it's a page refresh
+                    window.location.href = window.location.origin;
                     return true;
                 }
                 return false;
             }
-            
+        
             updateState(newState) {
                 this.currentState = { ...this.currentState, ...newState };
                 this.updateURL();
@@ -1282,6 +1281,7 @@
                     ? document.getElementById('mainSearchInput').value
                     : document.getElementById('searchInput').value;
                 
+                // 일반 검색일 때 UI 전환
                 if (type === 'initial') {
                     document.getElementById('initialView').classList.add('move-up');
                     document.getElementById('header').style.display = 'block';
@@ -1296,7 +1296,7 @@
                         }, 500);
                     }, 300);
                 }
-            }         
+                    
                 // URL 업데이트
                 const newUrl = new URL(window.location);
                 newUrl.searchParams.set('word', searchTerm);
@@ -1855,7 +1855,7 @@
                 document.getElementById('mainSearchInput').placeholder = placeholder;
             }
         }
-        
+
         // 초기 로드 시에도 실행
         document.addEventListener('DOMContentLoaded', () => {
             dialectManager.loadData().then(() => {
