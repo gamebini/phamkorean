@@ -279,9 +279,14 @@
         }
 
         .header-content .search-box button {
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+            background: white; /* 버튼 배경 */
+            color: #4B3F72; /* 텍스트 색상 */
             height: 40px;
             padding: 0 1.5rem;
-            background: white;
             border: none;
             border-radius: 0 50px 50px 0;
             font-size: 0.9rem;
