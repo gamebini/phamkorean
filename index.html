@@ -1046,18 +1046,17 @@
     <header id="header" style="display: none;">
         <div class="header-content">
             <h1 class="site-title">팜국어대사전(Beta)</h1>
-            <div class="header-right">
-                <div class="search-container">
-                    <div class="search-box">
-                        <input type="text" id="mainSearchInput" placeholder="팜국어 검색하기...">
-                        <div id="mainAutocompleteList" class="autocomplete-items"></div>
+                <div class="header-right">
+                    <div class="search-container">
+                        <div class="search-box">
+                            <input type="text" id="mainSearchInput" placeholder="팜국어 검색하기...">
+                            <button onclick="performSearch('main')" class="search-button">
+                                <i class="fas fa-search"></i>
+                                검색
+                            </button>
+                            <div id="mainAutocompleteList" class="autocomplete-items"></div>
+                        </div>
                     </div>
-                </div>
-                <div class="buttons-container">
-                    <button onclick="performSearch('main')" class="search-button">
-                        <i class="fas fa-search"></i>
-                        검색
-                    </button>
                     <button class="request-button" onclick="showRequestModal()">
                         <i class="fas fa-envelope"></i>
                         문의하기
