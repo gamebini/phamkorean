@@ -73,14 +73,13 @@
 
         .header-content .search-container {
             position: relative;
-            max-width: 400px;
+            max-width: 500px; /* 검색창과 버튼을 포함한 전체 너비 증가 */
             width: 100%;
             margin: 0;
             opacity: 1;
             transform: none;
             z-index: 1001;
-            display: flex;  /* 추가: flexbox 사용 */
-            align-items: center;  /* 추가: 수직 가운데 정렬 */
+            display: flex;
         }
 
         .header-content .autocomplete-items {
@@ -258,10 +257,9 @@
         .header-content .search-box {
             display: flex;
             align-items: center;
-            width: 100%; /* 검색창의 너비 */
-            max-width: 400px; /* 데스크톱에서 적절한 최대 너비 */
-            margin: 0; /* 외부 여백 제거 */
-            gap: 0; /* 버튼과 검색창 사이의 간격 제거 */
+            width: 100%;
+            margin: 0;
+            gap: 0; /* 간격 제거 */
         }
 
         .header-content .search-box input::placeholder {
@@ -271,29 +269,38 @@
         .header-content .search-box input {
             flex: 1;
             height: 40px;
-            padding: 0.5rem 1rem;
-            border-radius: 50px; /* 모든 모서리 둥글게 */
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            background-color: rgba(255, 255, 255, 0.1);
-            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px 0 0 50px; /* 오른쪽 모서리만 직각으로 */
+            border: none;
+            background-color: rgba(255, 255, 255, 0.9);
+            color: #333;
             font-size: 1rem;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
 
-        .header-content .search-box button {
-            height: 40px;
-            padding: 0 1.5rem;
-            border-radius: 50px; /* 모든 모서리 둥글게 */
+        .search-button {
+            background-color: white; /* 버튼 배경 */
+            color: #4B3F72; /* 텍스트 색상 */
             border: none;
-            background: linear-gradient(to right, #4B3F72, #1F3A8C);
-            color: white;
+            border-radius: 0 50px 50px 0;
+            font-size: 1rem;
             font-weight: bold;
-            cursor: pointer;
+            padding: 0.5rem 1.5rem;
+            height: 40px;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.3s ease;
-            margin-left: 0; /* 버튼의 여백 제거 */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .header-content .search-box button i {
+            background: linear-gradient(to right, #4B3F72, #1F3A8C);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
         }
 
         .header-content .search-box button span {
@@ -302,6 +309,12 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
             color: transparent;
+        }
+
+        .header-content .search-box button:hover {
+            background: #f5f5f5;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
         }
 
         header .search-box input {
@@ -352,10 +365,6 @@
 
         header .search-box button:hover {
             background-color: rgba(255, 255, 255, 0.2);
-        }
-
-        .header-content .search-box button:hover {
-            background: rgba(255, 255, 255, 0.2);
         }
 
         .search-container {
@@ -477,14 +486,6 @@
         .autocomplete-item:hover {
             background-color: rgba(75, 63, 114, 0.1);
             color: #222;  /* hover 시 텍스트를 더 진하게 */
-        }
-
-        .header-content .search-box button {
-            padding: 0.5rem 1rem;
-            font-size: 0.9rem;
-            height: 40px;
-            min-width: 60px;
-            white-space: nowrap;  /* 텍스트 줄바꿈 방지 */
         }
         
         .dictionary-content {
@@ -649,28 +650,42 @@
             pointer-events: auto;  /* 클릭 가능하도록 설정 */
         }
 
-        .search-button {
-            padding: 0 1.2rem;
+        .header-content .search-button {
+            height: 48px;
+            padding: 0 1.5rem;
             background: white;
-            color: #4B3F72;
             border: none;
-            border-radius: 0;
+            border-radius: 0 50px 50px 0;
             font-size: 0.9rem;
             font-weight: bold;
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
             transition: all 0.3s ease;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             cursor: pointer;
             white-space: nowrap;
-            border-radius: 50px;
-            height: 40px;
-            padding: 0 1.5rem;
-            margin-left: -1px; /* 경계선 겹침 방지 */
+            margin-left: -1px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .header-content .search-button i {
+            background: linear-gradient(to right, #4B3F72, #1F3A8C);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
         }
         
-        .search-button:hover,
+        .header-content .search-button:hover {
+            background: #f5f5f5;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        }
+
         .request-button:hover {
             background: #f5f5f5;
             color: #1F3A8C;
@@ -856,14 +871,13 @@
         
             /* 검색창 스타일링 */
             .header-content .search-box {
-                flex-direction: column; /* 세로 정렬 */
-                gap: 0.5rem; /* 검색창과 버튼 간격 */
+                flex-direction: row; /* 가로 정렬로 변경 */
+                gap: 0;
             }
-        
+                
             .header-content .search-box input,
             .header-content .search-box button {
                 width: 100%; /* 전체 화면 폭에 맞게 */
-                border-radius: 20px; /* 모서리 둥글게 */
             }
 
             .header-content .search-box input {
@@ -874,17 +888,15 @@
                 background-color: rgba(255, 255, 255, 0.9);
                 border: none;
                 color: #333;
-                border-radius: 50px;
+                border-radius: 50px 0 0 50px;
                 box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             }
         
             /* 버튼 컨테이너 */
             .buttons-container {
-                width: 100%; /* 전체 너비로 변경 */
-                margin: 0; /* 마진 제거 */
                 display: flex;
-                gap: 0.5rem;  /* 버튼 사이 간격 줄이기 */
-                flex-direction: row-reverse;
+                gap: 0.5rem;
+                align-items: center;
             }
         
             .search-button,
@@ -906,8 +918,8 @@
         
             /* 검색 버튼 (이제 오른쪽에 위치) */
             .search-button {
-                border-radius: 50px;  /* 각진 모서리 */
-                margin-left: 0;  /* 마진 제거 */
+                width: auto;
+                border-radius: 0 50px 50px 0;
             }
         
             /* 버튼 호버 효과 */
@@ -1052,18 +1064,17 @@
     <header id="header" style="display: none;">
         <div class="header-content">
             <h1 class="site-title">팜국어대사전(Beta)</h1>
-            <div class="header-right">
-                <div class="search-container">
-                    <div class="search-box">
-                        <input type="text" id="mainSearchInput" placeholder="팜국어 검색하기...">
-                        <div id="mainAutocompleteList" class="autocomplete-items"></div>
+                <div class="header-right">
+                    <div class="search-container">
+                        <div class="search-box">
+                            <input type="text" id="mainSearchInput" placeholder="팜국어 검색하기...">
+                            <button onclick="performSearch('main')" class="search-button">
+                                <i class="fas fa-search"></i>
+                                검색
+                            </button>
+                            <div id="mainAutocompleteList" class="autocomplete-items"></div>
+                        </div>
                     </div>
-                </div>
-                <div class="buttons-container">
-                    <button onclick="performSearch('main')" class="search-button">
-                        <i class="fas fa-search"></i>
-                        검색
-                    </button>
                     <button class="request-button" onclick="showRequestModal()">
                         <i class="fas fa-envelope"></i>
                         문의하기
