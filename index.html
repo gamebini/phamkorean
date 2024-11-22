@@ -73,7 +73,7 @@
 
         .header-content .search-container {
             position: relative;
-            max-width: 400px;
+            max-width: 500px; /* 검색창과 버튼을 포함한 전체 너비 증가 */
             width: 100%;
             margin: 0;
             opacity: 1;
@@ -258,9 +258,8 @@
             display: flex;
             align-items: center;
             width: 100%;
-            max-width: 400px;
             margin: 0;
-            gap: 0.5rem; /* 검색창과 버튼 사이 간격 추가 */
+            gap: 0; /* 간격 제거 */
         }
 
         .header-content .search-box input::placeholder {
@@ -270,11 +269,11 @@
         .header-content .search-box input {
             flex: 1;
             height: 40px;
-            padding: 0.5rem 1rem;
-            border-radius: 50px; /* 모든 모서리 둥글게 */
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            background-color: rgba(255, 255, 255, 0.1);
-            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px 0 0 50px; /* 오른쪽 모서리만 직각으로 */
+            border: none;
+            background-color: rgba(255, 255, 255, 0.9);
+            color: #333;
             font-size: 1rem;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
@@ -654,7 +653,7 @@
             background: white;
             color: #4B3F72;
             border: none;
-            border-radius: 50px;
+            border-radius: 0 50px 50px 0; /* 왼쪽 모서리만 직각으로 */
             font-size: 0.9rem;
             font-weight: bold;
             display: inline-flex;
@@ -664,7 +663,7 @@
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             cursor: pointer;
             white-space: nowrap;
-            margin-left: 0;
+            margin-left: -1px; /* 경계선 겹침 방지 */
         }
         
         .search-button:hover,
@@ -854,7 +853,7 @@
             /* 검색창 스타일링 */
             .header-content .search-box {
                 flex-direction: row; /* 가로 정렬로 변경 */
-                gap: 0.5rem;
+                gap: 0;
             }
                 
             .header-content .search-box input,
@@ -871,15 +870,15 @@
                 background-color: rgba(255, 255, 255, 0.9);
                 border: none;
                 color: #333;
-                border-radius: 50px;
+                border-radius: 50px 0 0 50px;
                 box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             }
         
             /* 버튼 컨테이너 */
             .buttons-container {
-                width: auto;
-                flex-direction: row;
-                justify-content: flex-end;
+                display: flex;
+                gap: 0.5rem;
+                align-items: center;
             }
         
             .search-button,
@@ -901,9 +900,8 @@
         
             /* 검색 버튼 (이제 오른쪽에 위치) */
             .search-button {
-                border-radius: 50px;  /* 각진 모서리 */
-                margin-left: 0;  /* 마진 제거 */
                 width: auto;
+                border-radius: 0 50px 50px 0;
             }
         
             /* 버튼 호버 효과 */
