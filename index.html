@@ -647,26 +647,29 @@
             pointer-events: auto;  /* 클릭 가능하도록 설정 */
         }
 
-        .search-button {
+        .header-content .search-button {
             height: 40px;
             padding: 0 1.5rem;
-            background: white;
-            color: #4B3F72;
+            background: linear-gradient(to right, #4B3F72, #1F3A8C);
+            color: white; /* 텍스트 색상을 흰색으로 변경 */
             border: none;
-            border-radius: 0 50px 50px 0; /* 왼쪽 모서리만 직각으로 */
+            border-radius: 0 50px 50px 0;
             font-size: 0.9rem;
             font-weight: bold;
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
             transition: all 0.3s ease;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             cursor: pointer;
             white-space: nowrap;
-            margin-left: -1px; /* 경계선 겹침 방지 */
+            margin-left: -1px;
         }
         
-        .search-button:hover,
+        .header-content .search-button:hover {
+            background: linear-gradient(to right, #5B4F82, #2F4A9C);
+            opacity: 1;
+        }
+        
         .request-button:hover {
             background: #f5f5f5;
             color: #1F3A8C;
