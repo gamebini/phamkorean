@@ -48,7 +48,7 @@ export class DialectManager {
             });
     }
 
-        async function performSearch(type = 'initial') {
+        async performSearch(type = 'initial') {
             // 데이터가 로드되지 않았다면 로드
             if (dialectManager.dialects.length === 0) {
                 await dialectManager.loadData();
