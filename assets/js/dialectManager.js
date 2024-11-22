@@ -48,11 +48,11 @@ export class DialectManager {
             });
     }
 
-        async performSearch(type = 'initial') {
+    async performSearch(type = 'initial') {
             // 데이터가 로드되지 않았다면 로드
             if (dialectManager.dialects.length === 0) {
                 await dialectManager.loadData();
-         }
+            }
             
             let searchTerm = '';
             const urlParams = new URLSearchParams(window.location.search);
@@ -87,36 +87,36 @@ export class DialectManager {
                     }, 300);
                 }
             }
-        
+            
             // URL 업데이트
             const newUrl = new URL(window.location);
             newUrl.searchParams.set('word', searchTerm);
             window.history.pushState({}, '', newUrl);
-        
+            
             // UI 상태 업데이트
             const content = document.getElementById('dictionaryContent');
-        
+            
             // 검색어 검증
             if (!searchTerm) {
                 content.innerHTML = '<div class="initial-message">검색어를 입력해주세요.</div>';
                 return;
             }
-        
+            
             // 검색 실행
             const filteredData = dialectManager.search(searchTerm);
-        
+            
             if (filteredData.length === 0) {
                 content.innerHTML = '<div class="search-result-header">검색 결과가 없습니다.</div>';
                 return;
             }
-        
+            
             // 검색 결과 표시
             content.innerHTML = `
                 <div class="search-result-header">
                     '<strong>${searchTerm}</strong>' 검색 결과 (<strong>${filteredData.length}</strong>건)
                 </div>
             `;
-
+            
             filteredData.forEach(dialect => {
                 const entry = document.createElement('div');
                 entry.className = 'word-entry';
@@ -163,29 +163,29 @@ export class DialectManager {
                         </div>
                     </div>
                 `;
-            
+                
                 // 클릭 이벤트 추가
                 entry.querySelector('.word-header').addEventListener('click', function() {
                     entry.classList.toggle('expanded');
                 });
-        
-            content.appendChild(entry);
-
-            const copyright = document.createElement('div');
-            copyright.className = 'copyright-notice';
-            copyright.innerHTML = `
-                Data by NewJeans<br>
-                Made By One of Bunnies(freelancerbini@gmail.com)<br>
-                © 2024 팜국어대사전. All rights reserved.
-            `;
-            content.appendChild(copyright);
+                
+                content.appendChild(entry);
+                
+                const copyright = document.createElement('div');
+                copyright.className = 'copyright-notice';
+                copyright.innerHTML = `
+                    Data by NewJeans<br>
+                    Made By One of Bunnies(freelancerbini@gmail.com)<br>
+                    © 2024 팜국어대사전. All rights reserved.
+                `;
+                content.appendChild(copyright);
             });
             setRandomPlaceholder();
             gtag('event', 'search', {
                 'search_term': searchTerm,
                 'search_type': type  // 'initial' 또는 'main'
             });
-
+            
             if (filteredData.length > 0) {
                 gtag('event', 'conversion', {
                     'send_to': 'G-D37XS581FJ',
