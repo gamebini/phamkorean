@@ -1636,6 +1636,7 @@
         
         // 검색 화면 설정 함수
         async function setupSearchView(searchWord) {
+            // UI 설정
             document.getElementById('initialView').style.display = 'none';
             document.getElementById('header').style.display = 'block';
             document.getElementById('mainContent').style.display = 'block';
@@ -1645,6 +1646,10 @@
             document.getElementById('searchInput').value = searchWord;
             document.getElementById('mainSearchInput').value = searchWord;
             
+            // 데이터 로드 확인 및 검색 실행
+            if (dialectManager.dialects.length === 0) {
+                await dialectManager.loadData();
+            }
             await performSearch('url');
         }
         
@@ -1879,7 +1884,7 @@
             const urlParams = new URLSearchParams(window.location.search);
             const searchWord = urlParams.get('word');
             
-            // 먼저 데이터를 로드
+            // 데이터 로드
             await dialectManager.loadData();
             
             // 랜덤 placeholder 설정 및 인터벌 시작
@@ -1902,6 +1907,18 @@
             initializeTracking();
         });
         
+        window.addEventListener('load', async () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const searchWord = urlParams.get('word');
+            
+            if (searchWord) {
+                if (dialectManager.dialects.length === 0) {
+                    await dialectManager.loadData();
+                }
+                await performSearch('url');
+            }
+        });
+
         function showIntroModal() {
             const modal = document.getElementById('introModal');
             modal.style.display = 'block';
