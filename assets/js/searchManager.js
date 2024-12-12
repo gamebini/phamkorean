@@ -126,4 +126,187 @@ class SearchManager {
             <a href="#" class="share-option instagram" onclick="event.preventDefault(); searchManager.shareToService('instagram', this)">
                 <i class="fab fa-instagram"></i> Instagram
             </a>
-            <a href="#" class="share-option kakao" onclick="event.
+            <a href="#" class="share-option kakao" onclick="event.preventDefault(); searchManager.shareToService('kakao', this)">
+                <i class="fas fa-comment"></i> KakaoTalk
+            </a>
+            <a href="#" class="share-option twitter" onclick="event.preventDefault(); searchManager.shareToService('twitter', this)">
+                <i class="fab fa-twitter"></i> Twitter
+            </a>
+        `;
+    }
+
+    handleShare(button) {
+        // 다른 드롭다운 모두 닫기
+        document.querySelectorAll('.share-button').forEach(btn => {
+            if (btn !== button) btn.classList.remove('active');
+        });
+        
+        button.classList.toggle('active');
+        event.stopPropagation();
+    }
+
+    shareToService(service, element) {
+        const wordEntry = element.closest('.word-entry');
+        const word = wordEntry.querySelector('.word-title').textContent;
+        const meaning = wordEntry.querySelector('.word-meaning').textContent;
+        const example = wordEntry.querySelector('.word-example').textContent;
+        
+        const shareUrl = `${window.location.origin}${window.location.pathname}?word=${encodeURIComponent(word)}`;
+        
+        switch(service) {
+            case 'twitter':
+                const twitterUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl)}`;
+                window.open(twitterUrl, '_blank');
+                break;
+
+            case 'discord':
+                navigator.clipboard.writeText(shareUrl).then(() => {
+                    alert('Discord에 붙여넣을 수 있도록 클립보드에 복사되었습니다.');
+                });
+                break;
+
+            case 'instagram':
+                navigator.clipboard.writeText(shareUrl).then(() => {
+                    alert('Instagram에 붙여넣을 수 있도록 클립보드에 복사되었습니다.');
+                });
+                break;
+
+            case 'kakao':
+                if (window.Kakao) {
+                    Kakao.Link.sendDefault({
+                        objectType: 'feed',
+                        content: {
+                            title: `팜국어: ${word}`,
+                            description: `${meaning}\n${example}`,
+                            imageUrl: './assets/img/icon-192.png',
+                            link: {
+                                mobileWebUrl: shareUrl,
+                                webUrl: shareUrl,
+                            },
+                        },
+                        buttons: [
+                            {
+                                title: '웹으로 보기',
+                                link: {
+                                    mobileWebUrl: shareUrl,
+                                    webUrl: shareUrl,
+                                },
+                            },
+                        ],
+                    });
+                } else {
+                    navigator.clipboard.writeText(shareUrl).then(() => {
+                        alert('카카오톡에 붙여넣을 수 있도록 클립보드에 복사되었습니다.');
+                    });
+                }
+                break;
+        }
+        
+        // 공유 버튼 드롭다운 닫기
+        element.closest('.word-entry').querySelector('.share-button').classList.remove('active');
+        
+        // 분석 이벤트 발생
+        gtag('event', 'share', {
+            'method': service,
+            'content_type': 'dialect',
+            'item_id': word
+        });
+    }
+
+    async showAutocomplete(inputId, listId) {
+        if (dialectManager.dialects.length === 0) {
+            await dialectManager.loadData();
+        }
+
+        const input = document.getElementById(inputId);
+        const list = document.getElementById(listId);
+        const value = input.value.toLowerCase();
+
+        if (!value) {
+            list.style.display = 'none';
+            return;
+        }
+
+        const matches = dialectManager.dialects.filter(item => 
+            item.word.toLowerCase().includes(value)
+        );
+
+        if (matches.length > 0) {
+            list.innerHTML = '';
+            matches.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'autocomplete-item';
+                div.textContent = item.word;
+                div.onclick = () => {
+                    input.value = item.word;
+                    list.style.display = 'none';
+                    this.performSearch(inputId === 'mainSearchInput' ? 'main' : 'initial');
+                };
+                list.appendChild(div);
+            });
+            list.style.display = 'block';
+        } else {
+            list.style.display = 'none';
+        }
+    }
+
+    setupEventListeners() {
+        ['searchInput', 'mainSearchInput'].forEach(id => {
+            const element = document.getElementById(id);
+            if (element) {
+                element.addEventListener('input', () => {
+                    this.showAutocomplete(
+                        id,
+                        id === 'searchInput' ? 'autocompleteList' : 'mainAutocompleteList'
+                    );
+                });
+                
+                element.addEventListener('keyup', (event) => {
+                    if (event.key === 'Enter') {
+                        this.performSearch(id === 'mainSearchInput' ? 'main' : 'initial');
+                    }
+                });
+            }
+        });
+
+        // 문서 클릭 시 드롭다운 닫기
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.button-group')) {
+                document.querySelectorAll('.share-button').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+            }
+            if (!e.target.closest('.search-box')) {
+                document.querySelectorAll('.autocomplete-items').forEach(list => {
+                    list.style.display = 'none';
+                });
+            }
+        });
+
+        // 스크롤 추적
+        window.addEventListener('scroll', () => {
+            const scrollPercent = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+            this.maxScroll = Math.max(this.maxScroll, scrollPercent);
+        });
+    }
+
+    trackVideoPlay(wordTitle) {
+        gtag('event', 'video_play', {
+            'word_title': wordTitle
+        });
+    }
+
+    addCopyright(container) {
+        const copyright = document.createElement('div');
+        copyright.className = 'copyright-notice';
+        copyright.innerHTML = `
+            Data by NewJeans<br>
+            Made By One of Bunnies(freelancerbini@gmail.com)<br>
+            © ${new Date().getFullYear()} 팜국어대사전. All rights reserved.
+        `;
+        container.appendChild(copyright);
+    }
+}
+
+// 전역 인스턴스 생성
+const searchManager = new SearchManager();
