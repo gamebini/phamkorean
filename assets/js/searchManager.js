@@ -5,6 +5,7 @@ class SearchManager {
     }
 
     async performSearch(type = 'initial') {
+        // 데이터가 로드되지 않았다면 로드
         if (dialectManager.dialects.length === 0) {
             await dialectManager.loadData();
         }
@@ -27,6 +28,11 @@ class SearchManager {
             }
         }
     
+        // 검색어가 없으면 return
+        if (!searchTerm.trim()) {
+            return;
+        }
+    
         // URL 업데이트
         const newUrl = new URL(window.location);
         newUrl.searchParams.set('word', searchTerm);
@@ -34,14 +40,13 @@ class SearchManager {
     
         // 검색 실행
         const content = document.getElementById('dictionaryContent');
-        
-        if (!searchTerm) {
-            content.innerHTML = '<div class="initial-message">검색어를 입력해주세요.</div>';
-            return;
-        }
-    
         const results = dialectManager.search(searchTerm);
+        
         this.displayResults(results, searchTerm, content);
+        
+        // 검색 완료 후 UI 업데이트
+        document.getElementById('header').classList.add('visible');
+        content.classList.add('visible');
     }
 
     displayResults(results, searchTerm, container) {
