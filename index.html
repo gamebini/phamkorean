@@ -13,6 +13,12 @@
     <meta property="og:description" content="팜국어는 뉴진스(NewJeans) 멤버인 하니(HANNI)가 사용한 독특하고 재치있는 말투와 표현을 뜻합니다.">
     <meta property="og:image" content="./assets/img/icon-192.png">
 
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="팜국어대사전">
+    <meta name="twitter:description" content="팜국어는 뉴진스(NewJeans) 멤버인 하니(HANNI)가 사용한 독특하고 재치있는 말투와 표현을 뜻합니다.">
+    <meta name="twitter:image" content="./assets/img/icon-192.png">
+
     <!-- CSS Files -->
     <link rel="stylesheet" href="./css/main.css">
     <link rel="stylesheet" href="./css/components.css">
@@ -23,9 +29,13 @@
     
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="./assets/img/favicon.png">
+    <link rel="icon" type="image/x-icon" href="./favicon.ico">
     
     <!-- Kakao SDK -->
     <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
+    
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-D37XS581FJ"></script>
 </head>
 <body>
     <!-- Initial View -->
@@ -68,17 +78,99 @@
         <div class="dictionary-content" id="dictionaryContent"></div>
     </div>
 
-    <!-- Modals -->
+    <!-- Intro Modal -->
     <div id="introModal" class="modal">
-        <!-- 소개 모달 내용 -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>팜국어대사전</h2>
+            </div>
+            <div class="modal-body">
+                <div class="modal-icon">
+                    <i class="fas fa-book"></i>
+                </div>
+                <h3>팜국어대사전에 오신걸 환영해요!</h3>
+                <div class="info-box">
+                    <span>📚 팜국어란?</span>
+                </div>
+                <p>
+                    '팜국어'는 뉴진스(NewJeans) 멤버인 하니(HANNI)가 사용한 독특하고 재치있는 말투와 표현을 뜻합니다. 
+                    이 페이지는 하니의 팜국어를 모아놓은 사전형 페이지입니다.
+                </p>
+                <button onclick="modalManager.showBetaModal()">
+                    <span>다음으로</span>
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
     </div>
 
+    <!-- Beta Notice Modal -->
     <div id="betaNoticeModal" class="modal">
-        <!-- 베타 알림 모달 내용 -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>베타 버전 안내</h2>
+                <span class="close-modal" onclick="modalManager.closeBetaModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="modal-icon">
+                    <i class="fas fa-flask"></i>
+                </div>
+                <h3>팜국어대사전 베타 버전</h3>
+                <p>베타 서비스 기간 동안 아래와 같은 제한사항이 있을 수 있습니다:</p>
+                <ul class="beta-notice-list">
+                    <li>
+                        <span class="number">1</span>
+                        mp3(음성 파일)을 추가 중이며, mp4(영상 파일)이 완벽하지 않을 수 있습니다.
+                    </li>
+                    <li>
+                        <span class="number">2</span>
+                        모바일에서 사용 시 이질감을 느끼실 수 있습니다. 현재 최적화를 진행 중입니다.
+                    </li>
+                    <li>
+                        <span class="number">3</span>
+                        UI 처리 예외가 발생하여 다소 어색한 부분이 있을 수 있습니다.
+                    </li>
+                </ul>
+                <p class="notice-footer">
+                    더 나은 서비스를 위해 지속적으로 업데이트할 예정입니다. 
+                    불편사항이나 개선사항이 있다면 '문의하기' 버튼을 통해 알려주시면 감사하겠습니다.
+                </p>
+                <button onclick="modalManager.closeBetaModal()">
+                    확인했습니다
+                </button>
+            </div>
+        </div>
     </div>
 
+    <!-- Request Modal -->
     <div id="requestModal" class="modal">
-        <!-- 문의하기 모달 내용 -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>문의 방법</h2>
+                <span class="close-modal" onclick="modalManager.closeRequestModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p>현재 문의전송시스템 구현 중에 있습니다.<br>
+                    구현 전까지는 아래 이메일을 통해 문의 부탁드립니다.
+                </p>
+                <div class="contact-method">
+                    <i class="fas fa-envelope"></i>
+                    <span><strong>freelancerbini@gmail.com</strong></span>
+                </div>
+                <div class="request-format">
+                    <p class="format-title">📝 <strong>요청 예시</strong></p>
+                    <pre class="format-content">
+팜국어대백과 데이터 추가 요청드립니다
+<strong>단어</strong>: 
+국제발음기호(선택): 
+<strong>뜻(원래 뜻)</strong>: 
+<strong>예문(실제 대사)</strong>: 
+영상(링크 또는 출처, 선택): 
+오디오(선택): 
+품사(선택):</pre>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- JavaScript Files -->
