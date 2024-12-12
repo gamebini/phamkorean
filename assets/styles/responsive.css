@@ -1,0 +1,94 @@
+/* Desktop Styles */
+@media (min-width: 769px) {
+    .header-content .search-box button {
+        height: 36px;
+        padding: 0 1.2rem;
+        font-size: 0.9rem;
+    }
+}
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+    @viewport {
+        width: device-width;
+        initial-scale: 1;
+        maximum-scale: 1;
+        user-scalable: no;
+    }
+    
+    body {
+        background-image: url('../img/background-mobile.png');
+    }
+
+    .initial-state {
+        background-image: url('../img/background-mobile.png');
+    }
+    
+    .header-content {
+        flex-direction: column;
+        padding: 1rem;
+        gap: 1rem;
+    }
+
+    .site-title {
+        font-size: 1.4rem;
+        margin: 0;
+        text-align: center;
+    }
+
+    .header-right {
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.8rem;
+    }
+
+    .search-container {
+        max-width: 400px;
+    }
+
+    .search-box {
+        flex-direction: row;
+    }
+
+    .search-box input {
+        height: 48px;
+        padding: 0.8rem 1.5rem;
+        font-size: 1.1rem;
+    }
+
+    .initial-state .title {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+    }
+
+    .initial-state .subtitle {
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
+    }
+
+    .word-entry {
+        padding: 1.2rem;
+        margin: 0.8rem 0;
+    }
+
+    .word-title {
+        font-size: 1.3rem;
+    }
+}
+
+/* Tablet Styles */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .header-content {
+        padding: 1rem 2rem;
+    }
+
+    .main-content {
+        margin: 1.5rem;
+        padding: 1.5rem;
+    }
+
+    .search-container.initial {
+        width: 90%;
+    }
+}
