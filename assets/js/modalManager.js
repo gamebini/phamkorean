@@ -5,12 +5,28 @@ class ModalManager {
 
     showIntroModal() {
         const modal = document.getElementById('introModal');
-        modal.style.display = 'block';
-        setTimeout(() => modal.classList.add('show'), 10);
-        
-        gtag('event', 'modal_open', {
-            'modal_type': 'intro'
-        });
+        if (modal) {
+            modal.style.display = 'block';
+            // display 속성이 적용된 후 show 클래스 추가
+            requestAnimationFrame(() => {
+                modal.classList.add('show');
+            });
+            
+            gtag('event', 'modal_open', {
+                'modal_type': 'intro'
+            });
+        }
+    }
+
+    checkFirstVisit() {
+        // localStorage 체크 전에 intro 모달 표시
+        const isFirstVisit = !localStorage.getItem('visited');
+        if (isFirstVisit) {
+            // 약간의 지연 후 모달 표시
+            setTimeout(() => {
+                this.showIntroModal();
+            }, 500);
+        }
     }
 
     showBetaModal() {
