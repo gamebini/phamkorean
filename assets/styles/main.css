@@ -1,0 +1,159 @@
+:root {
+    --primary-color: #7BA5A5;
+    --secondary-color: #4B3F72;
+    --accent-color: #1F3A8C;
+    --border-color: #ddd;
+    --text-color: #333;
+    --background-gradient: linear-gradient(to right, #4B3F72, #1F3A8C);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Noto Sans KR', sans-serif;
+    line-height: 1.6;
+    color: var(--text-color);
+    min-height: 100vh;
+    background-image: url('../img/background.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+/* Initial State Styles */
+.initial-state {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('../img/background.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: all 0.5s ease;
+    position: relative;
+    will-change: opacity, transform;
+}
+
+.initial-state::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
+.initial-state .title,
+.initial-state .subtitle,
+.initial-state .search-container {
+    position: relative;
+    z-index: 2;
+    color: white;
+}
+
+.initial-state.move-up {
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.initial-state .title {
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.initial-state .subtitle {
+    font-size: 1.3rem;
+    color: #fff;
+    margin-bottom: 3rem;
+    text-align: center;
+}
+
+/* Header Styles */
+header {
+    background: var(--background-gradient);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    color: white;
+    padding: 1rem 2rem;
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: all 0.5s ease;
+    width: 100%;
+    position: relative;
+    z-index: 1000;
+}
+
+.header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    padding: 0 1rem;
+    gap: 2rem;
+    justify-content: space-between;
+}
+
+.site-title {
+    font-size: 1.8rem;
+    font-weight: bold;
+}
+
+/* Search Container Styles */
+.search-container {
+    position: relative;
+    max-width: 500px;
+    width: 100%;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.5s ease 0.2s;
+}
+
+.search-container.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.search-container.initial {
+    margin: 0 auto;
+    opacity: 1;
+    transform: none;
+    width: 80%;
+    max-width: 800px;
+}
+
+.search-box {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin: 0;
+    gap: 0;
+}
+
+.search-box input {
+    flex: 1;
+    height: 40px;
+    padding: 0.8rem 1.5rem;
+    border-radius: 50px 0 0 50px;
+    border: none;
+    background-color: rgba(255, 255, 255, 0.9);
+    color: var(--text-color);
+    font-size: 1rem;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* Additional styles will continue in components.css */
