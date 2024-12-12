@@ -1,21 +1,32 @@
-/* Desktop Styles */
-@media (min-width: 769px) {
-    .header-content .search-box button {
-        height: 36px;
-        padding: 0 1.2rem;
-        font-size: 0.9rem;
+/* Tablet Styles */
+@media (max-width: 1024px) {
+    .header-content {
+        padding: 0 1rem;
+    }
+
+    .main-content {
+        padding: 1.5rem;
+    }
+
+    .search-container.initial {
+        width: 90%;
+    }
+
+    .word-header {
+        padding: 1.2rem 1.5rem;
+    }
+
+    .word-content {
+        padding: 0 1.5rem;
+    }
+
+    .word-entry.expanded .word-content {
+        padding: 1.5rem;
     }
 }
 
 /* Mobile Styles */
 @media (max-width: 768px) {
-    @viewport {
-        width: device-width;
-        initial-scale: 1;
-        maximum-scale: 1;
-        user-scalable: no;
-    }
-    
     body {
         background-image: url('../img/background-mobile.png');
     }
@@ -23,7 +34,8 @@
     .initial-state {
         background-image: url('../img/background-mobile.png');
     }
-    
+
+    /* Header */
     .header-content {
         flex-direction: column;
         padding: 1rem;
@@ -32,63 +44,123 @@
 
     .site-title {
         font-size: 1.4rem;
-        margin: 0;
         text-align: center;
     }
 
-    .header-right {
-        width: 100%;
-        flex-direction: column;
-        align-items: stretch;
-        gap: 0.8rem;
-    }
-
+    /* Search Container */
     .search-container {
-        max-width: 400px;
+        max-width: none;
     }
 
     .search-box {
-        flex-direction: row;
+        flex-direction: column;
+        gap: 0.8rem;
+        padding: 0.8rem;
     }
 
     .search-box input {
-        height: 48px;
-        padding: 0.8rem 1.5rem;
-        font-size: 1.1rem;
+        width: 100%;
+        text-align: center;
     }
 
-    .initial-state .title {
-        font-size: 2rem;
-        margin-bottom: 1rem;
+    .search-button {
+        width: 100%;
+        justify-content: center;
+        padding: 1rem;
     }
 
-    .initial-state .subtitle {
-        font-size: 1.1rem;
-        margin-bottom: 2rem;
+    /* Word Entry */
+    .word-header {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
     }
 
-    .word-entry {
-        padding: 1.2rem;
-        margin: 0.8rem 0;
+    .word-info {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .button-group {
+        justify-content: center;
     }
 
     .word-title {
-        font-size: 1.3rem;
-    }
-}
-
-/* Tablet Styles */
-@media (min-width: 769px) and (max-width: 1024px) {
-    .header-content {
-        padding: 1rem 2rem;
+        font-size: 1.4rem;
     }
 
-    .main-content {
-        margin: 1.5rem;
+    .word-video video {
+        width: 100%;
+    }
+
+    /* Modal */
+    .modal-content {
+        width: 95%;
+        margin: 45vh auto 0;
+    }
+
+    .modal-header {
+        padding: 1rem 1.5rem;
+    }
+
+    .modal-body {
         padding: 1.5rem;
     }
 
-    .search-container.initial {
-        width: 90%;
+    .beta-notice-list {
+        padding: 0.8rem;
+    }
+
+    /* Share Dropdown */
+    .share-dropdown {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        top: auto;
+        transform-origin: bottom center;
+        border-radius: 20px 20px 0 0;
+        padding: 1rem;
+        min-width: 100%;
+    }
+
+    .share-option {
+        padding: 1rem;
+        justify-content: center;
+        font-size: 1.1rem;
+    }
+}
+
+/* 애니메이션 최적화 */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* 고해상도 디스플레이 최적화 */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .word-entry,
+    .search-box,
+    .modal-content {
+        backdrop-filter: blur(8px);
+    }
+}
+
+/* 다크 모드 대응 */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --text-color: #e1e1e1;
+        --light-text: #a0a0a0;
+        --border-color: #2a2a2a;
+    }
+
+    .word-entry,
+    .modal-content,
+    .search-box {
+        background: rgba(255, 255, 255, 0.85);
     }
 }
