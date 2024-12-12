@@ -162,12 +162,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const urlParams = new URLSearchParams(window.location.search);
         const searchWord = urlParams.get('word');
         
-        if (searchWord) {
-            // URL에 검색어가 있으면 바로 검색 실행
-            document.getElementById('searchInput').value = searchWord;
-            document.getElementById('mainSearchInput').value = searchWord;
-            await searchManager.performSearch('url');
-        } else {
+        if (!searchWord) {
             // 첫 방문자 확인 및 모달 표시
             modalManager.checkFirstVisit();
         }
